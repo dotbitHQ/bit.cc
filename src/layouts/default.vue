@@ -1,3 +1,8 @@
+<style>
+body {
+  background-color: rgba(243, 252, 255, 1);
+}
+</style>
 <template>
   <nuxt />
 </template>

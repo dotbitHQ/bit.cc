@@ -3,9 +3,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  min-width: 250px;
+  max-width: 300px;
   min-height: 600px;
 
   .profile_account {
+    margin-top: 20px;
+    margin-bottom: 15px;
     font-size: 32px;
     word-break: break-all;
     font-family: monospace, sans-serif;
@@ -59,6 +63,15 @@
   .spacer {
     flex: 1;
   }
+
+  @media all and (max-width: 500px) {
+    min-height: unset;
+    max-width: unset;
+
+    .profile-logo {
+      display: none;
+    }
+  }
 }
 </style>
 
@@ -89,7 +102,7 @@
     </div>
 
     <div class="spacer"></div>
-    <img src="imgs/logo-profile.png" alt="Profile Logo">
+    <img class="profile-logo" src="imgs/logo-profile.png" alt="Profile Logo">
   </BitCard>
 </template>
 

@@ -1,5 +1,5 @@
 <style lang="scss">
-.big-card {
+.bit-card {
   box-sizing: border-box;
   border: 1px solid rgba(151, 151, 151, 0.14);
   padding: 16px;
@@ -13,7 +13,7 @@
 </style>
 
 <template>
-  <div class="big-card" :class="shadow ? '_shadow' : ''">
+  <div class="bit-card" :class="shadow ? '_shadow' : ''">
     <slot />
   </div>
 </template>
