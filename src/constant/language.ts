@@ -1,4 +1,4 @@
-import { IOption } from '~/constant/index'
+import { IOption } from '~/constant/types'
 
 export interface ILanguageOption extends IOption {
   matcher: RegExp,

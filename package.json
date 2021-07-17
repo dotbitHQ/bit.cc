@@ -24,6 +24,7 @@
   "dependencies": {
     "@nuxtjs/pwa": "^3.3.5",
     "axios": "^0.21.1",
+    "copy-to-clipboard": "^3.3.1",
     "cross-env": "^7.0.3",
     "js-cookie": "^2.2.1",
     "koa": "^2.13.1",
@@ -37,6 +38,7 @@
     "@nuxtjs/google-gtag": "^1.0.4",
     "@nuxtjs/sentry": "^5.1.0",
     "@nuxtjs/vuetify": "^1.12.1",
+    "@types/jest": "^26.0.24",
     "@types/js-cookie": "^2.2.7",
     "@vue/test-utils": "^1.2.1",
     "axios": "^0.21.1",
