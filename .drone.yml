@@ -1,0 +1,54 @@
+# drone 0.8
+pipeline:
+  # restore node_modules from cache
+  restore-cache:
+    image: drillster/drone-volume-cache
+    restore: true
+    mount:
+      - ./node_modules
+    volumes:
+      - /tmp/cache/drone/bit.cc:/cache
+
+  # build
+  build:
+    image: node:lts
+    commands:
+      - npm install
+      - npm run build
+
+  # write node_modules back to cache
+  rebuild-cache:
+    image: drillster/drone-volume-cache
+    rebuild: true
+    mount:
+      - ./node_modules
+    volumes:
+      - /tmp/cache/drone/bit.cc:/cache
+
+  # deploy production env
+  deploy_production:
+    image: drillster/drone-rsync
+    hosts: [host_ip]
+    user: root
+    secrets: [ rsync_key ]
+    source: ./
+    target: /data/code/bit.cc
+    script:
+      - cd /data/code/bit.cc
+      - npm run reload_production
+    when:
+      branch: [master]
+
+  # deploy_test_env
+  deploy_test:
+    image: drillster/drone-rsync
+    hosts: [host_ip]
+    user: root
+    secrets: [ rsync_key ]
+    source: ./
+    target: /data/code/bit.cc_test1
+    script:
+      - cd /data/code/bit.cc_test1
+      - npm run reload_test1
+    when:
+      branch: [test]
