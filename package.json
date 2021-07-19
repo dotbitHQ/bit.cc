@@ -1,7 +1,7 @@
 {
-  "name": "blockabc_web_template",
+  "name": "bit.cc",
   "version": "1.0.0",
-  "description": "blockabc_web_template",
+  "description": "bit.cc",
   "author": "jeffjing",
   "private": true,
   "scripts": {
@@ -18,8 +18,8 @@
     "lint": "eslint --ext .js,.vue --ignore-path .gitignore .",
     "i18n": "i18n-abc scan && i18n-abc transform",
     "test": "jest",
-    "reload_production": "pm2 reload ecosystem.config.js --only blockabc_web_template",
-    "reload_test1": "pm2 reload ecosystem.config.js --only blockabc_web_template_test1"
+    "reload_production": "pm2 reload ecosystem.config.js --only bit.cc",
+    "reload_test1": "pm2 reload ecosystem.config.js --only bit.cc_test1"
   },
   "dependencies": {
     "@nuxtjs/pwa": "^3.3.5",
