@@ -1,5 +1,7 @@
 <style lang="scss">
 .das-record-card {
+  padding: 10px 16px;
+
   .card_title {
     display: flex;
     justify-content: space-between;
@@ -7,15 +9,13 @@
 
   .card_name {
     font-size: 28px;
-    font-family: monospace, sans-serif;
     font-weight: 500;
     color: #11142d;
   }
 
   .card_content {
-    margin: 10px 0;
+    margin: 16px 0 20px 0;
     font-size: 16px;
-    font-family: monospace, sans-serif;
     word-break: break-all;
     color: rgba(17, 20, 45, 0.7);
     line-height: 20px;
@@ -28,10 +28,10 @@
 
   .card_label {
     padding: 2px 5px;
-    font-size: 12px;
+    font-size: 14px;
     border-radius: 5px;
     background: rgba(50, 54, 61, 0.1);
-    color: rgba(30, 34, 42, 0.6);
+    color: rgba(30, 34, 42, 1);
   }
 }
 </style>

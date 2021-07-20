@@ -3,7 +3,6 @@
   .nav_item {
     font-size: 14px;
     line-height: 2;
-    font-family: monospace;
     color: rgba(65, 67, 87, 0.4);
 
     &._active {

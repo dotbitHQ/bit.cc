@@ -1,15 +1,17 @@
 <style lang="scss">
+@import "src/assets/variables";
+
 .das-records {
   .das-records_group {
-    margin-bottom: 20px;
+    margin-bottom: 30px;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
   }
 
   .das-record-card {
-    margin-bottom: 20px;
-    margin-right: 20px;
+    margin-bottom: 35px;
+    margin-right: 35px;
     flex-basis: 40%;
     flex-grow: 1;
   }
@@ -25,7 +27,7 @@
     }
   }
 
-  @media all and (max-width: 500px) {
+  @media all and (max-width: $screen_sm) {
     .das-record-card {
       margin-right: 0;
       flex-basis: 100%;

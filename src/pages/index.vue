@@ -1,29 +1,36 @@
 <style lang="scss">
+@import "src/assets/variables";
+
 .page-index {
   height: 100vh;
-  background:
-    linear-gradient(150deg, #00b2f9, rgba(255, 255, 255, 0.3) 60%, transparent),
-    linear-gradient(-150deg, magenta, rgba(255, 255, 255, 0.3) 40%, transparent),
-    linear-gradient(-45deg, yellow, rgba(255, 255, 255, 0.3) 40%, transparent),
-    linear-gradient(45deg, white, rgba(255, 255, 255, 0.3) 50%, transparent);
+  background-image:
+    radial-gradient(circle farthest-side at 50% 100%, #fdfcfd, hsla(0, 0%, 100%, 0) 65%),
+    radial-gradient(circle farthest-corner at 50% 50%, #fdfcfd, hsla(0, 0%, 100%, 0) 87%),
+    radial-gradient(circle closest-corner at 100% 50%, #ffe6cc, hsla(0, 0%, 100%, 0)),
+    radial-gradient(circle farthest-side at 100% 100%, #fefdf2, hsla(0, 0%, 100%, 0) 67%),
+    radial-gradient(circle farthest-side at 0% 100%, #f3fcff 7%, hsla(0, 0%, 100%, 0) 50%),
+    radial-gradient(circle farthest-side at 100% 0%, #fc75de, hsla(0, 0%, 100%, 0)),
+    radial-gradient(circle farthest-corner at 10% 10%, #55c1fb, hsla(0, 0%, 100%, 0));
   background-blend-mode: hard-light;
   overflow: auto;
 
   .index_content {
     margin: 0 auto;
-    width: 1200px;
+    width: 960px;
     display: flex;
     justify-content: space-between;
     align-items: center;
 
     .index_nav {
+      position: absolute;
+      margin-top: -100px;
+      left: 12px;
       width: 180px;
       flex-shrink: 0;
-      order: 1;
     }
 
     .index_center {
-      order: 2;
+      order: 1;
       box-sizing: border-box;
       height: 100vh;
       padding-top: 50px;
@@ -39,6 +46,7 @@
       }
 
       .center_welcome {
+        margin-top: 10px;
         font-size: 68px;
         font-family: sans-serif;
         line-height: 1.2;
@@ -48,11 +56,10 @@
 
       .center_intro {
         margin-top: 30px;
-        margin-bottom: 50px;
+        margin-bottom: 55px;
         font-size: 20px;
         line-height: 1.2;
         font-weight: 500;
-        font-family: monospace, sans-serif;
         color: #11142d;
       }
 
@@ -66,13 +73,16 @@
     }
 
     .index_profile {
-      flex-shrink: 0;
+      order: 2;
+      align-self: stretch;
+      margin-top: 14%;
+      margin-bottom: 5%;
       margin-left: 20px;
-      order: 3;
+      flex-shrink: 0;
     }
   }
 
-  @media all and (max-width: 500px) {
+  @media all and (max-width: $screen_sm) {
     .index_content {
       width: unset;
       flex-direction: column;
@@ -124,14 +134,6 @@
     <BitHeader />
 
     <div class="index_content">
-      <ProfileCard class="index_profile"
-                   :account="account.account"
-                   :description="account.description"
-                   :owner="account.owner"
-                   :manager="account.manager"
-      />
-      <SideNav class="index_nav" v-model="activeNav" />
-
       <div class="index_center">
         <div id="J_overview" class="center_emoji">
           {{ account.emoji }}
@@ -162,6 +164,13 @@
           </div>
         </div>
       </div>
+      <ProfileCard class="index_profile"
+                   :account="account.account"
+                   :description="account.description"
+                   :owner="account.owner"
+                   :manager="account.manager"
+      />
+      <SideNav class="index_nav" v-model="activeNav" />
     </div>
   </div>
 </template>

@@ -4,7 +4,7 @@
   top: 15px;
   display: flex;
   justify-content: flex-end;
-  width: 1200px;
+  width: 960px;
   margin: 0 auto;
   height: 0;
 

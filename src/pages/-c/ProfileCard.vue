@@ -1,25 +1,28 @@
 <style lang="scss">
+@import "src/assets/variables";
+
 .profile-card {
   display: flex;
   flex-direction: column;
   align-items: center;
-  min-width: 250px;
-  max-width: 300px;
+  min-width: 230px;
+  max-width: 250px;
   min-height: 600px;
+  padding-top: 35px;
+  padding-bottom: 20px;
+  box-shadow: 0 30px 27px -29px rgb(108 113 148 / 26%);
 
   .profile_account {
     margin-top: 20px;
     margin-bottom: 15px;
     font-size: 32px;
     word-break: break-all;
-    font-family: monospace, sans-serif;
     font-weight: bold;
     color: #11142d;
   }
 
   .profile_description {
     font-size: 14px;
-    font-family: monospace, sans-serif;
     font-weight: 400;
     color: #797791;
     line-height: 20px;
@@ -41,7 +44,6 @@
       justify-content: space-between;
       font-size: 14px;
       font-weight: 500;
-      font-family: monospace, sans-serif;
 
       .profile_lock_type {
         flex: 1;
@@ -64,7 +66,7 @@
     flex: 1;
   }
 
-  @media all and (max-width: 500px) {
+  @media all and (max-width: $screen_sm) {
     min-height: unset;
     max-width: unset;
 
@@ -102,7 +104,7 @@
     </div>
 
     <div class="spacer"></div>
-    <img class="profile-logo" src="imgs/logo-profile.png" alt="Profile Logo">
+    <img class="profile-logo" src="imgs/logo-profile.png" alt="Profile Logo" width="140">
   </BitCard>
 </template>
 
