@@ -1,4 +1,6 @@
 <style lang="scss">
+@import "src/assets/variables";
+
 .bit-header {
   position: relative;
   top: 15px;
@@ -19,12 +21,21 @@
       color: white;
     }
   }
+
+  @media all and (max-width: $screen_xl) {
+    width: 700px;
+  }
+
+  @media all and (max-width: $screen_md) {
+    width: unset;
+    margin-right: 40px;
+  }
 }
 </style>
 
 <template>
   <div class="bit-header">
-    <a href="https://app.da.systems">{{$tt('Register DAS')}}→</a>
+    <a href="https://app.da.systems">{{ $tt('Register DAS') }}→</a>
   </div>
 </template>
 

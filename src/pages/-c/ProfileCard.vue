@@ -66,9 +66,14 @@
     flex: 1;
   }
 
-  @media all and (max-width: $screen_sm) {
+  @media all and (max-width: $screen_md) {
     min-height: unset;
     max-width: unset;
+
+    .profile_locks {
+      padding: 5px 16px;
+      line-height: 1.8;
+    }
 
     .profile-logo {
       display: none;

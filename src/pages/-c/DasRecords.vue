@@ -27,7 +27,19 @@
     }
   }
 
-  @media all and (max-width: $screen_sm) {
+  @media all and (max-width: $screen_xl) {
+    .das-records_group {
+      margin-bottom: 20px;
+    }
+
+    .das-record-card {
+      flex-basis: 100%;
+      margin-right: 0;
+      margin-bottom: 16px;
+    }
+  }
+
+  @media all and (max-width: $screen_md) {
     .das-record-card {
       margin-right: 0;
       flex-basis: 100%;

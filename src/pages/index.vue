@@ -47,6 +47,7 @@
 
       .center_welcome {
         margin-top: 10px;
+        margin-bottom: 30px;
         font-size: 68px;
         font-family: sans-serif;
         line-height: 1.2;
@@ -55,7 +56,6 @@
       }
 
       .center_intro {
-        margin-top: 30px;
         margin-bottom: 55px;
         font-size: 20px;
         line-height: 1.2;
@@ -82,7 +82,32 @@
     }
   }
 
-  @media all and (max-width: $screen_sm) {
+  @media all and (max-width: $screen_xl) {
+    .index_content {
+      width: 700px;
+
+      .index_nav {
+        display: none;
+      }
+
+      .index_center {
+        .center_welcome {
+          margin-bottom: 10px;
+          font-size: 44px;
+        }
+
+        .center_intro {
+          margin-bottom: 26px;
+        }
+      }
+
+      .index_profile {
+        margin-left: 55px;
+      }
+    }
+  }
+
+  @media all and (max-width: $screen_md) {
     .index_content {
       width: unset;
       flex-direction: column;
@@ -97,7 +122,8 @@
 
       .index_center {
         margin-top: 0;
-        padding: 20px;
+        padding: 20px 40px;
+        overflow: unset; // use page scroll
 
         .center_welcome {
           font-size: 44px;
@@ -124,6 +150,14 @@
             color: #22c68d;
           }
         }
+      }
+    }
+  }
+
+  @media all and (max-width: $screen_sm) {
+    .index_content {
+      .index_center {
+        padding: 20px;
       }
     }
   }
