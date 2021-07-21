@@ -109,7 +109,7 @@
     </div>
 
     <div class="spacer"></div>
-    <img class="profile-logo" src="imgs/logo-profile.png" alt="Profile Logo" width="140">
+    <img class="profile-logo" src="/imgs/logo-profile.png" alt="Profile Logo" width="140">
   </BitCard>
 </template>
 
