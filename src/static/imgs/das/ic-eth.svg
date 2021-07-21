@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic-eth</title>
+    <defs>
+        <linearGradient x1="100%" y1="1.05475548e-30%" x2="2.22044605e-14%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#497391" offset="0%"></stop>
+            <stop stop-color="#68879D" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="ic-eth" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="eth" fill-rule="nonzero">
+            <circle id="Oval" fill="url(#linearGradient-1)" cx="15" cy="15" r="15"></circle>
+            <g id="Group" transform="translate(9.000000, 6.857143)" fill="#FFFFFF">
+                <path d="M12,9.04761904 L6,16.2857143 L0,9.04761904 L6,12.0819145 L5.99955884,12.0860014 L12,9.04761904 Z M6,0 L12,8.23333332 L11.9907353,8.23058823 L12,8.24101693 L6,11.3095238 L0,8.24101693 L0.0114705882,8.22882352 L0,8.23333332 L6,0 Z" id="Combined-Shape"></path>
+            </g>
+        </g>
+    </g>
+</svg>

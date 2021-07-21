@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic-ckb</title>
+    <g id="ic-ckb" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="path-2" fill="#000000" cx="15" cy="15" r="15"></circle>
+        <g id="编组" transform="translate(8.000000, 8.000000)" fill="#FFFFFF">
+            <path d="M7.81597009e-14,-5.06261699e-14 L6.689,6.378 L3.7335,6.378 L3.7335,14 L7.81597009e-14,14 L7.81597009e-14,-5.06261699e-14 Z M14.4664,-1.0125234e-13 L14.4664,13.9995 L7.7779,7.622 L10.7334,7.622 L10.7334,-1.0125234e-13 L14.4664,-1.0125234e-13 Z" id="形状结合"></path>
+        </g>
+    </g>
+</svg>

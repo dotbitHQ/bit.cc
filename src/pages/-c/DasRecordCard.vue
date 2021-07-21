@@ -40,7 +40,7 @@
   <BitCard class="das-record-card">
     <div class="card_title">
       <span class="card_name">{{ record.name }}</span>
-      <Iconfont name="btc" />
+      <IconRecord :record="record.name" :size="30" />
     </div>
 
     <p class="card_content">
@@ -58,7 +58,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import BitCard from '~/components/BitCard'
 import BitCopy from '~/components/BitCopy.vue'
-import Iconfont from '~/components/Iconfont'
+import IconRecord from '~/components/IconRecord'
 import { IDasRecord } from '~/constant/das'
 import { collapseString } from '~/modules/tools'
 
@@ -67,7 +67,7 @@ export default defineComponent({
   components: {
     BitCard,
     BitCopy,
-    Iconfont,
+    IconRecord,
   },
   props: {
     record: {

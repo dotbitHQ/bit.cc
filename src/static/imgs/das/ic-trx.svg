@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic-trx</title>
+    <g id="ic-trx" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <circle id="Oval" fill="#EB0029" fill-rule="nonzero" cx="15" cy="15" r="15"></circle>
+        <path d="M19.7031219,9.85051708 L7,7.5 L13.6852257,24.4142857 L23,13.0032011 L19.7031219,9.85051708 Z M19.4987075,10.8862162 L21.4418373,12.7432766 L16.127063,13.7109955 L19.4987075,10.8862162 Z M14.9729569,13.5174517 L9.37104792,8.84600893 L18.5267449,10.5399168 L14.9729569,13.5174517 Z M14.5736727,14.3436117 L13.6605687,21.9366056 L8.7355339,9.47462629 L14.5736727,14.3436117 Z M15.4191688,14.7466945 L21.3042354,13.6750059 L14.553788,21.9446033 L15.4191688,14.7466945 Z" id="形状" fill="#FFFFFF" fill-rule="nonzero"></path>
+    </g>
+</svg>
