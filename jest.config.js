@@ -11,9 +11,9 @@ module.exports = {
     '.*\\.(vue)$': 'vue-jest',
     '^.+\\.tsx?$': 'ts-jest',
   },
-  collectCoverage: true,
-  collectCoverageFrom: [
-    '<rootDir>/src/**/*.{vue,ts,js}',
-  ],
+  // collectCoverage: true,
+  // collectCoverageFrom: [
+  //   '<rootDir>/src/**/*.{vue,ts,js}',
+  // ],
   testEnvironment: 'jsdom',
 }
