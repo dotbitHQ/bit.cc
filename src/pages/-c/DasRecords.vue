@@ -16,6 +16,15 @@
     flex-grow: 1;
   }
 
+  .record_empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45%;
+    height: 156px;
+    color: rgba(17, 20, 45, 0.6);
+  }
+
   // prevent the last single one from fulfilling the whole row
   .das_record_placeholder {
     display: none;
@@ -36,6 +45,10 @@
       flex-basis: 100%;
       margin-right: 0;
       margin-bottom: 16px;
+    }
+
+    .record_empty {
+      width: 100%;
     }
   }
 
@@ -64,12 +77,17 @@
       <DasRecordCard v-for="record in customs" :key="record.key + record.value" :record="record" />
       <div class="das_record_placeholder" />
     </div>
+
+    <BitCard v-if="!customs.length && !profiles.length && !addresses.length" class="record_empty">
+      {{ $tt('No records') }}
+    </BitCard>
   </div>
 </template>
 
 <script lang="ts">
 import { IDasRecord } from '~/constant/das'
 import DasRecordCard from '~/pages/-c/DasRecordCard.vue'
+import BitCard from '~/components/BitCard'
 
 const RecordsPropType = {
   type: IDasRecord,
@@ -80,6 +98,7 @@ export default {
   name: 'BitPlanet',
   components: {
     DasRecordCard,
+    BitCard,
   },
   props: {
     emoji: {

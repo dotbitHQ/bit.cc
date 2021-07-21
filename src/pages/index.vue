@@ -31,6 +31,7 @@
 
     .index_center {
       order: 1;
+      flex: 1;
       box-sizing: border-box;
       height: 100vh;
       padding-top: 50px;
@@ -140,6 +141,7 @@
         }
 
         .center_footer {
+          margin-top: 20px;
           display: block;
           text-align: center;
 
@@ -167,14 +169,15 @@
   <div class="page-index">
     <BitHeader />
 
-    <div class="index_content">
+    <DasUnregistered v-if="account.status === AccountStatus.unregistered" />
+    <div v-else class="index_content">
       <div class="index_center">
         <div id="J_overview" class="center_emoji">
           {{ account.emoji }}
         </div>
 
         <div class="center_welcome">
-          {{ account.welcome }}
+          {{ account.welcome || $tt('Hi, Welcome to my DAS Planet') }}
         </div>
 
         <p class="center_intro">{{ $tt('Here are all my DAS records') }}</p>
@@ -186,9 +189,9 @@
                      :manager="account.manager"
         />
 
-        <DasRecords :addresses="addresses"
-                    :profiles="profiles"
-                    :customs="customs"
+        <DasRecords :addresses="account.addresses"
+                    :profiles="account.profiles"
+                    :customs="account.customs"
         />
 
         <div class="center_footer">
@@ -210,25 +213,62 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropOptions, ref } from '@nuxtjs/composition-api'
-import BitHeader from '~/components/BitHeader'
+import {
+  defineComponent,
+  onBeforeMount,
+  Ref,
+  ref,
+} from '@nuxtjs/composition-api'
+import DasSDK from 'das-sdk'
+import { AccountData } from 'das-sdk/build/module/types/AccountData'
 import { DasRecordType, IDasRecord } from '~/constant/das'
+import { resolveAccountFromUrl } from '~/modules/das'
+import DasUnregistered from '~/pages/-c/DasUnregistered'
+import BitHeader from '~/components/BitHeader'
 import DasRecords from '~/pages/-c/DasRecords.vue'
 import ProfileCard from '~/pages/-c/ProfileCard'
 import SideNav from '~/pages/-c/SideNav'
 import { NavItem } from '~/pages/-c/SideNav.vue'
 
-export default defineComponent({
-  components: {
-    BitHeader,
-    ProfileCard,
-    SideNav,
-    DasRecords,
-  },
-  setup () {
-    const data = require('./data').default.result.data.account_data
+async function getDasAccount (account: string): Promise<AccountData> {
+  const das = await DasSDK.autonetwork({
+    network: 'aggron',
+  })
 
-    const records: IDasRecord[] = data.records.map(record => {
+  return das.getAccountData(account)
+}
+
+enum AccountStatus {
+  loading,
+  unregistered,
+  failed,
+  successful,
+}
+
+function useAccount (url: string): Ref<any> {
+  const account = ref({
+    status: AccountStatus.loading,
+  })
+
+  onBeforeMount(async () => {
+    const resolveResult = resolveAccountFromUrl(url)
+
+    let accountData
+    try {
+      accountData = await getDasAccount(resolveResult.account)
+    }
+    catch (err) {
+      if (err.code === 'UnregisteredDomain') {
+        account.value.status = AccountStatus.unregistered
+      }
+      else {
+        account.value.status = AccountStatus.failed
+        console.error(err)
+      }
+      return
+    }
+
+    const records: IDasRecord[] = accountData.records.map(record => {
       const keyParts = record.key.split('.') // address.btc
 
       return {
@@ -261,20 +301,39 @@ export default defineComponent({
     const welcomeRecord = customs.find(record => record.key === 'custom.host.welcome')
     const emojiRecord = customs.find(record => record.key === 'custom.host.emoji')
 
-    return {
-      account: {
-        account: data.account,
-        owner: data.owner_lock_args_hex,
-        manager: data.manager_lock_args_hex,
-        description: descriptionRecord?.value,
-        welcome: welcomeRecord?.value,
-        emoji: emojiRecord?.value // todo: prevent multiple chars(take 🦄️ into consideration）
-      },
+    account.value = {
+      account: accountData.account,
+      owner: accountData.owner_lock_args_hex,
+      manager: accountData.manager_lock_args_hex,
+      description: descriptionRecord?.value,
+      welcome: welcomeRecord?.value,
+      emoji: emojiRecord?.value, // todo: prevent multiple chars(take 🦄️ into consideration）
 
       addresses,
       profiles,
       customs,
 
+      status: AccountStatus.successful,
+    }
+  })
+
+  return account
+}
+
+export default defineComponent({
+  components: {
+    BitHeader,
+    ProfileCard,
+    SideNav,
+    DasRecords,
+    DasUnregistered,
+  },
+  setup () {
+    const account = useAccount(window.location.href)
+
+    return {
+      account,
+      AccountStatus,
       activeNav: ref(NavItem.overview)
     }
   }
