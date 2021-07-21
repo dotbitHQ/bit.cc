@@ -43,6 +43,20 @@ export default {
     '~/plugins/i18n',
     '~/plugins/service'
   ],
+
+  router: {
+    middleware: [
+      'redirect'
+    ],
+    extendRoutes (routes, resolve) {
+      routes.push({
+        name: 'account',
+        path: '*',
+        component: resolve(__dirname, 'src/pages/index.vue')
+      })
+    }
+  },
+
   /*
   ** Nuxt.js dev-modules
   */
