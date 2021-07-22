@@ -49,7 +49,7 @@
 
     <div class="card_footer">
       <span class="card_label">{{ record.label ? collapseString(record.label) : record.key }}</span>
-      <BitCopy />
+      <BitCopy :text="record.value" />
     </div>
   </BitCard>
 </template>
