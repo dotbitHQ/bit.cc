@@ -229,6 +229,7 @@ import {
   onBeforeMount,
   Ref,
   ref,
+  useMeta,
 } from '@nuxtjs/composition-api'
 import DasSDK from 'das-sdk'
 import { AccountData } from 'das-sdk/build/module/types/AccountData'
@@ -257,9 +258,10 @@ enum AccountStatus {
   successful,
 }
 
-function useAccount (url: string): Ref<any> {
+function useAccount (url: string, title: Ref<string>): Ref<any> {
   const account = ref({
     status: AccountStatus.loading,
+    account: '',
   })
 
   onBeforeMount(async () => {
@@ -325,12 +327,15 @@ function useAccount (url: string): Ref<any> {
 
       status: AccountStatus.successful,
     }
+
+    title.value = accountData.account + ' - Das Account'
   })
 
   return account
 }
 
 export default defineComponent({
+  head: {},
   components: {
     BitHeader,
     ProfileCard,
@@ -339,7 +344,8 @@ export default defineComponent({
     DasUnregistered,
   },
   setup () {
-    const account = useAccount(window.location.href)
+    const { title } = useMeta()
+    const account = useAccount(window.location.href, title)
 
     return {
       account,

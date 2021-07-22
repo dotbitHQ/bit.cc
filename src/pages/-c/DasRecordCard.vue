@@ -24,6 +24,8 @@
   .card_footer {
     display: flex;
     justify-content: space-between;
+    align-items: flex-end;
+    height: 21px;
   }
 
   .card_label {
@@ -32,6 +34,18 @@
     border-radius: 5px;
     background: rgba(50, 54, 61, 0.1);
     color: rgba(30, 34, 42, 1);
+  }
+
+  .card_copy,
+  .card_open {
+    display: none;
+  }
+
+  &:hover {
+    .card_copy,
+    .card_open {
+      display: inline-flex;
+    }
   }
 }
 </style>
@@ -48,8 +62,12 @@
     </p>
 
     <div class="card_footer">
-      <span class="card_label">{{ record.label ? collapseString(record.label) : record.key }}</span>
-      <BitCopy :text="record.value" />
+      <span v-if="record.label" class="card_label">{{ record.label }}</span>
+      <span class="spacer" />
+      <span>
+        <BitCopy class="card_copy" :text="record.value" />
+        <BitOpen class="card_open" :url="valueAsUrl" />
+      </span>
     </div>
   </BitCard>
 </template>
@@ -58,8 +76,10 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import BitCard from '~/components/BitCard'
 import BitCopy from '~/components/BitCopy.vue'
+import BitOpen from '~/components/BitOpen.vue'
 import IconRecord from '~/components/IconRecord'
 import { IDasRecord } from '~/constant/das'
+import { buildProfileUrl } from '~/modules/das'
 import { collapseString } from '~/modules/tools'
 
 export default defineComponent({
@@ -67,6 +87,7 @@ export default defineComponent({
   components: {
     BitCard,
     BitCopy,
+    BitOpen,
     IconRecord,
   },
   props: {
@@ -75,9 +96,11 @@ export default defineComponent({
       default: null
     }
   },
-  setup () {
+  setup (props) {
+    const valueAsUrl = buildProfileUrl(props.record)
     return {
-      collapseString
+      collapseString,
+      valueAsUrl,
     }
   }
 }
