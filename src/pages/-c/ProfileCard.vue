@@ -50,16 +50,6 @@
         flex: 1;
         color: #11142d;
       }
-
-      .profile_lock_address {
-        &._manager {
-          color: rgba(6, 109, 255, 1);
-        }
-
-        &._owner {
-          color: rgba(34, 198, 141, 1)
-        }
-      }
     }
   }
 
@@ -90,17 +80,13 @@
       <div class="profile_lock">
         <span class="profile_lock_type">{{ $tt('Owner') }}</span>
         <IconRecord record="eth" :size="16" style="margin-right: 4px;" />
-        <span class="profile_lock_address _owner">
-          {{ collapseString(owner) }}
-        </span>
+        <LockAddress :address="owner" owner />
       </div>
 
       <div class="profile_lock">
         <span class="profile_lock_type">{{ $tt('Manager') }}</span>
         <IconRecord record="eth" :size="16" style="margin-right: 4px;" />
-        <span class="profile_lock_address _manager">
-          {{ collapseString(manager) }}
-        </span>
+        <LockAddress :address="manager" />
       </div>
     </div>
 
@@ -115,6 +101,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import BitCard from '~/components/BitCard'
 import DasAvatar from '~/components/DasAvatar'
 import IconRecord from '~/components/IconRecord'
+import LockAddress from './LockAddress'
 import { collapseString } from '~/modules/tools'
 
 export default defineComponent({
@@ -123,6 +110,7 @@ export default defineComponent({
     BitCard,
     DasAvatar,
     IconRecord,
+    LockAddress,
   },
   props: {
     account: {
