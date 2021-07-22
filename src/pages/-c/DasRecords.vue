@@ -101,10 +101,6 @@ export default {
     BitCard,
   },
   props: {
-    emoji: {
-      type: String,
-      default: '😊'
-    },
     welcome: {
       type: String,
       default: '',

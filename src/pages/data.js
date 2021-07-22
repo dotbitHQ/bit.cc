@@ -20,13 +20,13 @@ export default {
         'manager_lock_args_hex': '0x5fd1d0dad20817951e40043fee7655548838d821',
         'records': [
           {
-            'key': 'custom.host.emoji',
+            'key': 'custom_key.host.emoji',
             'label': '',
             'value': '🦄️',
             'ttl': '300'
           },
           {
-            'key': 'custom.host.welcome',
+            'key': 'custom_key.host.welcome',
             'label': '',
             'value': 'Hi, Welcome to my DAS Planet',
             'ttl': '300'

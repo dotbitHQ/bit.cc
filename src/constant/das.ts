@@ -1,7 +1,7 @@
 export const enum DasRecordType {
   address = 'address',
   profile = 'profile',
-  custom = 'custom',
+  custom = 'custom_key',
 }
 
 export interface IDasRecord {

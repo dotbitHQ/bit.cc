@@ -310,8 +310,7 @@ function useAccount (url: string): Ref<any> {
 
     const customs = records.filter(record => record.type === DasRecordType.custom)
     const descriptionRecord = profiles.find(record => record.key === 'profile.description')
-    const welcomeRecord = customs.find(record => record.key === 'custom.host.welcome')
-    const emojiRecord = customs.find(record => record.key === 'custom.host.emoji')
+    const welcomeRecord = customs.find(record => record.key === 'custom_key.host.welcome')
 
     account.value = {
       account: accountData.account,
@@ -319,7 +318,6 @@ function useAccount (url: string): Ref<any> {
       manager: accountData.manager_lock_args_hex,
       description: descriptionRecord?.value,
       welcome: welcomeRecord?.value,
-      emoji: emojiRecord?.value, // todo: prevent multiple chars(take 🦄️ into consideration）
 
       addresses,
       profiles,

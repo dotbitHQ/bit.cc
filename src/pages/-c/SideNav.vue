@@ -40,8 +40,7 @@ export const NavItem = {
   overview: 'overview',
   address: 'address',
   profile: 'profile',
-  social: 'social',
-  custom: 'custom',
+  custom: 'custom_key',
 }
 
 export default defineComponent({
