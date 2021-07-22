@@ -11,8 +11,8 @@ export default {
   ** Headers of the page
   */
   head: {
-    // titleTemplate: '%s - ' + process.env.npm_package_name,
-    title: 'Das Bit Host' || '',
+    // titleTemplate: '%s - ' + 'bit.cc',
+    title: 'DAS Account',
     meta: [
       { charset: 'utf-8' },
       { name: 'viewport', content: 'width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no' },
