@@ -78,10 +78,10 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
-    // ['@nuxtjs/google-gtag', {
-    //   id: '',
-    //   debug: isDev,
-    // }]
+    ['@nuxtjs/google-gtag', {
+      id: 'G-Z8V922MV9H',
+      debug: abcConfig.isDev,
+    }],
     [
       '@nuxtjs/sentry',
       {
