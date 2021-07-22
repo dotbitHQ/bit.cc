@@ -74,7 +74,9 @@
     <DasAvatar :size="136" :account="account" />
 
     <h3 class="profile_account">{{ account }}</h3>
-    <p class="profile_description">{{ description }}</p>
+    <p class="profile_description">
+      {{ description || $tt('No description added') }}
+    </p>
 
     <div class="profile_locks">
       <div class="profile_lock">
