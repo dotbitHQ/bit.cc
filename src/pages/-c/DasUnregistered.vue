@@ -29,6 +29,7 @@
   .unregistered_button {
     cursor: pointer;
     margin-top: 40px;
+    margin-bottom: 100px;
     width: 148px;
     height: 56px;
     display: flex;
@@ -67,7 +68,7 @@
 <template>
   <div class="das-unregistered">
     <div class="unregistered_emoji">
-      🪐
+      🥳
     </div>
     <p class="unregistered_desc">
       {{ $tt('{account} is not registered, you can register and have it.', { account: account }) }}

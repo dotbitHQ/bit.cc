@@ -1,5 +1,9 @@
 <style lang="scss">
 .das-record-card {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  min-height: 156px;
   padding: 10px 16px;
 
   .card_title {
@@ -14,7 +18,7 @@
   }
 
   .card_content {
-    margin: 16px 0 20px 0;
+    margin: 16px 0 0 0;
     font-size: 16px;
     word-break: break-all;
     color: rgba(17, 20, 45, 0.7);
@@ -60,6 +64,8 @@
     <p class="card_content">
       {{record.value}}
     </p>
+
+    <div class="spacer" />
 
     <div class="card_footer">
       <span v-if="record.label" class="card_label">{{ record.label }}</span>

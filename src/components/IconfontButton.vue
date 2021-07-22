@@ -4,8 +4,7 @@
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 28px;
-  height: 28px;
+  padding: 8px;
   border-radius: 8px;
   cursor: pointer;
   transition: background-color ease 400ms;

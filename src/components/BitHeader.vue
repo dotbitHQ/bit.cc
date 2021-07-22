@@ -3,12 +3,11 @@
 
 .bit-header {
   position: relative;
-  top: 15px;
+  top: 8px;
   display: flex;
   justify-content: flex-end;
   width: 960px;
   margin: 0 auto;
-  height: 0;
 
   a {
     font-size: 14px;
@@ -16,8 +15,10 @@
     font-family: sans-serif;
     color: #11142d;
     transition: color ease-out 200ms;
+  }
 
-    &:hover {
+  &:hover {
+    a {
       color: white;
     }
   }
@@ -27,22 +28,28 @@
   }
 
   @media all and (max-width: $screen_md) {
-    display: none;
+    width: unset;
+    top: 10px;
   }
 }
 </style>
 
 <template>
   <div class="bit-header">
-    <a href="https://app.da.systems">{{ $tt('Register DAS') }}→</a>
+    <IconfontButton>
+      <a href="https://da.systems">{{ $tt('About DAS') }}→</a>
+    </IconfontButton>
   </div>
 </template>
 
 <script>
+import IconfontButton from './IconfontButton'
 
 export default {
   name: 'BitHeader',
-  components: {},
+  components: {
+    IconfontButton,
+  },
   data () {
     return {}
   },

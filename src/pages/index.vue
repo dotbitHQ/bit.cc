@@ -4,7 +4,7 @@
 .page-index {
   height: 100vh;
   background:
-    no-repeat top right/300px url('/imgs/background_planet.png'),
+    no-repeat top right/300px url('/imgs/background_planet.svg'),
     radial-gradient(circle farthest-side at 50% 100%, #fdfcfd, hsla(0, 0%, 100%, 0) 65%),
     radial-gradient(circle farthest-corner at 50% 50%, #fdfcfd, hsla(0, 0%, 100%, 0) 87%),
     radial-gradient(circle closest-corner at 100% 50%, #ffe6cc, hsla(0, 0%, 100%, 0)),
@@ -35,7 +35,7 @@
       flex: 1;
       box-sizing: border-box;
       height: 100vh;
-      padding-top: 50px;
+      padding-top: 20px;
       overflow: auto;
 
       &::-webkit-scrollbar {
@@ -158,7 +158,7 @@
 
   @media all and (max-width: $screen_sm) {
     background:
-      no-repeat top right/140px url('/imgs/background_planet.png'),
+      no-repeat top right/140px url('/imgs/background_planet.svg'),
       radial-gradient(circle farthest-side at 50% 100%, #fdfcfd, hsla(0, 0%, 100%, 0) 65%),
       radial-gradient(circle farthest-corner at 50% 50%, #fdfcfd, hsla(0, 0%, 100%, 0) 87%),
       radial-gradient(circle closest-corner at 100% 50%, #ffe6cc, hsla(0, 0%, 100%, 0)),
@@ -183,7 +183,7 @@
     <div v-else-if="account.status === AccountStatus.successful" class="index_content">
       <div class="index_center">
         <div id="J_overview" class="center_emoji">
-          🪐
+          👋
         </div>
 
         <div class="center_welcome">
