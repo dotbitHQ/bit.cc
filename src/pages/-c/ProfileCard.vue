@@ -16,6 +16,7 @@
     margin-top: 20px;
     margin-bottom: 15px;
     font-size: 32px;
+    text-align: center;
     word-break: break-all;
     font-weight: bold;
     color: #11142d;
