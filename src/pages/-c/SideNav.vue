@@ -64,15 +64,11 @@ export default defineComponent({
       value: NavItem.profile,
       text: root.$tt('Profile'),
     }, {
-      value: NavItem.social,
-      text: root.$tt('Social'),
-    }, {
       value: NavItem.custom,
       text: root.$tt('Custom'),
     }]
 
     function onClickItem (item: IOption): void {
-      console.log(item.value)
       emit(EVENTS.input, item.value)
     }
 
