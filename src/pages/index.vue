@@ -34,7 +34,7 @@
       order: 1;
       flex: 1;
       box-sizing: border-box;
-      height: 100vh;
+      height: calc(100vh - #{$header_height});
       padding-top: 20px;
       overflow: auto;
 
@@ -76,7 +76,7 @@
     .index_profile {
       order: 2;
       align-self: stretch;
-      margin-top: 14%;
+      margin-top: 12%;
       margin-bottom: 5%;
       margin-left: 20px;
       flex-shrink: 0;

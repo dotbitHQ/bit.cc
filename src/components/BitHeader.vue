@@ -3,10 +3,12 @@
 
 .bit-header {
   position: relative;
-  top: 8px;
   display: flex;
   justify-content: flex-end;
+  box-sizing: border-box;
   width: 960px;
+  height: $header_height;
+  padding-top: 8px;
   margin: 0 auto;
 
   a {
