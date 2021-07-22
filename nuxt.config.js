@@ -82,14 +82,14 @@ export default {
     //   id: '',
     //   debug: isDev,
     // }]
-    // [
-    //   '@nuxtjs/sentry',
-    //   {
-    //     dsn: '',
-    //     disabled: isDev,
-    //     config: {}
-    //   }
-    // ]
+    [
+      '@nuxtjs/sentry',
+      {
+        dsn: 'https://1b34640b328e488b8081930c085d6369@sentry.blockabc.com/14',
+        disabled: abcConfig.isDev,
+        config: {}
+      }
+    ]
   ],
   render: {
     // prevent preload, improve first time performance
