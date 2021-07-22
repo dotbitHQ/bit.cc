@@ -26,6 +26,7 @@
   }
 
   .unregistered_button {
+    cursor: pointer;
     margin-top: 40px;
     width: 148px;
     height: 56px;
@@ -68,11 +69,11 @@
       🪐
     </div>
     <p class="unregistered_desc">
-      {{ $tt('This DAS is not registered, you can register and have it.') }}
+      {{ $tt('{account} is not registered, you can register and have it.', { account: account }) }}
     </p>
-    <div class="unregistered_button">
+    <a class="unregistered_button" :href="`https://app.da.systems`" target="_blank">
       {{ $tt('Register') }} →
-    </div>
+    </a>
 
     <img class="profile-logo" src="/imgs/logo-profile.png" width="55%" alt="Profile Logo">
   </div>
@@ -83,6 +84,12 @@
 export default {
   name: 'DasUnregistered',
   components: {},
+  props: {
+    account: {
+      type: String,
+      default: '',
+    }
+  },
   data () {
     return {}
   },

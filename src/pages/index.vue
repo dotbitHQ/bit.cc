@@ -180,7 +180,7 @@
   <div class="page-index">
     <BitHeader />
 
-    <DasUnregistered v-if="account.status === AccountStatus.unregistered" />
+    <DasUnregistered v-if="account.status === AccountStatus.unregistered" :account="account.account" />
     <div v-else-if="account.status === AccountStatus.successful" class="index_content">
       <div class="index_center">
         <div id="J_overview" class="center_emoji">
@@ -266,6 +266,8 @@ function useAccount (url: string, title: Ref<string>): Ref<any> {
 
   onBeforeMount(async () => {
     const resolveResult = resolveAccountFromUrl(url)
+
+    account.value.account = resolveResult.account
 
     let accountData
     try {
