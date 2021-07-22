@@ -1,5 +1,6 @@
-import UrlParse from 'url-parse'
 import uts46 from 'idna-uts46-hx'
+import UrlParse from 'url-parse'
+import { IDasRecord } from '~/constant/das'
 
 interface ResolveResult {
   account: string, // xxx.bit
@@ -56,4 +57,11 @@ export function resolveAccountFromUrl (url: string): ResolveResult {
     domain,
     redirectTo,
   }
+}
+
+export function buildProfileUrl<T extends Pick<IDasRecord, 'value'|'key'>> (record: T): string {
+  if (record.key === 'profile.twitter') {
+    return `https://twitter.com/${record.value.replace(/^@/, '')}`
+  }
+  return record.value
 }

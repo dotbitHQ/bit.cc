@@ -1,4 +1,4 @@
-import { resolveAccountFromUrl } from '~/modules/das'
+import { buildProfileUrl, resolveAccountFromUrl } from '~/modules/das'
 
 describe('extractAccountFromUrl()', () => {
   test('das.bit.cc', () => {
@@ -58,5 +58,31 @@ describe('extractAccountFromUrl()', () => {
     expect(fromHost).toBe(false)
     expect(isPunyCode).toBe(false)
     expect(redirectTo).toBe('')
+  })
+})
+
+describe('buildProfileUrl', () => {
+  it('normal @das', () => {
+    const record = {
+      key: 'custom_key.name',
+      value: '@das',
+    }
+    expect(buildProfileUrl(record)).toBe('@das')
+  })
+
+  it('twitter @das', () => {
+    const record = {
+      key: 'profile.twitter',
+      value: '@das',
+    }
+    expect(buildProfileUrl(record)).toBe('https://twitter.com/das')
+  })
+
+  it('twitter das', () => {
+    const record = {
+      key: 'profile.twitter',
+      value: 'das',
+    }
+    expect(buildProfileUrl(record)).toBe('https://twitter.com/das')
   })
 })
