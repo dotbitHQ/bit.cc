@@ -12,6 +12,7 @@
     radial-gradient(circle farthest-side at 0% 100%, #f3fcff 7%, hsla(0, 0%, 100%, 0) 50%),
     radial-gradient(circle farthest-side at 100% 0%, #fc75de, hsla(0, 0%, 100%, 0)),
     radial-gradient(circle farthest-corner at 10% 10%, #55c1fb, hsla(0, 0%, 100%, 0));
+  //background-blend-mode: hard-light;
   overflow: auto;
 
   .index_content {
@@ -180,10 +181,10 @@
     <BitHeader />
 
     <DasUnregistered v-if="account.status === AccountStatus.unregistered" />
-    <div v-else class="index_content">
+    <div v-else-if="account.status === AccountStatus.successful" class="index_content">
       <div class="index_center">
         <div id="J_overview" class="center_emoji">
-          {{ account.emoji }}
+          🪐
         </div>
 
         <div class="center_welcome">
@@ -205,7 +206,7 @@
         />
 
         <div class="center_footer">
-          <img class="profile-logo" src="imgs/logo-profile.png" width="50%" alt="Profile Logo">
+          <img class="profile-logo" src="/imgs/logo-profile.png" width="50%" alt="Profile Logo">
           <div style="margin-top: 10px;">
             <a href="https://app.da.systems">{{ $tt('Register DAS') }}→</a>
           </div>
@@ -242,7 +243,8 @@ import { NavItem } from '~/pages/-c/SideNav.vue'
 
 async function getDasAccount (account: string): Promise<AccountData> {
   const das = await DasSDK.autonetwork({
-    network: 'aggron',
+    url: 'https://indexer.da.systems',
+    // network: 'aggron',
   })
 
   return das.getAccountData(account)

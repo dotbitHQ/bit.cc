@@ -27,8 +27,7 @@
   }
 
   @media all and (max-width: $screen_md) {
-    width: unset;
-    margin-right: 40px;
+    display: none;
   }
 }
 </style>

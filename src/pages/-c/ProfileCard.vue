@@ -37,11 +37,12 @@
     border-radius: 10px;
     background: #f7f7f7;
     font-family: sans-serif;
-    line-height: 1.4;
+    line-height: 1.6;
 
     .profile_lock {
       display: flex;
       justify-content: space-between;
+      align-items: center;
       font-size: 14px;
       font-weight: 500;
 
@@ -60,10 +61,6 @@
         }
       }
     }
-  }
-
-  .spacer {
-    flex: 1;
   }
 
   @media all and (max-width: $screen_md) {
@@ -92,7 +89,7 @@
     <div class="profile_locks">
       <div class="profile_lock">
         <span class="profile_lock_type">{{ $tt('Owner') }}</span>
-        <Iconfont name="crypto.eth" />
+        <IconRecord record="eth" :size="16" style="margin-right: 4px;" />
         <span class="profile_lock_address _owner">
           {{ collapseString(owner) }}
         </span>
@@ -100,8 +97,7 @@
 
       <div class="profile_lock">
         <span class="profile_lock_type">{{ $tt('Manager') }}</span>
-        <!--<Iconfont name="crypto.eth" />-->
-        <DasAvatar :size="14" style="margin-right: 5px;" />
+        <IconRecord record="eth" :size="16" style="margin-right: 4px;" />
         <span class="profile_lock_address _manager">
           {{ collapseString(manager) }}
         </span>
@@ -118,7 +114,7 @@
 import { defineComponent } from '@nuxtjs/composition-api'
 import BitCard from '~/components/BitCard'
 import DasAvatar from '~/components/DasAvatar'
-import Iconfont from '~/components/Iconfont'
+import IconRecord from '~/components/IconRecord'
 import { collapseString } from '~/modules/tools'
 
 export default defineComponent({
@@ -126,7 +122,7 @@ export default defineComponent({
   components: {
     BitCard,
     DasAvatar,
-    Iconfont,
+    IconRecord,
   },
   props: {
     account: {

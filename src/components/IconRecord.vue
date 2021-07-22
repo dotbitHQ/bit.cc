@@ -5,7 +5,7 @@
 </style>
 
 <template>
-  <img class="icon-record" :src="`/imgs/das/ic-${record.toLowerCase()}.svg`" :alt="`${record} icon`" :style="{height: `${size}px`, width: `${size}px`}">
+  <img class="icon-record" :src="`/imgs/records/ic-${record.toLowerCase()}.svg`" :alt="`${record} icon`" :style="{height: `${size}px`, width: `${size}px`}">
 </template>
 
 <script>
