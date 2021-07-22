@@ -20,9 +20,10 @@
   .unregistered_desc {
     margin-top: 40px;
     font-size: 68px;
+    line-height: 82px;
+    word-break: break-all;
     font-weight: 900;
     color: #11142d;
-    line-height: 82px;
   }
 
   .unregistered_button {
