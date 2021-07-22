@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic-ltc</title>
+    <defs>
+        <linearGradient x1="100%" y1="1.05475548e-30%" x2="2.22044605e-14%" y2="100%" id="linearGradient-1">
+            <stop stop-color="#C4C9CF" offset="0%"></stop>
+            <stop stop-color="#CCCFD5" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="ic-ltc" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="ltc" fill-rule="nonzero">
+            <g id="Rectangle-3">
+                <g id="path-2-link" fill="#A9A9AE">
+                    <path d="M15,0 C23.2842713,0 30,6.71572875 30,15 C30,23.2842713 23.2842713,30 15,30 C6.71572875,30 0,23.2842713 0,15 C0,6.71572875 6.71572875,0 15,0 Z" id="path-2"></path>
+                </g>
+                <g id="path-2-link" fill="url(#linearGradient-1)">
+                    <path d="M15,0 C23.2842713,0 30,6.71572875 30,15 C30,23.2842713 23.2842713,30 15,30 C6.71572875,30 0,23.2842713 0,15 C0,6.71572875 6.71572875,0 15,0 Z" id="path-2"></path>
+                </g>
+            </g>
+            <polygon id="Shape" fill="#FFFFFF" points="11.2488214 16.9819286 10.1785714 17.3974286 10.6945714 15.3281786 11.7775714 14.8931786 13.3383214 8.57142856 17.1850714 8.57142856 16.0458214 13.2184286 17.1033214 12.7901786 16.5933214 14.8526786 15.5230714 15.2809286 14.8870714 17.8931786 20.6785714 17.8931786 20.0238214 20.5714286 10.3675714 20.5714286"></polygon>
+        </g>
+    </g>
+</svg>

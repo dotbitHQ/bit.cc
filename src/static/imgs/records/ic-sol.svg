@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic-sol</title>
+    <defs>
+        <linearGradient x1="67.605811%" y1="37.5899845%" x2="10.1321751%" y2="59.0540913%" id="linearGradient-1">
+            <stop stop-color="#00FFA3" offset="0%"></stop>
+            <stop stop-color="#DC1FFF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="67.605811%" y1="31.6894817%" x2="10.5593754%" y2="52.9940634%" id="linearGradient-2">
+            <stop stop-color="#00FFA3" offset="0%"></stop>
+            <stop stop-color="#DC1FFF" offset="100%"></stop>
+        </linearGradient>
+        <linearGradient x1="67.605811%" y1="43.6511652%" x2="10.5593754%" y2="64.9557469%" id="linearGradient-3">
+            <stop stop-color="#00FFA3" offset="0%"></stop>
+            <stop stop-color="#DC1FFF" offset="100%"></stop>
+        </linearGradient>
+    </defs>
+    <g id="ic-sol" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="exchange-black" fill-rule="nonzero">
+            <circle id="椭圆形" fill="#000000" cx="15" cy="15" r="15"></circle>
+            <path d="M20.2732187,13.5905312 C20.177625,13.4925312 20.048,13.4375 19.9128437,13.4375 L7.4429375,13.4375 C7.21578125,13.4375 7.1020625,13.7192812 7.26275,13.8839687 L9.72678125,16.4094688 C9.822375,16.5074688 9.952,16.5625 10.0871562,16.5625 L22.5570625,16.5625 C22.7842187,16.5625 22.8979375,16.2807188 22.73725,16.1160312 L20.2732187,13.5905312 Z" id="路径" fill="url(#linearGradient-1)"></path>
+            <path d="M9.72678125,18.29225 C9.822375,18.1947187 9.952,18.1399375 10.0871562,18.1399375 L22.5570625,18.1399375 C22.7842187,18.1399375 22.8979375,18.420375 22.73725,18.5842812 L20.2732187,21.0976875 C20.177625,21.1952188 20.048,21.25 19.9128437,21.25 L7.4429375,21.25 C7.21578125,21.25 7.1020625,20.9695937 7.26275,20.8056563 L9.72678125,18.29225 Z" id="路径" fill="url(#linearGradient-2)"></path>
+            <path d="M9.72678125,8.9023125 C9.822375,8.80478125 9.952,8.75 10.0871562,8.75 L22.5570625,8.75 C22.7842187,8.75 22.8979375,9.03040625 22.73725,9.19434375 L20.2732187,11.70775 C20.177625,11.8052813 20.048,11.8600625 19.9128437,11.8600625 L7.4429375,11.8600625 C7.21578125,11.8600625 7.1020625,11.579625 7.26275,11.4157187 L9.72678125,8.9023125 Z" id="路径" fill="url(#linearGradient-3)"></path>
+        </g>
+    </g>
+</svg>

@@ -8,11 +8,7 @@
         </linearGradient>
     </defs>
     <g id="ic-eth" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
-        <g id="eth" fill-rule="nonzero">
-            <circle id="Oval" fill="url(#linearGradient-1)" cx="15" cy="15" r="15"></circle>
-            <g id="Group" transform="translate(9.000000, 6.857143)" fill="#FFFFFF">
-                <path d="M12,9.04761904 L6,16.2857143 L0,9.04761904 L6,12.0819145 L5.99955884,12.0860014 L12,9.04761904 Z M6,0 L12,8.23333332 L11.9907353,8.23058823 L12,8.24101693 L6,11.3095238 L0,8.24101693 L0.0114705882,8.22882352 L0,8.23333332 L6,0 Z" id="Combined-Shape"></path>
-            </g>
-        </g>
+        <circle id="Oval" fill="url(#linearGradient-1)" fill-rule="nonzero" cx="15" cy="15" r="15"></circle>
+        <path d="M20.9999998,15.9047617 L14.9999998,23.1428569 L8.99999981,15.9047617 L14.9999998,18.9390572 L14.9995586,18.9431441 L20.9999998,15.9047617 Z M14.9999998,6.85714267 L20.9999998,15.090476 L20.9907351,15.0877309 L20.9999998,15.0981596 L14.9999998,18.1666665 L8.99999981,15.0981596 L9.0114704,15.0859662 L8.99999981,15.090476 L14.9999998,6.85714267 Z" id="Combined-Shape" fill="#FFFFFF" fill-rule="nonzero"></path>
     </g>
 </svg>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic-etc</title>
+    <defs>
+        <polygon id="path-1" points="0 0 29.9999 0 29.9999 30 0 30"></polygon>
+    </defs>
+    <g id="ic-etc" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组" transform="translate(-0.000000, 0.000000)">
+            <g>
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Clip-2"></g>
+                <path d="M29.9999,15 C29.9999,23.284 23.2839,30 14.9999,30 C6.7159,30 -0.0001,23.284 -0.0001,15 C-0.0001,6.716 6.7159,0 14.9999,0 C23.2839,0 29.9999,6.716 29.9999,15" id="Fill-1" fill="#328332" mask="url(#mask-2)"></path>
+            </g>
+            <polygon id="Fill-3" fill="#FFFFFF" points="8.205 14.0259 15.004 10.0549 15.004 3.8219"></polygon>
+            <polygon id="Fill-5" fill="#FFFFFF" points="8.205 15.9389 15.004 26.1429 15.004 19.9099"></polygon>
+            <polygon id="Fill-7" fill="#AECEAE" points="14.9999 15.5889 14.9999 18.4289 9.0499 14.9489"></polygon>
+            <polygon id="Fill-9" fill="#ADCDAD" points="21.8036 14.0259 15.0046 3.8219 15.0046 3.8219 15.0046 10.0549 15.0046 10.0539"></polygon>
+            <polygon id="Fill-11" fill="#ADCDAD" points="15.0043 19.9101 15.0043 19.9101 15.0043 26.1431 21.8033 15.9391"></polygon>
+            <polygon id="Fill-13" fill="#5A9B5A" points="20.9598 14.9487 14.9998 18.4287 14.9998 15.5887"></polygon>
+            <polygon id="Fill-15" fill="#ACCDAC" points="20.9598 14.9487 14.9998 15.5887 14.9998 11.4687"></polygon>
+            <polygon id="Fill-17" fill="#FFFFFF" points="14.9999 11.4687 14.9999 15.5887 9.0499 14.9487"></polygon>
+        </g>
+    </g>
+</svg>

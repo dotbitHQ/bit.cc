@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="30px" height="30px" viewBox="0 0 30 30" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>ic-zil</title>
+    <defs>
+        <polygon id="path-1" points="0 0 29.9999 0 29.9999 29.9998 0 29.9998"></polygon>
+    </defs>
+    <g id="ic-zil" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="编组" transform="translate(-0.000000, 0.000000)">
+            <g>
+                <mask id="mask-2" fill="white">
+                    <use xlink:href="#path-1"></use>
+                </mask>
+                <g id="Clip-2"></g>
+                <path d="M30,14.9998 C30,23.2848 23.284,29.9998 15,29.9998 C6.716,29.9998 0,23.2848 0,14.9998 C0,6.7158 6.716,-0.0002 15,-0.0002 C23.284,-0.0002 30,6.7158 30,14.9998" id="Fill-1" fill="#00C4C0" mask="url(#mask-2)"></path>
+            </g>
+            <polygon id="Fill-3" fill="#62D6D2" points="18.6499 14.5198 11.5099 18.3198 18.6499 21.5498 18.6499 16.1688 21.4999 14.7298 21.4999 22.9298 18.6499 24.2498 8.4999 19.2198 8.4999 16.5998 15.4099 13.0098 8.4999 9.5868 8.4999 6.8568 11.3499 5.7498 21.4999 10.6378 21.4999 13.0098"></polygon>
+            <polygon id="Fill-5" fill="#FDFEFE" points="18.6499 14.5198 11.5099 18.3198 18.6499 21.5498 18.6499 24.2498 8.4999 19.2198 8.4999 16.5998 15.4099 13.0098 8.4999 9.5868 8.4999 6.8568 18.6499 12.0498"></polygon>
+            <polygon id="Fill-7" fill="#B4EBE9" points="21.5 10.6375 18.65 12.0505 18.65 14.5195 21.5 13.0105"></polygon>
+            <polygon id="Fill-9" fill="#B4EBE9" points="21.5 14.7303 18.65 16.1693 18.65 24.2503 21.5 22.9303"></polygon>
+        </g>
+    </g>
+</svg>
