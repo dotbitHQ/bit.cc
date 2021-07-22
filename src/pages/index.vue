@@ -51,7 +51,6 @@
         margin-top: 10px;
         margin-bottom: 30px;
         font-size: 68px;
-        font-family: sans-serif;
         line-height: 1.2;
         font-weight: 900;
         color: #11142d;
@@ -258,11 +257,13 @@ enum AccountStatus {
   successful,
 }
 
-function useAccount (url: string, title: Ref<string>): Ref<any> {
+function useAccount (url: string): Ref<any> {
   const account = ref({
     status: AccountStatus.loading,
     account: '',
   })
+
+  const meta = useMeta()
 
   onBeforeMount(async () => {
     const resolveResult = resolveAccountFromUrl(url)
@@ -330,7 +331,14 @@ function useAccount (url: string, title: Ref<string>): Ref<any> {
       status: AccountStatus.successful,
     }
 
-    title.value = accountData.account + ' - Das Account'
+    meta.title.value = accountData.account + ' - Das Account'
+
+    // vue-meta can not control what exists, so we have to override it manually
+    setTimeout(() => {
+      const $icon = window.document.querySelector('link[rel=icon]')
+      $icon?.setAttribute('type', 'image/png')
+      $icon?.setAttribute('href', `https://identicons.da.systems/identicon/${accountData.account}`)
+    }, 100)
   })
 
   return account
@@ -346,8 +354,7 @@ export default defineComponent({
     DasUnregistered,
   },
   setup () {
-    const { title } = useMeta()
-    const account = useAccount(window.location.href, title)
+    const account = useAccount(window.location.href)
 
     return {
       account,

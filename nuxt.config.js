@@ -19,7 +19,7 @@ export default {
       { hid: 'description', name: 'description', content: 'Host your .bit account as a website' || '' }
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' },
+      { rel: 'icon', type: 'image/png', href: '/favicon.png' },
     ],
     script: [{
       src: '//at.alicdn.com/t/font_2675899_l801nzmcfyp.js',
