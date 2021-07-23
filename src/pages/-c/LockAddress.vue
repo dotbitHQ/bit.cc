@@ -1,5 +1,6 @@
 <style lang="scss">
 .lock-address {
+  font-family: monospace;
   color: rgba(6, 109, 255, 1);
 
   &._owner {

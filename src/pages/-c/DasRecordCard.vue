@@ -4,7 +4,7 @@
   flex-direction: column;
   box-sizing: border-box;
   min-height: 156px;
-  padding: 10px 16px;
+  padding: 8px 16px 12px 16px;
 
   .card_title {
     display: flex;
@@ -18,17 +18,23 @@
   }
 
   .card_content {
-    margin: 16px 0 0 0;
+    margin: 16px 0 16px 0;
+    max-height: 70px;
+    overflow-y: auto;
     font-size: 16px;
     word-break: break-all;
     color: rgba(17, 20, 45, 0.7);
-    line-height: 20px;
+    line-height: 1;
+
+    &._address {
+      font-family: monospace;
+    }
   }
 
   .card_footer {
     display: flex;
     justify-content: space-between;
-    align-items: flex-end;
+    align-items: center;
     height: 21px;
   }
 
@@ -61,7 +67,7 @@
       <IconRecord :record="record.name" :size="30" />
     </div>
 
-    <p class="card_content">
+    <p class="card_content" :class="{'_address': record.type === DasRecordType.address}">
       {{record.value}}
     </p>
 
@@ -84,7 +90,7 @@ import BitCard from '~/components/BitCard'
 import BitCopy from '~/components/BitCopy.vue'
 import BitOpen from '~/components/BitOpen.vue'
 import IconRecord from '~/components/IconRecord'
-import { IDasRecord } from '~/constant/das'
+import { IDasRecord, DasRecordType } from '~/constant/das'
 import { buildProfileUrl } from '~/modules/das'
 import { collapseString } from '~/modules/tools'
 
@@ -106,6 +112,8 @@ export default defineComponent({
     const valueAsUrl = buildProfileUrl(props.record)
     return {
       collapseString,
+
+      DasRecordType,
       valueAsUrl,
     }
   }

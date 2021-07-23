@@ -63,5 +63,14 @@ export function buildProfileUrl<T extends Pick<IDasRecord, 'value'|'key'>> (reco
   if (record.key === 'profile.twitter') {
     return `https://twitter.com/${record.value.replace(/^@/, '')}`
   }
+  if (record.key === 'profile.website') {
+    return record.value.indexOf('http') === 0 ? record.value : `http://${record.value}`
+  }
+  if (record.key === 'address.eth') {
+    return `https://etherscan.io/address/${record.value}`
+  }
+  if (record.key === 'address.ckb') {
+    return `https://explorer.nervos.org/address/${record.value}`
+  }
   return record.value
 }
