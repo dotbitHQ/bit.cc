@@ -28,7 +28,7 @@ export default defineComponent({
     }
   },
   setup (props) {
-    const avatarUrl = `https://identicons.da.systems/identicon/${props.account}.bit`
+    const avatarUrl = `https://identicons.da.systems/identicon/${props.account}`
 
     return {
       avatarUrl,
