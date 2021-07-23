@@ -72,24 +72,24 @@
 
 <template>
   <BitCard class="profile-card">
-    <DasAvatar :size="136" :account="account" />
+    <DasAvatar :size="136" :account="account.account" />
 
-    <h3 class="profile_account">{{ account }}</h3>
+    <h3 class="profile_account">{{ account.account }}</h3>
     <p class="profile_description">
-      {{ description || $tt('No description added') }}
+      {{ account.description || $tt('No description added') }}
     </p>
 
     <div class="profile_locks">
       <div class="profile_lock">
         <span class="profile_lock_type">{{ $tt('Owner') }}</span>
-        <IconRecord record="eth" :size="16" style="margin-right: 4px;" />
-        <LockAddress :address="owner" owner />
+        <IconRecord :record="account.owner_address_chain" :size="16" style="margin-right: 4px;" />
+        <LockAddress :address="account.owner_address" :address-chain="account.owner_address_chain" owner />
       </div>
 
       <div class="profile_lock">
         <span class="profile_lock_type">{{ $tt('Manager') }}</span>
-        <IconRecord record="eth" :size="16" style="margin-right: 4px;" />
-        <LockAddress :address="manager" />
+        <IconRecord :record="account.manager_address_chain" :size="16" style="margin-right: 4px;" />
+        <LockAddress :address="account.manager_address" :address-chain="account.manager_address_chain" />
       </div>
     </div>
 
@@ -108,7 +108,7 @@ import LockAddress from './LockAddress'
 import { collapseString } from '~/modules/tools'
 
 export default defineComponent({
-  name: 'Profile',
+  name: 'ProfileCard',
   components: {
     BitCard,
     DasAvatar,
@@ -117,20 +117,8 @@ export default defineComponent({
   },
   props: {
     account: {
-      type: String,
-      default: '',
-    },
-    description: {
-      type: String,
-      default: '',
-    },
-    owner: {
-      type: String,
-      default: '',
-    },
-    manager: {
-      type: String,
-      default: '',
+      type: Object,
+      default: () => ({})
     },
   },
   setup (props) {

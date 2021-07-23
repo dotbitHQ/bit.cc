@@ -21,7 +21,7 @@
     margin-top: 40px;
     font-size: 68px;
     line-height: 82px;
-    word-break: break-all;
+    word-break: break-word;
     font-weight: 900;
     color: #11142d;
   }

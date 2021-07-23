@@ -192,12 +192,7 @@
 
         <p class="center_intro">{{ $tt('Here are all my DAS records') }}</p>
 
-        <ProfileCard class="center_profile"
-                     :account="account.account"
-                     :description="account.description"
-                     :owner="account.owner"
-                     :manager="account.manager"
-        />
+        <ProfileCard class="center_profile" :account="account" />
 
         <DasRecords :addresses="account.addresses"
                     :profiles="account.profiles"
@@ -211,12 +206,7 @@
           </div>
         </div>
       </div>
-      <ProfileCard class="index_profile"
-                   :account="account.account"
-                   :description="account.description"
-                   :owner="account.owner"
-                   :manager="account.manager"
-      />
+      <ProfileCard class="index_profile" :account="account"/>
       <SideNav class="index_nav" v-model="activeNav" />
     </div>
   </div>
@@ -319,8 +309,10 @@ function useAccount (url: string): Ref<any> {
 
     account.value = {
       account: accountData.account,
-      owner: accountData.owner_lock_args_hex,
-      manager: accountData.manager_lock_args_hex,
+      owner_address: accountData.owner_address,
+      owner_address_chain: accountData.owner_lock_chain_type.toLowerCase(),
+      manager_address: accountData.manager_address,
+      manager_address_chain: accountData.manage_lock_chain_type.toLowerCase(),
       description: descriptionRecord?.value,
       welcome: welcomeRecord?.value,
 

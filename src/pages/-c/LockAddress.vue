@@ -28,16 +28,19 @@ export default {
       type: String,
       default: '',
     },
+    addressChain: {
+      type: String,
+      default: '',
+    },
     owner: Boolean
   },
   setup (props) {
     const addressMap = {
       'eth': `https://etherscan.io/address/${props.address}`,
       'trx': `https://tronscan.org/#/address/${props.address}`,
+      'tron': `https://tronscan.org/#/address/${props.address}`,
     }
-
-    // todo: href checker should be more accurate
-    const href = props.address.indexOf('0x') === 0 ? addressMap.eth : addressMap.trx
+    const href = addressMap[props.addressChain]
 
     return {
       href,
