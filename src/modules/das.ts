@@ -72,5 +72,11 @@ export function buildProfileUrl<T extends Pick<IDasRecord, 'value'|'key'>> (reco
   if (record.key === 'address.ckb') {
     return `https://explorer.nervos.org/address/${record.value}`
   }
+  if (record.key === 'address.btc') {
+    return `https://explorer.viawallet.com/btc/address/${record.value}`
+  }
+  if (record.key === 'address.trx') {
+    return `https://tronscan.org/#/address/${record.value}`
+  }
   return record.value
 }

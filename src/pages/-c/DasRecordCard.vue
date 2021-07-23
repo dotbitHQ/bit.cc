@@ -24,10 +24,10 @@
     font-size: 16px;
     word-break: break-all;
     color: rgba(17, 20, 45, 0.7);
-    line-height: 1;
 
     &._address {
       font-family: monospace;
+      line-height: 1;
     }
   }
 

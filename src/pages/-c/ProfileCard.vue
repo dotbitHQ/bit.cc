@@ -27,7 +27,6 @@
     font-weight: 400;
     color: #797791;
     line-height: 20px;
-    word-break: keep-all;
     text-align: center;
   }
 
