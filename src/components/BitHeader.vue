@@ -31,7 +31,7 @@
 
   @media all and (max-width: $screen_md) {
     width: unset;
-    top: 10px;
+    padding-right: 10px;
   }
 }
 </style>

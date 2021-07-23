@@ -35,7 +35,6 @@
       flex: 1;
       box-sizing: border-box;
       height: calc(100vh - #{$header_height});
-      padding-top: 20px;
       overflow: auto;
 
       &::-webkit-scrollbar {
@@ -48,7 +47,7 @@
       }
 
       .center_welcome {
-        margin-top: 10px;
+        margin-top: 30px;
         margin-bottom: 30px;
         font-size: 68px;
         line-height: 1.2;
@@ -169,7 +168,11 @@
 
     .index_content {
       .index_center {
-        padding: 20px;
+        padding: 0 20px 20px;
+
+        .center_emoji {
+          margin-top: -10px;
+        }
       }
     }
   }
