@@ -18,12 +18,17 @@
   }
 
   .card_content {
+    flex: 1;
     margin: 16px 0 16px 0;
     max-height: 70px;
     overflow-y: auto;
     font-size: 16px;
     word-break: break-all;
     color: rgba(17, 20, 45, 0.7);
+
+    &::-webkit-scrollbar {
+      width: 0;
+    }
 
     &._address {
       font-family: monospace;
@@ -35,6 +40,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: auto;
     height: 21px;
   }
 
@@ -70,8 +76,6 @@
     <p class="card_content" :class="{'_address': record.type === DasRecordType.address}">
       {{record.value}}
     </p>
-
-    <div class="spacer" />
 
     <div class="card_footer">
       <span v-if="record.label" class="card_label">{{ record.label }}</span>
