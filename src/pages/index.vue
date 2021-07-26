@@ -313,16 +313,15 @@ function useAccount (url: string): Ref<any> {
     account.value = {
       account: accountData.account,
       owner_address: accountData.owner_address,
-      owner_address_chain: accountData.owner_lock_chain_type.toLowerCase(),
+      owner_address_chain: accountData.owner_address_chain.toLowerCase(),
       manager_address: accountData.manager_address,
-      manager_address_chain: accountData.manage_lock_chain_type.toLowerCase(),
+      manager_address_chain: accountData.manager_address_chain.toLowerCase(),
       description: descriptionRecord?.value,
       welcome: welcomeRecord?.value,
 
       addresses,
       profiles,
       customs,
-
       status: AccountStatus.successful,
     }
 
