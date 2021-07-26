@@ -73,7 +73,7 @@
       <div class="das_record_placeholder" />
     </div>
 
-    <div v-if="customs.length" id="J_custom" class="das-records_group">
+    <div v-if="customs.length" id="J_custom_key" class="das-records_group">
       <DasRecordCard v-for="record in customs" :key="record.key + record.value" :record="record" />
       <div class="das_record_placeholder" />
     </div>

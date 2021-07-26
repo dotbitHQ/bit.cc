@@ -23,7 +23,7 @@
         class="nav_item"
         :class="{'_active': value === item.value}"
         @click="onClickItem(item)">
-      <a :href="`#J_records_${item.value}`">{{ item.text }}</a>
+      <a :href="`#J_${item.value}`">{{ item.text }}</a>
     </li>
   </ul>
 </template>
