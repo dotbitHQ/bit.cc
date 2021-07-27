@@ -223,24 +223,22 @@ import {
   ref,
   useMeta,
 } from '@nuxtjs/composition-api'
-import DasSDK from 'das-sdk'
+import DasSDK, { AccountRecord, AccountRecordType, AccountRecordTypes } from 'das-sdk'
 import { AccountData } from 'das-sdk/build/module/types/AccountData'
 import { DasRecordType, IDasRecord } from '~/constant/das'
 import { resolveAccountFromUrl } from '~/modules/das'
-import DasUnregistered from '~/pages/-c/DasUnregistered'
-import BitHeader from '~/components/BitHeader'
+import DasUnregistered from '~/pages/-c/DasUnregistered.vue'
+import BitHeader from '~/components/BitHeader.vue'
 import DasRecords from '~/pages/-c/DasRecords.vue'
-import ProfileCard from '~/pages/-c/ProfileCard'
-import SideNav from '~/pages/-c/SideNav'
-import { NavItem } from '~/pages/-c/SideNav.vue'
+import ProfileCard from '~/pages/-c/ProfileCard.vue'
+import SideNav, { NavItem } from '~/pages/-c/SideNav.vue'
 
 async function getDasAccount (account: string): Promise<AccountData> {
-  const das = await DasSDK.autonetwork({
+  const das = await new DasSDK({
     url: 'https://indexer.da.systems',
-    // network: 'aggron',
   })
 
-  return das.getAccountData(account)
+  return das.account(account)
 }
 
 enum AccountStatus {
@@ -253,7 +251,17 @@ enum AccountStatus {
 function useAccount (url: string): Ref<any> {
   const account = ref({
     status: AccountStatus.loading,
+
     account: '',
+    owner_address: '',
+    manager_address: '',
+    owner_address_chain: '',
+    manager_address_chain: '',
+    description: '',
+    welcome: '',
+    addresses: [],
+    profiles: [],
+    customs: [],
   })
 
   const meta = useMeta()
@@ -263,7 +271,7 @@ function useAccount (url: string): Ref<any> {
 
     account.value.account = resolveResult.account
 
-    let accountData
+    let accountData: AccountData
     try {
       accountData = await getDasAccount(resolveResult.account)
     }
@@ -278,12 +286,12 @@ function useAccount (url: string): Ref<any> {
       return
     }
 
-    const records: IDasRecord[] = accountData.records.map(record => {
+    const records: AccountRecord[] = accountData.records.map(record => {
       const keyParts = record.key.split('.') // address.btc
 
       return {
         ...record,
-        type: keyParts.shift(), // address
+        type: keyParts.shift() as AccountRecordType, // address
         name: keyParts.join('.'), // btc
       }
     })
@@ -291,6 +299,7 @@ function useAccount (url: string): Ref<any> {
     const addresses = records.filter(record => {
       if (record.type === DasRecordType.address) {
         // crypto name should be all uppercase, btc => BTC
+        // @ts-ignore
         record.name = record.name.toUpperCase()
         return true
       }
@@ -300,13 +309,14 @@ function useAccount (url: string): Ref<any> {
     const profiles = records.filter(record => {
       if (record.type === DasRecordType.profile) {
         // First letter should be uppercase, youtube => Youtube
+        // @ts-ignore
         record.name = record.name.charAt(0).toUpperCase() + record.name.slice(1)
         return true
       }
       return false
     })
 
-    const customs = records.filter(record => record.type === DasRecordType.custom)
+    const customs = records.filter(record => record.type === AccountRecordTypes.custom)
     const descriptionRecord = profiles.find(record => record.key === 'profile.description')
     const welcomeRecord = customs.find(record => record.key === 'custom_key.host.welcome')
 
@@ -316,11 +326,14 @@ function useAccount (url: string): Ref<any> {
       owner_address_chain: accountData.owner_address_chain.toLowerCase(),
       manager_address: accountData.manager_address,
       manager_address_chain: accountData.manager_address_chain.toLowerCase(),
-      description: descriptionRecord?.value,
-      welcome: welcomeRecord?.value,
+      description: descriptionRecord?.value || '',
+      welcome: welcomeRecord?.value || '',
 
+      // @ts-ignore
       addresses,
+      // @ts-ignore
       profiles,
+      // @ts-ignore
       customs,
       status: AccountStatus.successful,
     }
