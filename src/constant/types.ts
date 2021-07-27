@@ -1,4 +1,4 @@
-export interface IOption {
-  text: string,
-  value: string,
+export interface IOption<T = string> {
+  text: T,
+  value: T,
 }

@@ -90,11 +90,12 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import BitCard from '~/components/BitCard'
+import { AccountRecord } from 'das-sdk'
+import BitCard from '~/components/BitCard.vue'
 import BitCopy from '~/components/BitCopy.vue'
 import BitOpen from '~/components/BitOpen.vue'
-import IconRecord from '~/components/IconRecord'
-import { IDasRecord, DasRecordType } from '~/constant/das'
+import IconRecord from '~/components/IconRecord.vue'
+import { DasRecordType } from '~/constant/das'
 import { buildProfileUrl } from '~/modules/das'
 import { collapseString } from '~/modules/tools'
 
@@ -108,12 +109,12 @@ export default defineComponent({
   },
   props: {
     record: {
-      type: IDasRecord,
+      type: Object, // AccountRecord
       default: null
     }
   },
   setup (props) {
-    const valueAsUrl = buildProfileUrl(props.record)
+    const valueAsUrl = buildProfileUrl(props.record as AccountRecord)
     return {
       collapseString,
 

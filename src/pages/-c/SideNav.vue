@@ -54,7 +54,7 @@ export default defineComponent({
     }
   },
   setup (props, { emit, root }) {
-    const navList: IOption<string>[] = [{
+    const navList: IOption[] = [{
       value: NavItem.overview,
       text: root.$tt('Overview'),
     }, {

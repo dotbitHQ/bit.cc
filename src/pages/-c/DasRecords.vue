@@ -85,13 +85,12 @@
 </template>
 
 <script lang="ts">
-import { IDasRecord } from '~/constant/das'
 import DasRecordCard from '~/pages/-c/DasRecordCard.vue'
-import BitCard from '~/components/BitCard'
+import BitCard from '~/components/BitCard.vue'
 
 const RecordsPropType = {
-  type: IDasRecord,
-  default: (): Array => [],
+  type: Array, // AccountRecord[]
+  default: () => [],
 }
 
 export default {
@@ -107,16 +106,11 @@ export default {
     },
     records: {
       type: Array,
-      default: (): Array => [],
+      default: () => [],
     },
     addresses: RecordsPropType,
     profiles: RecordsPropType,
     customs: RecordsPropType,
   },
-  setup (props) {
-    return {
-
-    }
-  }
 }
 </script>

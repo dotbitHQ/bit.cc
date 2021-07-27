@@ -225,7 +225,7 @@ import {
 } from '@nuxtjs/composition-api'
 import DasSDK, { AccountRecord, AccountRecordType, AccountRecordTypes } from 'das-sdk'
 import { AccountData } from 'das-sdk/build/module/types/AccountData'
-import { DasRecordType, IDasRecord } from '~/constant/das'
+import { DasRecordType } from '~/constant/das'
 import { resolveAccountFromUrl } from '~/modules/das'
 import DasUnregistered from '~/pages/-c/DasUnregistered.vue'
 import BitHeader from '~/components/BitHeader.vue'
