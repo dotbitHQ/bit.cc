@@ -20,6 +20,7 @@
     word-break: break-all;
     font-weight: bold;
     color: #11142d;
+    white-space: nowrap;
   }
 
   .profile_description {
@@ -73,7 +74,7 @@
   <BitCard class="profile-card">
     <DasAvatar :size="136" :account="account.account" />
 
-    <h3 class="profile_account">{{ account.account }}</h3>
+    <h3 class="profile_account" v-resize-text="{minSize: 20, maxSize: 36}">{{ account.account }}</h3>
     <p class="profile_description">
       {{ account.description || $tt('No description added') }}
     </p>
@@ -103,6 +104,7 @@ import { defineComponent } from '@nuxtjs/composition-api'
 import BitCard from '~/components/BitCard'
 import DasAvatar from '~/components/DasAvatar'
 import IconRecord from '~/components/IconRecord'
+import ResizeText from '~/directives/ResizeText'
 import LockAddress from './LockAddress'
 import { collapseString } from '~/modules/tools'
 
@@ -113,6 +115,9 @@ export default defineComponent({
     DasAvatar,
     IconRecord,
     LockAddress,
+  },
+  directives: {
+    ResizeText,
   },
   props: {
     account: {

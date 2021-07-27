@@ -168,6 +168,7 @@
 
     .index_content {
       .index_center {
+        width: 100%;
         padding: 0 20px 20px;
 
         .center_emoji {
