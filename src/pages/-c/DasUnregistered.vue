@@ -71,7 +71,7 @@
       🥳
     </div>
     <p class="unregistered_desc">
-      {{ $tt('{account} is not registered, you can register and have it.', { account: account }) }}
+      {{ $tt('{account} is not yet registered, you can register and have it.', { account: account }) }}
     </p>
     <a class="unregistered_button" :href="`https://app.da.systems`" target="_blank">
       {{ $tt('Register') }} →
