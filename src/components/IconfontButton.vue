@@ -21,6 +21,7 @@
     border-radius: 5px;
     font-size: 14px;
     font-weight: 500;
+    white-space: nowrap;
     color: #fff;
     background: $color;
     text-shadow: 0 20px 16px rgba(43, 54, 77, 0.16);
