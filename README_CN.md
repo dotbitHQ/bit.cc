@@ -23,17 +23,21 @@ bit.cc 会将链上存储的 DAS 记录，以更加个性化的设计风格进�
 ### 改变 bit.cc 展示
 除了展示 DAS 解析记录之外，你还可以通过设置解析记录来改变 bit.cc 的展示。
 
+#### 设置描述
+通过设置资料记录（`profile`）分类下的的 `description` 的记录，可以改变 bit.cc 的个人描述。
+![设置描述](./docs/set_description.png)
+
+### 设置欢迎语
+你可以通过设置自定义记录（`custom_key`）的 `bitcc_welcome` 记录来改变 bit.cc 的欢迎语。
+![设置欢迎语](./docs/set_welcome.png)
+
 #### 设置主题（theme）
 bit.cc 默认主题是亮色模式（light）。
 
 你可以通过设置自定义记录（`custom_key`）的 `bitcc_theme` 记录来改变 bit.cc 的主题。
 
-现在 bit.cc 支持 `light`/`dark` 两个不同的主题。
-
-#### 设置描述
-通过设置资料记录（`profile`）分类下的的 `description` 的记录，可以改变 bit.cc 的个人描述。
-
-![设置描述](./docs/description_flow.png)
+现在 bit.cc 支持 `light`/`dark` 两个不同的主题。默认是 `light`。
+![设置主题](./docs/theme_dark.png)
 
 ## 分享链接
 设置好 DAS 解析记录之后，就可以将你的 bit.cc 个性化页面分享给其他人了。
