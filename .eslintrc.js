@@ -6,4 +6,7 @@ module.exports = {
   parserOptions: {
     project: 'tsconfig.eslint.json',
   },
+  rules: {
+    '@typescript-eslint/prefer-nullish-coalescing': [0],
+  },
 }

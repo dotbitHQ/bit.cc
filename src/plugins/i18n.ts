@@ -1,7 +1,8 @@
+import { IncomingMessage } from 'connect'
 import Vue from 'vue'
 import VueI18n from 'vue-i18n'
 import { Context } from '@nuxt/types'
-import { ILanguageOption } from '~/constant'
+import { ILanguageOption, LANGUAGE, LanguageOptions } from '~/constant'
 import { configKeys } from '~/store/config'
 // @ts-expect-error
 import { makeCrcKey } from 'i18n-abc/lib/shared.js'
@@ -20,16 +21,16 @@ export function $tt (key: string, params?: any): string {
 /**
  * Match users language with the languages we supported
  * @param acceptLanguage {string} comma split string
- * @param LanguageOptions {ILanguageOption[]}
+ * @param languageOptions {ILanguageOption[]}
  * @param defaultLanguage {string]}
  */
-export function matchLanguage (acceptLanguage: string, LanguageOptions: ILanguageOption[], defaultLanguage: string): any {
+export function matchLanguage (acceptLanguage: string, languageOptions: ILanguageOption[], defaultLanguage: string): ILanguageOption {
   const languageList = acceptLanguage.split(',')
 
   let language = defaultLanguage
 
   languageList.some((lang: string) => {
-    return LanguageOptions.some((option) => {
+    return languageOptions.some((option) => {
       if (lang.match(option.matcher)) {
         language = option.value
 
@@ -39,11 +40,17 @@ export function matchLanguage (acceptLanguage: string, LanguageOptions: ILanguag
     })
   })
 
-  return language
+  return languageOptions.find(option => option.value === language) as ILanguageOption
 }
 
-export default async ({ app, store, route }: Context, inject: Function) => {
-  const lang: ILanguageOption = store.getters[configKeys.computedLanguage]
+function resolveLanguageFromRequest (req: IncomingMessage): ILanguageOption {
+  const langs = req.headers['accept-language']?.split(',').map(accept => accept.split(';')[0]).join(',') || ''
+
+  return matchLanguage(langs, LanguageOptions, LANGUAGE.en)
+}
+
+export default async ({ app, store, route, req }: Context, inject: Function): Promise<void> => {
+  const lang: ILanguageOption = process.server ? resolveLanguageFromRequest(req) : store.getters[configKeys.computedLanguage]
 
   const translations = await import(`~/locales/${lang.value}.json`)
 
@@ -56,7 +63,13 @@ export default async ({ app, store, route }: Context, inject: Function) => {
   })
 
   // we can't override vue-i18n's $t, inject $tt instead
-  inject('tt', $tt)
+  inject('tt', (key: string, params?: any) => {
+    key = makeCrcKey(key)
+    // @ts-expect-error
+    return app.i18n.t(key, params)
+  })
 
-  window.i18n = app.i18n
+  if (process.browser) {
+    window.i18n = app.i18n
+  }
 }

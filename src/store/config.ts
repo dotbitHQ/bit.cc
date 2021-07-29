@@ -42,14 +42,14 @@ const configStore: Module<IState, IRootState> = {
     [keys.computedLanguage]: function (state) {
       const ua = window.navigator.userAgent.match(/Language\/([a-zA-Z-_]+)/) // only for cctip Box
       const query = window.location.search.match(/[&?]lang=([a-zA-Z-_]+)/)
-      const uaLanguage = ua && ua[1]
-      const queryLanguage = query && query[1]
-      const lang = matchLanguage(
+      const uaLanguage = ua?.[1]
+      const queryLanguage = query?.[1]
+
+      return matchLanguage(
         localStorage.getItem('lang') || cookie.get('lang') || state.language || queryLanguage || uaLanguage || window.navigator.language,
         LanguageOptions,
         LANGUAGE.en
       )
-      return LanguageOptions.find(option => option.value === lang)
     }
   },
 }

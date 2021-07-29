@@ -1,7 +1,8 @@
 import abcConfig from './abc.config'
 
 export default {
-  ssr: false,
+  ssr: true,
+  target: 'server',
   srcDir: 'src',
   server: {
     host: '0.0.0.0',
@@ -40,14 +41,13 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
+    '~/plugins/redirect',
     '~/plugins/i18n',
-    '~/plugins/service'
+    '~/plugins/service',
   ],
 
   router: {
-    middleware: [
-      'redirect'
-    ],
+    middleware: [],
     extendRoutes (routes, resolve) {
       routes.push({
         name: 'account',
@@ -78,6 +78,16 @@ export default {
   ** Nuxt.js modules
   */
   modules: [
+    // https://i18n.nuxtjs.org/
+    // [
+    //   'nuxt-i18n',
+    //   {
+    //     locales: [
+    //       { code: 'en', iso: 'en-US', file: 'en.json' },
+    //       { code: 'zh', iso: 'zh-CN', file: 'zh-CN.json' },
+    //     ],
+    //   }
+    // ],
     ['@nuxtjs/google-gtag', {
       id: 'G-Z8V922MV9H',
       debug: abcConfig.isDev,

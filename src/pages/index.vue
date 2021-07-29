@@ -210,7 +210,7 @@
           </div>
         </div>
       </div>
-      <ProfileCard class="index_profile" :account="account"/>
+      <ProfileCard class="index_profile" :account="account" />
       <SideNav class="index_nav" v-model="activeNav" />
     </div>
   </div>
@@ -219,8 +219,8 @@
 <script lang="ts">
 import {
   defineComponent,
-  onBeforeMount,
-  Ref,
+  inject,
+  useFetch,
   ref,
   useMeta,
 } from '@nuxtjs/composition-api'
@@ -233,6 +233,7 @@ import BitHeader from '~/components/BitHeader.vue'
 import DasRecords from '~/pages/-c/DasRecords.vue'
 import ProfileCard from '~/pages/-c/ProfileCard.vue'
 import SideNav, { NavItem } from '~/pages/-c/SideNav.vue'
+import { INJECTED_BITCC_ACCOUNT } from '~/plugins/redirect'
 
 async function getDasAccount (account: string): Promise<AccountData> {
   const das = await new DasSDK({
@@ -249,11 +250,11 @@ enum AccountStatus {
   successful,
 }
 
-function useAccount (url: string): Ref<any> {
+function useAccount (accountString: string): Promise<any> {
   const account = ref({
     status: AccountStatus.loading,
 
-    account: '',
+    account: accountString,
     owner_address: '',
     manager_address: '',
     owner_address_chain: '',
@@ -267,14 +268,10 @@ function useAccount (url: string): Ref<any> {
 
   const meta = useMeta()
 
-  onBeforeMount(async () => {
-    const resolveResult = resolveAccountFromUrl(url)
-
-    account.value.account = resolveResult.account
-
+  const { fetch } = useFetch(async () => {
     let accountData: AccountData
     try {
-      accountData = await getDasAccount(resolveResult.account)
+      accountData = await getDasAccount(accountString)
     }
     catch (err) {
       if (err.code === 'UnregisteredDomain') {
@@ -330,11 +327,8 @@ function useAccount (url: string): Ref<any> {
       description: descriptionRecord?.value || '',
       welcome: welcomeRecord?.value || '',
 
-      // @ts-ignore
       addresses,
-      // @ts-ignore
       profiles,
-      // @ts-ignore
       customs,
       status: AccountStatus.successful,
     }
@@ -342,14 +336,19 @@ function useAccount (url: string): Ref<any> {
     meta.title.value = accountData.account + ' - Das Account'
 
     // vue-meta can not control what exists, so we have to override it manually
-    setTimeout(() => {
-      const $icon = window.document.querySelector('link[rel=icon]')
-      $icon?.setAttribute('type', 'image/png')
-      $icon?.setAttribute('href', `https://identicons.da.systems/identicon/${accountData.account}`)
-    }, 100)
+    if (process.client) {
+      setTimeout(() => {
+        const $icon = window.document.querySelector('link[rel=icon]')
+        $icon?.setAttribute('type', 'image/png')
+        $icon?.setAttribute('href', `https://identicons.da.systems/identicon/${accountData.account}`)
+      }, 100)
+    }
   })
 
-  return account
+  return {
+    account,
+    fetch,
+  }
 }
 
 export default defineComponent({
@@ -362,7 +361,9 @@ export default defineComponent({
     DasUnregistered,
   },
   setup () {
-    const account = useAccount(window.location.href)
+    const { account, fetch } = useAccount(inject(INJECTED_BITCC_ACCOUNT))
+
+    fetch()
 
     return {
       account,
