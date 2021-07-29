@@ -1,7 +1,7 @@
 import { DirectiveOptions } from 'vue'
 
 const defaultOption = {
-  delay: 200,
+  delay: 20,
   minSize: 16,
   maxSize: 40,
 }
