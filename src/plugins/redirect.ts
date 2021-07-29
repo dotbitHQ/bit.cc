@@ -20,6 +20,8 @@ export default function redirectPlugin (context: Context): void {
       url = window.location.href
     }
 
+    console.log(url)
+
     const result = resolveAccountFromUrl(url)
 
     if (result.redirectTo) {
