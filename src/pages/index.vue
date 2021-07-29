@@ -276,7 +276,7 @@ function useAccount (resolveResult: ResolveResult): Promise<any> {
         url: resolveResult.url,
         title,
         site_name: title,
-        description: title,
+        description: account.value.description || 'Welcome to My DAS planet, the most decentralized bio systems',
         img: icon,
         twitter: 'realDASystems',
         twitter_card: icon,
