@@ -10,6 +10,12 @@
     box-shadow: 0 30px 27px -29px rgba(108, 113, 148, 0.26);
   }
 }
+
+.theme_dark {
+  .bit-card {
+    background-color: #1e222a;
+  }
+}
 </style>
 
 <template>

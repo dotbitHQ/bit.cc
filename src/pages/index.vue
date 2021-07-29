@@ -82,6 +82,24 @@
     }
   }
 
+  &.theme_dark {
+    background: no-repeat top right/300px url('/imgs/background_planet_dark.svg') #030303;
+
+    .index_content {
+      .center_welcome {
+        background-image: radial-gradient(circle farthest-corner at 0% 0%, #ecfcff, hsla(0, 0%, 100%, 0) 32%), radial-gradient(circle farthest-corner at 100% 100%, #fefaef, hsla(0, 0%, 100%, 0) 36%), radial-gradient(circle farthest-corner at 50% 50%, #fdfcfc, hsla(0, 0%, 100%, 0)), radial-gradient(circle farthest-side at 100% 0%, #e376be, hsla(0, 0%, 100%, 0) 94%), radial-gradient(circle farthest-corner at 0% 100%, #a0e9fc, hsla(0, 0%, 100%, 0) 85%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+
+      .center_intro {
+        background-image: radial-gradient(circle farthest-corner at 0% 0%, #ecfcff, hsla(0, 0%, 100%, 0) 32%), radial-gradient(circle farthest-corner at 100% 100%, #fefaef, hsla(0, 0%, 100%, 0) 36%), radial-gradient(circle farthest-corner at 50% 50%, #fdfcfc, hsla(0, 0%, 100%, 0)), radial-gradient(circle farthest-side at 100% 0%, #e376be, hsla(0, 0%, 100%, 0) 94%), radial-gradient(circle farthest-corner at 0% 100%, #a0e9fc, hsla(0, 0%, 100%, 0) 85%);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+      }
+    }
+  }
+
   @media all and (max-width: $screen_xl) {
     .index_content {
       width: 700px;
@@ -180,7 +198,7 @@
 }
 </style>
 <template>
-  <div class="page-index">
+  <div class="page-index" :class="account.theme ? `theme_${account.theme}` : ''">
     <BitHeader />
 
     <DasUnregistered v-if="account.status === AccountStatus.unregistered" :account="account.account" />
@@ -254,6 +272,7 @@ enum AccountStatus {
 function useAccount (resolveResult: ResolveResult): Promise<any> {
   const account = ref({
     status: AccountStatus.loading,
+    theme: '',
 
     account: resolveResult.account,
     owner_address: '',
@@ -344,21 +363,25 @@ function useAccount (resolveResult: ResolveResult): Promise<any> {
 
     const customs = records.filter(record => record.type === AccountRecordTypes.custom)
     const descriptionRecord = profiles.find(record => record.key === 'profile.description')
-    const welcomeRecord = customs.find(record => record.key === 'custom_key.host.welcome')
+    const welcomeRecord = customs.find(record => record.key === 'custom_key.bitcc_welcome')
+    const themeRecord = customs.find(record => record.key === 'custom_key.bitcc_theme')
 
     account.value = {
       account: accountData.account,
+      status: AccountStatus.successful,
+
       owner_address: accountData.owner_address,
       owner_address_chain: accountData.owner_address_chain.toLowerCase(),
       manager_address: accountData.manager_address,
       manager_address_chain: accountData.manager_address_chain.toLowerCase(),
-      description: descriptionRecord?.value || '',
-      welcome: welcomeRecord?.value || '',
+
+      description: descriptionRecord?.value,
+      welcome: welcomeRecord?.value,
+      theme: themeRecord?.value,
 
       addresses,
       profiles,
       customs,
-      status: AccountStatus.successful,
     }
   })
 

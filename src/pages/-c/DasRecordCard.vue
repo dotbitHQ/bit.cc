@@ -64,6 +64,23 @@
     }
   }
 }
+
+.theme_dark {
+  .das-record-card {
+    .card_name {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .card_content {
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .card_label {
+      background-color: #32363d;
+      color: #000;
+    }
+  }
+}
 </style>
 
 <template>

@@ -34,6 +34,18 @@
     padding-right: 10px;
   }
 }
+
+.theme_dark {
+  .bit-header {
+    a {
+      color: #6b7384;
+
+      &:hover {
+        color: white;
+      }
+    }
+  }
+}
 </style>
 
 <template>

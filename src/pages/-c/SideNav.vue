@@ -14,6 +14,18 @@
     }
   }
 }
+
+.theme_dark {
+  .side-nav {
+    .nav_item {
+      color: #2e323a;
+
+      &._active {
+        color: #9ee8fc;
+      }
+    }
+  }
+}
 </style>
 
 <template>

@@ -7,7 +7,11 @@
 </style>
 
 <template>
-  <img :src="avatarUrl" :alt="account" :width="size" height="size">
+  <img class="das-avatar"
+       :src="avatarUrl"
+       :width="size"
+       :height="size"
+       :alt="account">
 </template>
 
 <script>

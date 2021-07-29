@@ -69,6 +69,24 @@
     }
   }
 }
+
+.theme_dark {
+  .profile-card {
+    .profile_account {
+      background-image: radial-gradient(circle farthest-corner at 0% 0%, #ecfcff, hsla(0, 0%, 100%, 0) 32%), radial-gradient(circle farthest-corner at 100% 100%, #fefaef, hsla(0, 0%, 100%, 0) 36%), radial-gradient(circle farthest-corner at 50% 50%, #fdfcfc, hsla(0, 0%, 100%, 0)), radial-gradient(circle farthest-side at 100% 0%, #e376be, hsla(0, 0%, 100%, 0) 94%), radial-gradient(circle farthest-corner at 0% 100%, #a0e9fc, hsla(0, 0%, 100%, 0) 85%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .profile_locks {
+      background-color: rgba(3, 3, 3, 0.2);
+
+      .profile_lock_type {
+        color: #fff;
+      }
+    }
+  }
+}
 </style>
 
 <template>
