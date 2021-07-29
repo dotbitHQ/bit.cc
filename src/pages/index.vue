@@ -270,6 +270,7 @@ function useAccount (resolveResult: ResolveResult): Promise<any> {
   const meta = useMeta(() => {
     const title = `${resolveResult.account} - Share your crypto identity`
     const icon = `https://identicons.da.systems/identicon/${resolveResult.account}`
+    // const icon = 'https://phone.bit.cc/favicon.png'
     return {
       title,
       meta: socialMeta({
@@ -278,8 +279,8 @@ function useAccount (resolveResult: ResolveResult): Promise<any> {
         site_name: title,
         description: account.value.description || 'Welcome to My DAS planet, the most decentralized bio systems',
         img: icon,
-        twitter: 'realDASystems',
-        twitter_card: icon,
+        twitter: '@realDASystems',
+        twitter_card: 'summary_large_image',
         theme_color: '#000000',
       }),
       link: [{
