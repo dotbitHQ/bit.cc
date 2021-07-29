@@ -20,12 +20,16 @@ export default function redirectPlugin (context: Context): void {
       url = window.location.href
     }
 
-    const { account, domain, fromHost, isPunyCode, redirectTo } = resolveAccountFromUrl(url)
+    const result = resolveAccountFromUrl(url)
 
-    if (redirectTo) {
-      context.redirect(redirectTo)
+    if (result.redirectTo) {
+      context.redirect(result.redirectTo)
     }
 
-    provide(INJECTED_BITCC_ACCOUNT, account)
+    provide(INJECTED_BITCC_ACCOUNT, result)
   })
+
+  if (process.server) {
+    context.res.setHeader('cache-control', 'max-age=60, s-maxage=60, public')
+  }
 }

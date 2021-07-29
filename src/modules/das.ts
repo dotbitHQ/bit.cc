@@ -2,12 +2,13 @@ import { AccountRecord } from 'das-sdk'
 import uts46 from 'idna-uts46-hx'
 import UrlParse from 'url-parse'
 
-interface ResolveResult {
+export interface ResolveResult {
   account: string, // xxx.bit
   domain: string, // abc.xyz.com => xyz.com
   fromHost: boolean,
   isPunyCode: boolean,
   redirectTo: string,
+  url: string,
 }
 
 export function resolveAccountFromUrl (url: string): ResolveResult {
@@ -56,6 +57,7 @@ export function resolveAccountFromUrl (url: string): ResolveResult {
     fromHost,
     domain,
     redirectTo,
+    url,
   }
 }
 

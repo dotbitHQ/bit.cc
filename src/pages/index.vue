@@ -227,7 +227,8 @@ import {
 import DasSDK, { AccountRecord, AccountRecordType, AccountRecordTypes } from 'das-sdk'
 import { AccountData } from 'das-sdk/build/module/types/AccountData'
 import { DasRecordType } from '~/constant/das'
-import { resolveAccountFromUrl } from '~/modules/das'
+import { ResolveResult } from '~/modules/das'
+import { socialMeta } from '~/modules/social-media'
 import DasUnregistered from '~/pages/-c/DasUnregistered.vue'
 import BitHeader from '~/components/BitHeader.vue'
 import DasRecords from '~/pages/-c/DasRecords.vue'
@@ -250,11 +251,11 @@ enum AccountStatus {
   successful,
 }
 
-function useAccount (accountString: string): Promise<any> {
+function useAccount (resolveResult: ResolveResult): Promise<any> {
   const account = ref({
     status: AccountStatus.loading,
 
-    account: accountString,
+    account: resolveResult.account,
     owner_address: '',
     manager_address: '',
     owner_address_chain: '',
@@ -266,12 +267,38 @@ function useAccount (accountString: string): Promise<any> {
     customs: [],
   })
 
-  const meta = useMeta()
+  const meta = useMeta(() => {
+    const title = `${resolveResult.account} - Share your crypto identity`
+    const icon = `https://identicons.da.systems/identicon/${resolveResult.account}`
+    return {
+      title,
+      meta: socialMeta({
+        url: resolveResult.url,
+        title,
+        site_name: title,
+        description: title,
+        img: icon,
+        twitter: 'realDASystems',
+        twitter_card: icon,
+        theme_color: '#000000',
+      }),
+      link: [{
+        hid: 'apple-touch-icon',
+        rel: 'apple-touch-icon',
+        href: icon,
+      }, {
+        hid: 'favicon',
+        rel: 'icon',
+        type: 'image/png',
+        href: icon,
+      }]
+    }
+  })
 
   const { fetch } = useFetch(async () => {
     let accountData: AccountData
     try {
-      accountData = await getDasAccount(accountString)
+      accountData = await getDasAccount(resolveResult.account)
     }
     catch (err) {
       if (err.code === 'UnregisteredDomain') {
@@ -331,17 +358,6 @@ function useAccount (accountString: string): Promise<any> {
       profiles,
       customs,
       status: AccountStatus.successful,
-    }
-
-    meta.title.value = accountData.account + ' - Das Account'
-
-    // vue-meta can not control what exists, so we have to override it manually
-    if (process.client) {
-      setTimeout(() => {
-        const $icon = window.document.querySelector('link[rel=icon]')
-        $icon?.setAttribute('type', 'image/png')
-        $icon?.setAttribute('href', `https://identicons.da.systems/identicon/${accountData.account}`)
-      }, 100)
     }
   })
 

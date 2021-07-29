@@ -21,6 +21,7 @@
     font-weight: bold;
     color: #11142d;
     white-space: nowrap;
+    transition: font-size 100ms ease-in;
   }
 
   .profile_description {
