@@ -13,7 +13,7 @@ export default function redirectPlugin (context: Context): void {
         url = `https://bit.cc${context.req.url || ''}`
       }
       else {
-        url = `https://${context.req.headers.host || ''}/${context.req.url || ''}`
+        url = `https://${context.req.headers.host || ''}${context.req.url || ''}`
       }
     }
     else {
