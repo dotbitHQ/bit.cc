@@ -1,32 +1,54 @@
 # bit.cc
 
-> bit.cc
+English | [简体中文](./README_CN.md)
 
-#### dev
-``` bash
-# install dependencies
-$ npm install
+[bit.cc](https://bit.cc) is a service to display your personalized [DAS](https://da.systems) account.
 
-# generate the i18n file
-$ npm run i18n
+bit.cc will read DAS records stored on chain. As users change their records, bit.cc will show different appearance. 
 
-# serve with hot reload at localhost:18888
-$ npm run dev
-```
+If you want to share your media contact, blockchain address and other personalized info to others, don't hesitate to set your DAS records and share the corresponding bit.cc url.
 
-### build
-```bash
-# build for production and launch server
-$ npm run build
-$ npm run start
-```
+## Usage
 
-### deploy
-```bash 
-# we use pm2 in production
-$ npm run reload_production
-$ npm run reload_test1
-```
+### Set Records
+All records added on DAS will be displayed on bit.cc.
 
+If you don't know how to add DAS records, please checkout the link below.
 
-## todo: 
+[Manage DAS records](https://dasystems.medium.com/das-is-now-listed-on-imtoken-619b1052b788)
+
+### Visit a url
+If the record is a web url, or the record itself can jump to a web page, you can jump directly to the corresponding link.
+
+![Visit a url](./docs/visit.png)
+
+### Change bit.cc appearance
+Aside from displaying DAS records, bit.cc's appearance can be changed by changing DAS records.
+
+#### Configure description
+You can change the description field on bit.cc by setting `description` field under `profile`.
+![Configure description](./docs/set_description.png)
+
+#### Configure welcome
+You can change the welcome message on bit.cc by setting custom records.
+
+Please fill in the key with `bitcc_welcome`, and value with any message you want.
+
+![Configure welcome](./docs/set_welcome.png)
+
+#### Configure theme
+You can change the theme of bit.cc by setting custom records.
+
+Please fill in the key with `bitcc_theme`. The value can either be `light` or `dark`, corresponding to light and on, respectively.
+
+![Configure theme](./docs/theme_dark.png)
+
+## Share Link
+Once the DAS records has been set up, you can share your customized bit.cc pages to any others. 
+
+The format of the link is as follows: 
+
+> [yourname].bit.cc
+
+For example, if your DAS account is `dastodamoon.bit`, the link will be [https://dastodamoon.bit.cc](https://dastodamoon.bit.cc)
+
