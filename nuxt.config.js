@@ -93,7 +93,9 @@ export default {
       {
         dsn: 'https://1b34640b328e488b8081930c085d6369@sentry.blockabc.com/14',
         disabled: abcConfig.isDev,
-        config: {}
+        config: {
+          autoSessionTracking: false,
+        }
       }
     ]
   ],
