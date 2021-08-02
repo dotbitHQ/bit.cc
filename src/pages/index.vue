@@ -240,7 +240,7 @@ import {
   inject,
   useFetch,
   ref,
-  useMeta,
+  useMeta, useContext,
 } from '@nuxtjs/composition-api'
 import DasSDK, { AccountRecord, AccountRecordType, AccountRecordTypes } from 'das-sdk'
 import { AccountData } from 'das-sdk/build/module/types/AccountData'
@@ -288,6 +288,8 @@ function useAccount (resolveResult: ResolveResult): any {
     profiles: [] as AccountRecord[],
     customs: [] as AccountRecord[],
   })
+
+  const context = useContext()
 
   // @ts-ignore
   useMeta(() => {
@@ -370,6 +372,11 @@ function useAccount (resolveResult: ResolveResult): any {
     const avatarRecord = profiles.find(record => record.key === 'profile.avatar')
     const welcomeRecord = customs.find(record => record.key === 'custom_key.bitcc_welcome')
     const themeRecord = customs.find(record => record.key === 'custom_key.bitcc_theme')
+    const redirectRecord = customs.find(record => record.key === 'custom_key.bitcc_redirect')
+
+    if (redirectRecord?.value) {
+      context.redirect(redirectRecord.value)
+    }
 
     account.value = {
       account: accountData.account,
