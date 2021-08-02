@@ -15,6 +15,11 @@
   //background-blend-mode: hard-light;
   overflow: auto;
 
+  &._has_background {
+    background-size: cover;
+    background-position: center;
+  }
+
   .index_content {
     margin: 0 auto;
     width: 960px;
@@ -198,7 +203,9 @@
 }
 </style>
 <template>
-  <div class="page-index" :class="account.theme ? `theme_${account.theme}` : ''">
+  <div class="page-index"
+       :class="{[`theme_${account.theme}`]: account.theme, '_has_background': account.backgroundImage}"
+       :style="account.backgroundImage ? `background-image:url('${account.backgroundImage}');` : ''">
     <BitHeader />
 
     <DasUnregistered v-if="account.status === AccountStatus.unregistered" :account="account.account" />
@@ -240,7 +247,7 @@ import {
   inject,
   useFetch,
   ref,
-  useMeta, useContext,
+  useMeta, useContext, useRoute,
 } from '@nuxtjs/composition-api'
 import DasSDK, { AccountRecord, AccountRecordType, AccountRecordTypes } from 'das-sdk'
 import { AccountData } from 'das-sdk/build/module/types/AccountData'
@@ -283,6 +290,7 @@ function useAccount (resolveResult: ResolveResult): any {
     avatar: '',
     welcome: '',
     theme: '',
+    backgroundImage: '',
 
     addresses: [] as AccountRecord[],
     profiles: [] as AccountRecord[],
@@ -290,6 +298,7 @@ function useAccount (resolveResult: ResolveResult): any {
   })
 
   const context = useContext()
+  const route = useRoute()
 
   // @ts-ignore
   useMeta(() => {
@@ -373,8 +382,9 @@ function useAccount (resolveResult: ResolveResult): any {
     const welcomeRecord = customs.find(record => record.key === 'custom_key.bitcc_welcome')
     const themeRecord = customs.find(record => record.key === 'custom_key.bitcc_theme')
     const redirectRecord = customs.find(record => record.key === 'custom_key.bitcc_redirect')
+    const backgroundImageRecord = customs.find(record => record.key === 'custom_key.bitcc_background_image')
 
-    if (redirectRecord?.value) {
+    if (redirectRecord?.value && !route.value.query.noredirect) {
       context.redirect(redirectRecord.value)
     }
 
@@ -391,6 +401,7 @@ function useAccount (resolveResult: ResolveResult): any {
       avatar: avatarRecord?.value || '',
       welcome: welcomeRecord?.value || '',
       theme: themeRecord?.value || '',
+      backgroundImage: backgroundImageRecord?.value || '',
 
       addresses,
       profiles,
