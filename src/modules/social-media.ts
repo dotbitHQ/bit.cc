@@ -1,9 +1,7 @@
-interface Meta {
+type Meta = {
   hid?: string,
-  name?: string,
-  property?: string,
-  content: string,
-}
+  content?: string,
+} & ({ name: string } | { property: string })
 
 interface MetaDescription {
   url: string,
@@ -55,17 +53,17 @@ export function socialMeta (options: Partial<MetaDescription>): Meta[] {
   // Add meta tags to head
   metaTags.forEach((tag) => {
     if (tag.content !== undefined && tag.content !== null) {
-      if (tag.hasOwnProperty('name')) {
+      if (Object.prototype.hasOwnProperty.call(tag, 'name')) {
         meta.push({
           hid: tag.name,
-          name: tag.name,
+          name: tag.name as string,
           content: tag.content,
         })
       }
-      else if (tag.hasOwnProperty('property')) {
+      else if (Object.prototype.hasOwnProperty.call(tag, 'property')) {
         meta.push({
           hid: tag.property,
-          property: tag.property,
+          property: tag.property as string,
           content: tag.content,
         })
       }
