@@ -29,6 +29,11 @@ bit.cc 会将链上存储的 DAS 记录，以更加个性化的设计风格进�
 通过设置资料记录（`profile`）分类下的 `description` 的记录，可以改变 bit.cc 的个人描述。
 ![设置描述](./docs/set_description.png)
 
+#### 设置头像
+通过设置 `profile` 分类下的 `avatar` 字段，你可以改变 bit.cc 上展示的头像。
+
+![设置头像](./docs/set_avatar.png)
+
 #### 设置欢迎语
 你可以通过设置自定义记录（`custom_key`)，记录来改变 bit.cc 的欢迎语。
 
@@ -42,6 +47,13 @@ bit.cc 会将链上存储的 DAS 记录，以更加个性化的设计风格进�
 设置键（key）为 `bitcc_theme`，取值可以为`light`/`dark`，分别对应亮色/暗色两个不同的主题。默认是 `light`。
 
 ![设置主题](./docs/theme_dark.png)
+
+#### 设置重定向
+你可以利用 bit.cc 作为你的其他网站的入口。当用户进入你的 bit.cc 页面之后，他们会被重定向到你指定的其他网页。
+
+请设置自定义记录的键为 `bitcc_redirect`，其值可以是任何你想要的网站链接。
+
+![设置重定向](./docs/set_redirect.png)
 
 ## 分享链接
 设置好 DAS 解析记录之后，就可以将你的 bit.cc 个性化页面分享给其他人了。

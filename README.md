@@ -29,19 +29,30 @@ Aside from displaying DAS records, bit.cc's appearance can be changed by changin
 You can change the description field on bit.cc by setting `description` field under `profile`.
 ![Configure description](./docs/set_description.png)
 
+#### Configure avatar
+You can change the avatar image on bit.cc by setting `avatar` field under `profile`.
+![Configure avatar](./docs/set_avatar.png)
+
 #### Configure welcome
 You can change the welcome message on bit.cc by setting custom records.
 
-Please fill in the key with `bitcc_welcome`, and value with any message you want.
+Please fill in the custom key with `bitcc_welcome`, and value with any message you want.
 
 ![Configure welcome](./docs/set_welcome.png)
 
 #### Configure theme
 You can change the theme of bit.cc by setting custom records.
 
-Please fill in the key with `bitcc_theme`. The value can either be `light` or `dark`, corresponding to light and on, respectively.
+Please fill in the custom key with `bitcc_theme`. The value can either be `light` or `dark`, corresponding to light and on, respectively.
 
 ![Configure theme](./docs/theme_dark.png)
+
+#### Configure redirect
+You can use bit.cc as an entry to your other website. When users enter your bit.cc, they will be redirected to your own website.
+
+Please fill in the custom key with `bitcc_redirect`. The value can be any website url you want.
+
+![Configure redirect](./docs/set_redirect.png)
 
 ## Share Link
 Once the DAS records has been set up, you can share your customized bit.cc pages to any others. 
