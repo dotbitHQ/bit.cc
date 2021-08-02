@@ -8,7 +8,7 @@
 
 <template>
   <img class="das-avatar"
-       :src="avatarUrl"
+       :src="avatar || identicon"
        :width="size"
        :height="size"
        :alt="account">
@@ -26,16 +26,20 @@ export default defineComponent({
       type: Number,
       default: 30
     },
+    avatar: {
+      type: String,
+      default: null,
+    },
     account: {
       type: String,
       default: 'das.bit'
     }
   },
   setup (props) {
-    const avatarUrl = `https://identicons.da.systems/identicon/${props.account}`
+    const identicon = `https://identicons.da.systems/identicon/${props.account}`
 
     return {
-      avatarUrl,
+      identicon,
     }
   }
 }

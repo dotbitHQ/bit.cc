@@ -91,7 +91,7 @@
 
 <template>
   <BitCard class="profile-card">
-    <DasAvatar :size="136" :account="account.account" />
+    <DasAvatar :size="136" :avatar="account.avatar" :account="account.account" />
 
     <h3 class="profile_account" v-resize-text="{minSize: 20, maxSize: 36}">{{ account.account }}</h3>
     <p class="profile_description">

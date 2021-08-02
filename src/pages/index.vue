@@ -269,24 +269,28 @@ enum AccountStatus {
   successful,
 }
 
-function useAccount (resolveResult: ResolveResult): Promise<any> {
+function useAccount (resolveResult: ResolveResult): any {
   const account = ref({
     status: AccountStatus.loading,
-    theme: '',
 
     account: resolveResult.account,
     owner_address: '',
     manager_address: '',
     owner_address_chain: '',
     manager_address_chain: '',
+
     description: '',
+    avatar: '',
     welcome: '',
-    addresses: [],
-    profiles: [],
-    customs: [],
+    theme: '',
+
+    addresses: [] as AccountRecord[],
+    profiles: [] as AccountRecord[],
+    customs: [] as AccountRecord[],
   })
 
-  const meta = useMeta(() => {
+  // @ts-ignore
+  useMeta(() => {
     const title = `${resolveResult.account} - Share your crypto identity`
     const icon = `https://identicons.da.systems/identicon/${resolveResult.account}`
     // const icon = 'https://phone.bit.cc/favicon.png'
@@ -363,6 +367,7 @@ function useAccount (resolveResult: ResolveResult): Promise<any> {
 
     const customs = records.filter(record => record.type === AccountRecordTypes.custom)
     const descriptionRecord = profiles.find(record => record.key === 'profile.description')
+    const avatarRecord = profiles.find(record => record.key === 'profile.avatar')
     const welcomeRecord = customs.find(record => record.key === 'custom_key.bitcc_welcome')
     const themeRecord = customs.find(record => record.key === 'custom_key.bitcc_theme')
 
@@ -375,9 +380,10 @@ function useAccount (resolveResult: ResolveResult): Promise<any> {
       manager_address: accountData.manager_address,
       manager_address_chain: accountData.manager_address_chain.toLowerCase(),
 
-      description: descriptionRecord?.value,
-      welcome: welcomeRecord?.value,
-      theme: themeRecord?.value,
+      description: descriptionRecord?.value || '',
+      avatar: avatarRecord?.value || '',
+      welcome: welcomeRecord?.value || '',
+      theme: themeRecord?.value || '',
 
       addresses,
       profiles,
@@ -401,7 +407,7 @@ export default defineComponent({
     DasUnregistered,
   },
   setup () {
-    const { account, fetch } = useAccount(inject(INJECTED_BITCC_ACCOUNT))
+    const { account, fetch } = useAccount(inject(INJECTED_BITCC_ACCOUNT) as ResolveResult)
 
     fetch()
 
