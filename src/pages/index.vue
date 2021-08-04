@@ -247,173 +247,18 @@ import {
   inject,
   useFetch,
   ref,
-  useMeta, useContext, useRoute,
+  useContext,
+  useRoute,
 } from '@nuxtjs/composition-api'
-import DasSDK, { AccountRecord, AccountRecordType, AccountRecordTypes } from 'das-sdk'
-import { AccountData } from 'das-sdk/build/module/types/AccountData'
-import { DasRecordType } from '~/constant/das'
+import { AccountStatus, useAccount } from '~/hooks/useAccount'
+import { useMetaAccount } from '~/hooks/useMetaAccount'
 import { ResolveResult } from '~/modules/das'
-import { socialMeta } from '~/modules/social-media'
 import DasUnregistered from '~/pages/-c/DasUnregistered.vue'
 import BitHeader from '~/components/BitHeader.vue'
 import DasRecords from '~/pages/-c/DasRecords.vue'
 import ProfileCard from '~/pages/-c/ProfileCard.vue'
 import SideNav, { NavItem } from '~/pages/-c/SideNav.vue'
 import { INJECTED_BITCC_ACCOUNT } from '~/plugins/redirect'
-
-async function getDasAccount (account: string): Promise<AccountData> {
-  const das = await new DasSDK({
-    url: 'https://indexer.da.systems',
-  })
-
-  return das.account(account)
-}
-
-enum AccountStatus {
-  loading,
-  unregistered,
-  failed,
-  successful,
-}
-
-function useAccount (resolveResult: ResolveResult): any {
-  const account = ref({
-    status: AccountStatus.loading,
-
-    account: resolveResult.account,
-    owner_address: '',
-    manager_address: '',
-    owner_address_chain: '',
-    manager_address_chain: '',
-
-    description: '',
-    avatar: '',
-    welcome: '',
-    theme: '',
-    backgroundImage: '',
-
-    addresses: [] as AccountRecord[],
-    profiles: [] as AccountRecord[],
-    customs: [] as AccountRecord[],
-  })
-
-  const context = useContext()
-  const route = useRoute()
-
-  // @ts-ignore
-  useMeta(() => {
-    const title = `${resolveResult.account} - Share your crypto identity`
-    const icon = `https://identicons.da.systems/identicon/${resolveResult.account}`
-    // const icon = 'https://phone.bit.cc/favicon.png'
-    return {
-      title,
-      meta: socialMeta({
-        url: resolveResult.url,
-        title,
-        site_name: title,
-        description: account.value.description || 'Welcome to My DAS planet, the most decentralized bio systems',
-        img: icon,
-        twitter: '@realDASystems',
-        twitter_card: 'summary_large_image',
-        theme_color: '#000000',
-      }),
-      link: [{
-        hid: 'apple-touch-icon',
-        rel: 'apple-touch-icon',
-        href: icon,
-      }, {
-        hid: 'favicon',
-        rel: 'icon',
-        type: 'image/png',
-        href: icon,
-      }]
-    }
-  })
-
-  const { fetch } = useFetch(async () => {
-    let accountData: AccountData
-    try {
-      accountData = await getDasAccount(resolveResult.account)
-    }
-    catch (err) {
-      if (err.code === 'UnregisteredDomain') {
-        account.value.status = AccountStatus.unregistered
-      }
-      else {
-        account.value.status = AccountStatus.failed
-        console.error(err)
-      }
-      return
-    }
-
-    const records: AccountRecord[] = accountData.records.map(record => {
-      const keyParts = record.key.split('.') // address.btc
-
-      return {
-        ...record,
-        type: keyParts.shift() as AccountRecordType, // address
-        name: keyParts.join('.'), // btc
-      }
-    })
-
-    const addresses = records.filter(record => {
-      if (record.type === DasRecordType.address) {
-        // crypto name should be all uppercase, btc => BTC
-        // @ts-ignore
-        record.name = record.name.toUpperCase()
-        return true
-      }
-      return false
-    })
-
-    const profiles = records.filter(record => {
-      if (record.type === DasRecordType.profile) {
-        // First letter should be uppercase, youtube => Youtube
-        // @ts-ignore
-        record.name = record.name.charAt(0).toUpperCase() + record.name.slice(1)
-        return true
-      }
-      return false
-    })
-
-    const customs = records.filter(record => record.type === AccountRecordTypes.custom)
-    const descriptionRecord = profiles.find(record => record.key === 'profile.description')
-    const avatarRecord = profiles.find(record => record.key === 'profile.avatar')
-    const welcomeRecord = customs.find(record => record.key === 'custom_key.bitcc_welcome')
-    const themeRecord = customs.find(record => record.key === 'custom_key.bitcc_theme')
-    const redirectRecord = customs.find(record => record.key === 'custom_key.bitcc_redirect')
-    const backgroundImageRecord = customs.find(record => record.key === 'custom_key.bitcc_background_image')
-
-    if (redirectRecord?.value && !route.value.query.noredirect) {
-      context.redirect(redirectRecord.value)
-    }
-
-    account.value = {
-      account: accountData.account,
-      status: AccountStatus.successful,
-
-      owner_address: accountData.owner_address,
-      owner_address_chain: accountData.owner_address_chain.toLowerCase(),
-      manager_address: accountData.manager_address,
-      manager_address_chain: accountData.manager_address_chain.toLowerCase(),
-
-      description: descriptionRecord?.value || '',
-      avatar: avatarRecord?.value || '',
-      welcome: welcomeRecord?.value || '',
-      theme: themeRecord?.value || '',
-      backgroundImage: backgroundImageRecord?.value || '',
-
-      addresses,
-      profiles,
-      customs,
-    }
-  })
-
-  return {
-    account,
-    fetch,
-  }
-}
 
 export default defineComponent({
   head: {},
@@ -425,9 +270,26 @@ export default defineComponent({
     DasUnregistered,
   },
   setup () {
-    const { account, fetch } = useAccount(inject(INJECTED_BITCC_ACCOUNT) as ResolveResult)
+    const resolveResult = inject(INJECTED_BITCC_ACCOUNT) as ResolveResult
 
-    fetch()
+    const route = useRoute()
+    const context = useContext()
+
+    const { account, fetchAccount } = useAccount(resolveResult)
+
+    useMetaAccount(account, resolveResult.url)
+
+    const { fetch } = useFetch(async () => {
+      await fetchAccount()
+
+      if (account.redirect && !route.value.query.noredirect) {
+        context.redirect(account.redirect)
+      }
+    })
+
+    if (process.server) {
+      fetch()
+    }
 
     return {
       account,
