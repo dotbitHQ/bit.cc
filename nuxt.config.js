@@ -37,7 +37,7 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/redirect',
+    '~/plugins/resolve',
     '~/plugins/i18n',
     '~/plugins/service',
   ],
@@ -46,8 +46,8 @@ export default {
     middleware: [],
     extendRoutes (routes, resolve) {
       routes.push({
-        name: 'account',
-        path: '*',
+        name: 'ACCOUNT_BIT',
+        path: '*.bit',
         component: resolve(__dirname, 'src/pages/index.vue')
       })
     }
