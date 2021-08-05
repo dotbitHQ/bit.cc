@@ -3,24 +3,18 @@
 
 .das-records {
   .das-records_group {
-    margin-bottom: 30px;
+    margin-left: -3%;
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-between;
   }
 
-  .das-record-card {
-    margin-bottom: 35px;
-    margin-right: 35px;
-    flex-basis: 40%;
-    flex-grow: 1;
-  }
-
+  .das-record-card,
   .nft-record {
+    width: 33%;
     flex-basis: 30%;
-    flex-grow: 1;
     flex-shrink: 1;
-    max-width: 33%;
+    margin-left: 3%;
+    margin-bottom: 3%;
   }
 
   .record_empty {
@@ -32,37 +26,39 @@
     color: rgba(17, 20, 45, 0.6);
   }
 
-  // prevent the last single one from fulfilling the whole row
-  .das_record_placeholder {
-    display: none;
-    flex-basis: 50%;
-
-    &:nth-child(2n) {
-      display: block;
-      flex-basis: 50%;
-    }
-  }
-
-  @media all and (max-width: $screen_xl) {
+  @media all and (max-width: $screen_lg) {
     .das-records_group {
-      margin-bottom: 20px;
+      margin-left: 0;
+    }
+
+    .das-record-card,
+    .nft-record {
+      flex-basis: 49%;
+      margin-left: 1%;
     }
 
     .das-record-card {
-      flex-basis: 100%;
-      margin-right: 0;
-      margin-bottom: 16px;
+      margin-bottom: 2%;
     }
 
-    .record_empty {
-      width: 100%;
+    .nft-record {
+      margin-bottom: 1%;
     }
   }
 
-  @media all and (max-width: $screen_md) {
+  @media all and (max-width: $screen_sm) {
+    .das-records_group {
+      margin-left: 0;
+
+      &._nft {
+        margin-left: -1%;
+      }
+    }
+
     .das-record-card {
-      margin-right: 0;
       flex-basis: 100%;
+      margin-left: 0;
+      margin-bottom: 4%;
     }
   }
 }
@@ -70,23 +66,26 @@
 
 <template>
   <div class="das-records">
-    <div v-if="nfts.length" id="J_nft" class="das-records_group">
+    <div v-if="nfts.length" id="J_nft" class="das-records_group _nft">
       <NFTRecord v-for="nft in nfts" :key="nft.name + nft.link" :nft="nft" />
     </div>
 
+    <RecordsSeparator />
+
     <div v-if="addresses.length" id="J_address" class="das-records_group">
       <DasRecordCard v-for="record in addresses" :key="record.key + record.value" :record="record" />
-      <div class="das_record_placeholder" />
     </div>
+
+    <RecordsSeparator />
 
     <div v-if="profiles.length" id="J_profile" class="das-records_group">
       <DasRecordCard v-for="record in profiles" :key="record.key + record.value" :record="record" />
-      <div class="das_record_placeholder" />
     </div>
+
+    <RecordsSeparator />
 
     <div v-if="customs.length" id="J_custom_key" class="das-records_group">
       <DasRecordCard v-for="record in customs" :key="record.key + record.value" :record="record" />
-      <div class="das_record_placeholder" />
     </div>
 
     <BitCard v-if="!customs.length && !profiles.length && !addresses.length" class="record_empty">
@@ -99,6 +98,7 @@
 import DasRecordCard from '~/pages/-c/DasRecordCard.vue'
 import NFTRecord from '~/pages/-c/NFTRecord.vue'
 import BitCard from '~/components/BitCard.vue'
+import RecordsSeparator from './RecordsSeparator.vue'
 
 const RecordsPropType = {
   type: Array, // AccountRecord[]
@@ -111,6 +111,7 @@ export default {
     DasRecordCard,
     NFTRecord,
     BitCard,
+    RecordsSeparator,
   },
   props: {
     welcome: {

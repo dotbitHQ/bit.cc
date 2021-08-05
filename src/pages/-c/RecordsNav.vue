@@ -1,27 +1,56 @@
 <style lang="scss">
-.side-nav {
+@import "src/assets/variables";
+
+.records-nav {
+  display: flex;
+  justify-content: center;
+  overflow: auto;
+
   .nav_item {
+    margin: 0 14px;
+    padding: 7px 16px;
     font-size: 14px;
-    line-height: 2;
+    line-height: 1;
+    white-space: nowrap;
+    border-radius: 20px;
     color: rgba(65, 67, 87, 0.4);
 
+    &:hover {
+      background: rgba(3, 3, 3, 0.03);
+    }
+
     &._active {
-      color: black;
+      background: rgba(255, 255, 255, 0.66);
+      border: 1px solid rgba(151, 151, 151, 0.08);
+      color: #11142d;
     }
 
     a {
       color: inherit;
     }
   }
+
+  @media all and (max-width: $screen_md) {
+    justify-content: flex-start;
+
+    .nav_item {
+      margin: 0;
+    }
+  }
 }
 
 .theme_dark {
-  .side-nav {
+  .records-nav {
     .nav_item {
-      color: #2e323a;
+      color: #6f7684;
+
+      &:hover {
+        background-color: black;
+      }
 
       &._active {
-        color: #9ee8fc;
+        color: rgba(255, 255, 255, 0.8);
+        background-color: #6f7684;
       }
     }
   }
@@ -29,7 +58,7 @@
 </style>
 
 <template>
-  <ul class="side-nav">
+  <ul class="records-nav">
     <li v-for="item in navList"
         :key="item.value"
         class="nav_item"
@@ -49,7 +78,6 @@ const EVENTS = {
 }
 
 export const NavItem = {
-  overview: 'overview',
   nft: 'nft',
   address: 'address',
   profile: 'profile',
@@ -57,22 +85,19 @@ export const NavItem = {
 }
 
 export default defineComponent({
-  name: 'SideNav',
+  name: 'RecordsNav',
   components: {},
   events: EVENTS,
   props: {
     value: {
       type: String,
-      default: NavItem.overview,
+      default: NavItem.nft,
     }
   },
   setup (props, { emit, root }) {
     const navList: IOption[] = [{
-      value: NavItem.overview,
-      text: root.$tt('Overview'),
-    }, {
       value: NavItem.nft,
-      text: root.$tt('NFT')
+      text: root.$tt('NFTs')
     }, {
       value: NavItem.address,
       text: root.$tt('Crypto Address'),

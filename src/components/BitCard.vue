@@ -3,7 +3,7 @@
   box-sizing: border-box;
   border: 1px solid rgba(151, 151, 151, 0.14);
   padding: 16px;
-  border-radius: 12px;
+  border-radius: 8px;
   background-color: #fff;
 
   &._shadow {
