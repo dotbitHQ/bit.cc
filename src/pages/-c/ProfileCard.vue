@@ -42,7 +42,7 @@
   <div class="profile-card">
     <DasAvatar :size="110" :avatar="account.avatar" :account="account.account" />
 
-    <h3 class="profile_account" v-resize-text="{minSize: 20, maxSize: 70}">{{ account.account }}</h3>
+    <h3 class="profile_account" v-resize-text="{minSize: 40, maxSize: 70}">{{ account.account }}</h3>
     <p class="profile_description">
       {{ account.description || $tt('No description added') }}
     </p>

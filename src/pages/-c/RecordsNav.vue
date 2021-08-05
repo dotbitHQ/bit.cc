@@ -30,12 +30,8 @@
     }
   }
 
-  @media all and (max-width: $screen_md) {
+  @media all and (max-width: $screen_sm) {
     justify-content: flex-start;
-
-    .nav_item {
-      margin: 0;
-    }
   }
 }
 

@@ -24,6 +24,8 @@
     margin: 0 auto;
     width: 1080px;
     max-width: 100vw;
+    display: flex;
+    flex-direction: column;
 
     .index_profile {
       margin-bottom: 25px;
@@ -45,6 +47,7 @@
   @media all and (max-width: $screen_md) {
     .index_content {
       width: unset;
+      min-height: 95%;
       padding: 0 15px;
 
       .index_nav {
@@ -52,7 +55,8 @@
       }
 
       .center_footer {
-        margin-top: 20px;
+        margin-top: auto;
+        margin-bottom: 20px;
         display: block;
         text-align: center;
 
@@ -94,6 +98,7 @@
                   :profiles="account.profiles"
                   :customs="account.customs"
                   :nfts="nfts"
+                  :account="account.account"
       />
 
       <div class="center_footer">
@@ -154,7 +159,7 @@ export default defineComponent({
     if (process.browser) {
       onMounted(() => {
         if (account.value.status === AccountStatus.successful) {
-          fetchNFTs()
+          // fetchNFTs()
         }
       })
     }
