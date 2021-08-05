@@ -277,18 +277,18 @@ export default defineComponent({
 
     const { account, fetchAccount } = useAccount(resolveResult)
 
-    useMetaAccount(account, resolveResult.url)
+    useMetaAccount(account.value, resolveResult.url)
 
-    const { fetch } = useFetch(async () => {
+    const { fetch: fetchAccountServer } = useFetch(async () => {
       await fetchAccount()
 
-      if (account.redirect && !route.value.query.noredirect) {
-        context.redirect(account.redirect)
+      if (account.value.redirect && !route.value.query.noredirect) {
+        context.redirect(account.value.redirect)
       }
     })
 
     if (process.server) {
-      fetch()
+      fetchAccountServer()
     }
 
     return {

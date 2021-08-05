@@ -1,4 +1,4 @@
-import { reactive } from '@nuxtjs/composition-api'
+import { Ref, ref } from '@nuxtjs/composition-api'
 import DasSDK, { AccountData, AccountRecord, AccountRecordType, AccountRecordTypes } from 'das-sdk'
 import { DasRecordType } from '~/constant/das'
 import { ResolveResult } from '~/modules/das'
@@ -17,7 +17,7 @@ declare module 'das-sdk' {
 }
 
 const defaultAccount = {
-  status: AccountStatus.loading,
+  status: AccountStatus.loading as AccountStatus,
 
   account: '',
 
@@ -40,8 +40,8 @@ const defaultAccount = {
 
 export type AccountInfo = typeof defaultAccount
 
-export function useAccount (resolveResult: ResolveResult): {account: AccountInfo, fetchAccount: Function} {
-  const account = reactive({
+export function useAccount (resolveResult: ResolveResult): {account: Ref<AccountInfo>, fetchAccount: Function} {
+  const account = ref({
     ...defaultAccount,
     account: resolveResult.account,
   })
@@ -54,14 +54,14 @@ export function useAccount (resolveResult: ResolveResult): {account: AccountInfo
     let accountData: AccountData
 
     try {
-      accountData = await das.account(account.account)
+      accountData = await das.account(account.value.account)
     }
     catch (err) {
       if (err.code === 'UnregisteredDomain') {
-        account.status = AccountStatus.unregistered
+        account.value.status = AccountStatus.unregistered
       }
       else {
-        account.status = AccountStatus.failed
+        account.value.status = AccountStatus.failed
         console.error(err)
       }
 
@@ -104,7 +104,7 @@ export function useAccount (resolveResult: ResolveResult): {account: AccountInfo
     const redirectRecord = customs.find(record => record.key === 'custom_key.bitcc_redirect')
     const backgroundImageRecord = customs.find(record => record.key === 'custom_key.bitcc_background_image')
 
-    Object.assign(account, {
+    Object.assign(account.value, {
       status: AccountStatus.successful,
 
       owner_address: accountData.owner_address,
