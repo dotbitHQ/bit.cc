@@ -5,7 +5,7 @@ import { Services } from '~/services'
 declare module 'vue/types/vue' {
   interface Vue {
     $service: Services,
-    $tt: (key: string, params: Record<string, string| number>) => string,
+    $tt: (key: string, params?: Record<string, string| number>) => string,
   }
 }
 

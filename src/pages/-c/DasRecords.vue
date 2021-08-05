@@ -16,6 +16,13 @@
     flex-grow: 1;
   }
 
+  .nft-record {
+    flex-basis: 30%;
+    flex-grow: 1;
+    flex-shrink: 1;
+    max-width: 33%;
+  }
+
   .record_empty {
     display: flex;
     align-items: center;
@@ -63,6 +70,10 @@
 
 <template>
   <div class="das-records">
+    <div v-if="nfts.length" id="J_nft" class="das-records_group">
+      <NFTRecord v-for="nft in nfts" :key="nft.name + nft.link" :nft="nft" />
+    </div>
+
     <div v-if="addresses.length" id="J_address" class="das-records_group">
       <DasRecordCard v-for="record in addresses" :key="record.key + record.value" :record="record" />
       <div class="das_record_placeholder" />
@@ -86,6 +97,7 @@
 
 <script lang="ts">
 import DasRecordCard from '~/pages/-c/DasRecordCard.vue'
+import NFTRecord from '~/pages/-c/NFTRecord.vue'
 import BitCard from '~/components/BitCard.vue'
 
 const RecordsPropType = {
@@ -97,6 +109,7 @@ export default {
   name: 'BitPlanet',
   components: {
     DasRecordCard,
+    NFTRecord,
     BitCard,
   },
   props: {
@@ -104,10 +117,8 @@ export default {
       type: String,
       default: '',
     },
-    records: {
-      type: Array,
-      default: () => [],
-    },
+
+    nfts: RecordsPropType,
     addresses: RecordsPropType,
     profiles: RecordsPropType,
     customs: RecordsPropType,

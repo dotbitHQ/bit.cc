@@ -50,6 +50,7 @@ const EVENTS = {
 
 export const NavItem = {
   overview: 'overview',
+  nft: 'nft',
   address: 'address',
   profile: 'profile',
   custom: 'custom_key',
@@ -69,6 +70,9 @@ export default defineComponent({
     const navList: IOption[] = [{
       value: NavItem.overview,
       text: root.$tt('Overview'),
+    }, {
+      value: NavItem.nft,
+      text: root.$tt('NFT')
     }, {
       value: NavItem.address,
       text: root.$tt('Crypto Address'),

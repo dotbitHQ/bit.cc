@@ -226,6 +226,7 @@
         <DasRecords :addresses="account.addresses"
                     :profiles="account.profiles"
                     :customs="account.customs"
+                    :nfts="nfts"
         />
 
         <div class="center_footer">
@@ -242,23 +243,17 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  inject,
-  useFetch,
-  ref,
-  useContext,
-  useRoute,
-} from '@nuxtjs/composition-api'
+import { defineComponent, inject, onMounted, ref, useContext, useFetch, useRoute } from '@nuxtjs/composition-api'
+import BitHeader from '~/components/BitHeader.vue'
 import { AccountStatus, useAccount } from '~/hooks/useAccount'
 import { useMetaAccount } from '~/hooks/useMetaAccount'
+import { useNFT } from '~/hooks/useNFT'
 import { ResolveResult } from '~/modules/das'
-import DasUnregistered from '~/pages/-c/DasUnregistered.vue'
-import BitHeader from '~/components/BitHeader.vue'
 import DasRecords from '~/pages/-c/DasRecords.vue'
+import DasUnregistered from '~/pages/-c/DasUnregistered.vue'
 import ProfileCard from '~/pages/-c/ProfileCard.vue'
 import SideNav, { NavItem } from '~/pages/-c/SideNav.vue'
-import { INJECTED_BITCC_ACCOUNT } from '~/plugins/redirect'
+import { INJECTED_BITCC_ACCOUNT } from '~/plugins/resolve'
 
 export default defineComponent({
   head: {},
@@ -276,6 +271,7 @@ export default defineComponent({
     const context = useContext()
 
     const { account, fetchAccount } = useAccount(resolveResult)
+    const { nfts, fetchNFTs, loading: loadingNFT } = useNFT(account.value)
 
     useMetaAccount(account.value, resolveResult.url)
 
@@ -291,9 +287,21 @@ export default defineComponent({
       fetchAccountServer()
     }
 
+    if (process.browser) {
+      onMounted(() => {
+        if (account.value.status === AccountStatus.successful) {
+          fetchNFTs()
+        }
+      })
+    }
+
     return {
       account,
       AccountStatus,
+
+      nfts,
+      loadingNFT,
+
       activeNav: ref(NavItem.overview)
     }
   }
