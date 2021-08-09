@@ -140,7 +140,7 @@ export default defineComponent({
     const context = useContext()
 
     const { account, fetchAccount } = useAccount(resolveResult)
-    const { nfts, fetchNFTs, loading: loadingNFT } = useNFT(account.value)
+    const { nfts, fetchNFTs, loading: loadingNFT } = useNFT(account)
 
     useMetaAccount(account.value, resolveResult.url)
 
@@ -159,7 +159,7 @@ export default defineComponent({
     if (process.browser) {
       onMounted(() => {
         if (account.value.status === AccountStatus.successful) {
-          // fetchNFTs()
+          fetchNFTs()
         }
       })
     }

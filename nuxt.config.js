@@ -42,6 +42,10 @@ export default {
     '~/plugins/service',
   ],
 
+  serverMiddleware: [
+    '~/serverMiddleware/api_mibao'
+  ],
+
   router: {
     middleware: [],
     extendRoutes (routes, resolve) {

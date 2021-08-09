@@ -1,4 +1,5 @@
 import { BasicService } from '~/services/BasicService'
+import { JinseAsset } from '../../types/jinse'
 import { OpenSeaAsset } from '../../types/opensea'
 
 // for simple app, service can all be placed under BasicService
@@ -23,7 +24,9 @@ export class Services extends BasicService {
     })
   }
 
-  getMibaoAssets () {
-
+  getJinseAssets (address: string): Promise<JinseAsset[]> {
+    return this.axios.get(`/mibao/holder_tokens/${address}`)
   }
 }
+
+export const services = new Services()
