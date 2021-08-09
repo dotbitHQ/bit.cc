@@ -2,6 +2,7 @@ import { Ref, ref } from '@nuxtjs/composition-api'
 import DasSDK, { AccountData, AccountRecord, AccountRecordType, AccountRecordTypes } from 'das-sdk'
 import { DasRecordType } from '~/constant/das'
 import { ResolveResult } from '~/modules/das'
+import { das } from '~/services'
 
 export enum AccountStatus {
   loading,
@@ -47,10 +48,6 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
   })
 
   async function fetchAccount (): Promise<void> {
-    const das = await new DasSDK({
-      url: 'https://indexer.da.systems',
-    })
-
     let accountData: AccountData
 
     try {

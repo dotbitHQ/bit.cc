@@ -7,26 +7,28 @@
   overflow: auto;
 
   .nav_item {
-    margin: 0 14px;
-    padding: 7px 16px;
-    font-size: 14px;
-    line-height: 1;
-    white-space: nowrap;
-    border-radius: 20px;
-    color: rgba(65, 67, 87, 0.4);
+    a {
+      display: inline-block;
+      margin: 0 14px;
+      padding: 7px 16px;
+      font-size: 14px;
+      line-height: 1;
+      white-space: nowrap;
+      border-radius: 20px;
+      color: #22262e;
 
-    &:hover {
-      background: rgba(3, 3, 3, 0.03);
+      &:hover {
+        background: rgba(3, 3, 3, 0.03);
+      }
     }
 
     &._active {
-      background: rgba(255, 255, 255, 0.66);
-      border: 1px solid rgba(151, 151, 151, 0.08);
-      color: #11142d;
-    }
-
-    a {
-      color: inherit;
+      a {
+        border: 1px solid rgba(151, 151, 151, 0.08);
+        font-weight: bold;
+        color: #11142d;
+        background: rgba(255, 255, 255, 0.66);
+      }
     }
   }
 
@@ -38,15 +40,19 @@
 .theme_dark {
   .records-nav {
     .nav_item {
-      color: #6f7684;
+      a {
+        color: #6f7684;
 
-      &:hover {
-        background-color: black;
+        &:hover {
+          background-color: black;
+        }
       }
 
       &._active {
-        color: rgba(255, 255, 255, 0.8);
-        background-color: #6f7684;
+        a {
+          color: rgba(255, 255, 255, 0.8);
+          background-color: #6f7684;
+        }
       }
     }
   }

@@ -1,3 +1,4 @@
+import DasSDK from '_das-sdk@0.4.1@das-sdk'
 import { BasicService } from '~/services/BasicService'
 import { JinseAsset } from '../../types/jinse'
 import { OpenSeaAsset } from '../../types/opensea'
@@ -30,3 +31,7 @@ export class Services extends BasicService {
 }
 
 export const services = new Services()
+
+export const das = new DasSDK({
+  url: 'https://indexer.da.systems',
+})

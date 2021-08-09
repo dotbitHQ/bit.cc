@@ -20,6 +20,7 @@
   .records-separator {
     .separator {
       &._dark {
+        opacity: 0.3;
         display: flex;
       }
 
