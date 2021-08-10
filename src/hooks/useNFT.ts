@@ -63,24 +63,24 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
     const ownerAddress = account.value.owner_address
     const ckbAddressRecords = account.value.addresses.filter(record => record.key === 'address.ckb')
 
-    const ethAddressRecords = account.value.addresses.filter(record => record.key === 'address.eth')
-    for (const record of ethAddressRecords) {
-      void services.getOpenseaAssets(record.value).then(res => {
-        nfts.value = nfts.value.concat(normalizeOpenseaAssets(res.assets))
-      })
-    }
-
-    // if (account.value.owner_address_chain === 'ETH') {
-    //   void services.getOpenseaAssets(ownerAddress).then(res => {
+    // const ethAddressRecords = account.value.addresses.filter(record => record.key === 'address.eth')
+    // for (const record of ethAddressRecords) {
+    //   void services.getOpenseaAssets(record.value).then(res => {
     //     nfts.value = nfts.value.concat(normalizeOpenseaAssets(res.assets))
     //   })
     // }
 
-    for (const record of ckbAddressRecords) {
-      void services.getJinseAssets(record.value).then(res => {
-        nfts.value = nfts.value.concat(normalizeJinseAssets(res))
+    if (account.value.owner_address_chain === 'ETH') {
+      void services.getOpenseaAssets(ownerAddress).then(res => {
+        nfts.value = nfts.value.concat(normalizeOpenseaAssets(res.assets))
       })
     }
+
+    // for (const record of ckbAddressRecords) {
+    //   void services.getJinseAssets(record.value).then(res => {
+    //     nfts.value = nfts.value.concat(normalizeJinseAssets(res))
+    //   })
+    // }
 
     void das.accountsForOwner(ownerAddress).then(res => {
       nfts.value = nfts.value.concat(normalizeDASAccounts(res))
