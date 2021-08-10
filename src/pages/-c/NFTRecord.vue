@@ -26,20 +26,23 @@
         justify-content: center;
 
         .das_card {
-          margin-top: 10%;
-          width: 90%;
-          height: 57%;
-          background: url('/imgs/nft/das-card.svg') no-repeat center/contain;
-        }
-
-        .das_card_content {
           position: relative;
-          height: 100%;
-          padding: 0 20px;
+          margin-top: 10%;
+          box-sizing: border-box;
+          width: 90%;
+          max-width: 90%;
+          height: 57%;
+          padding: 15px 15px 5px 15px;
           display: flex;
           flex-direction: column;
           align-items: center;
-          justify-content: center;
+          justify-content: space-around;
+          background: url('/imgs/nft/das-card.svg') no-repeat center/contain;
+
+          &._narrow {
+            padding-left: 5px;
+            padding-right: 5px;
+          }
         }
 
         .das_avatar {
@@ -50,10 +53,10 @@
         }
 
         .das_name {
-          margin: 15px 0;
           font-size: 44px;
           font-weight: bold;
           text-align: center;
+          line-height: 1;
           color: #fff;
         }
 
@@ -133,7 +136,6 @@
           }
 
           .das_name {
-            margin: 10px 0;
           }
 
           .das_suffix {
@@ -158,12 +160,10 @@
       </div>
 
       <div v-else class="nft_content _das" :style="{backgroundColor: color}">
-        <div class="das_card">
-          <div class="das_card_content">
-            <DasAvatar class="das_avatar" :account="nft.name" size="" />
-            <div class="das_name" v-resize-text="{minSize: minNameSize, maxSize: 44}">{{ nft.name.replace('.bit', '') }}</div>
-            <div class="das_suffix">.bit</div>
-          </div>
+        <div class="das_card" :class="isNarrow ? '_narrow': ''" >
+          <DasAvatar class="das_avatar" :account="nft.name" size="" />
+          <div class="das_name" v-resize-text="{minSize: minNameSize, maxSize: maxNameSize}">{{ nft.name.replace('.bit', '') }}</div>
+          <div class="das_suffix">.bit</div>
         </div>
       </div>
     </div>
@@ -192,9 +192,17 @@ export default defineComponent({
   },
   setup (props: {nft: NFT}) {
     let minNameSize = 15
+    let maxNameSize = 44
+    let isNarrow = false
+
     if (process.browser) {
       if (window.screen.availWidth < 540) {
         minNameSize = 12
+        maxNameSize = 30
+      }
+
+      if (props.nft.name.length > 60) {
+        isNarrow = true
       }
     }
 
@@ -209,6 +217,8 @@ export default defineComponent({
     return {
       NFTProviderType,
       minNameSize,
+      maxNameSize,
+      isNarrow,
       color,
     }
   }
