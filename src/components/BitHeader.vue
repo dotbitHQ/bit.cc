@@ -66,7 +66,7 @@ export default defineComponent({
     const intent = ref('')
 
     onMounted(() => {
-      const text = 'Hey! It\'s time to DAS! \nCome to see my NFTs, crypto addresses, and social contacts!\n'
+      const text = 'Hey! It\'s time to DAS! \nCome to my DAS profile card and view all my NFTs, crypto addresses, and social contacts!\n'
       const url = window.location.href
       intent.value = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
     })

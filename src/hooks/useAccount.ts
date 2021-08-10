@@ -93,13 +93,15 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
       return false
     })
 
-    const customs = records.filter(record => record.type === AccountRecordTypes.custom)
+    let customs = records.filter(record => record.type === AccountRecordTypes.custom)
     const descriptionRecord = profiles.find(record => record.key === 'profile.description')
     const avatarRecord = profiles.find(record => record.key === 'profile.avatar')
     const welcomeRecord = customs.find(record => record.key === 'custom_key.bitcc_welcome')
     const themeRecord = customs.find(record => record.key === 'custom_key.bitcc_theme')
     const redirectRecord = customs.find(record => record.key === 'custom_key.bitcc_redirect')
     const backgroundImageRecord = customs.find(record => record.key === 'custom_key.bitcc_background_image')
+
+    customs = customs.filter(record => record.key.indexOf('custom_key.bitcc_') !== 0)
 
     Object.assign(account.value, {
       status: AccountStatus.successful,

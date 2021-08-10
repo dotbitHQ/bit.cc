@@ -1,4 +1,4 @@
-import { useMeta } from '_@nuxtjs_composition-api@0.24.7@@nuxtjs/composition-api'
+import { useMeta } from '@nuxtjs/composition-api'
 import { AccountInfo } from '~/hooks/useAccount'
 import { socialMeta } from '~/modules/social-media'
 

@@ -1,4 +1,4 @@
-import DasSDK from '_das-sdk@0.4.1@das-sdk'
+import DasSDK from 'das-sdk'
 import { BasicService } from '~/services/BasicService'
 import { JinseAsset } from '../../types/jinse'
 import { OpenSeaAsset } from '../../types/opensea'
