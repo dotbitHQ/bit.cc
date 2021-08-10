@@ -58,14 +58,14 @@
         }
 
         .das_suffix {
-          padding: 2px 20px 4px 20px;
+          padding: 0 20px 4px 20px;
           display: flex;
           align-items: center;
           justify-content: center;
           font-size: 44px;
           font-weight: bold;
           border-radius: 45px;
-          background: rgba(0, 0, 0, 0.26);
+          background: rgba(0, 0, 0, 0.1);
           color: #fff;
         }
       }

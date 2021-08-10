@@ -9,7 +9,7 @@
   .profile_account {
     margin-top: 15px;
     margin-bottom: 15px;
-    font-size: 40px;
+    font-size: 70px;
     text-align: center;
     word-break: break-all;
     font-weight: bold;
