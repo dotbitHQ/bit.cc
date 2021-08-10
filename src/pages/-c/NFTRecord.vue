@@ -2,9 +2,16 @@
 @import "src/assets/variables";
 
 .nft-record {
+  $avatarSize: 60px;
+
   display: flex;
   box-shadow: 0 30px 30px -30px rgb(108 113 148 / 26%);
-  $avatarSize: 60px;
+  cursor: pointer;
+  transition: all 0.4s;
+
+  &:hover {
+    transform: scale(1.05);
+  }
 
   .nft_wrap {
     position: relative;
@@ -150,7 +157,7 @@
 
 <template>
   <div class="nft-record">
-    <div class="nft_wrap">
+    <a class="nft_wrap" :href="nft.link" target="_blank">
       <div v-if="nft.providerType !== NFTProviderType.das" class="nft_content">
         <img class="nft_img" :src="nft.imageUrl" :alt="nft.name">
         <div class="nft_info">
@@ -166,7 +173,7 @@
           <div class="das_suffix">.bit</div>
         </div>
       </div>
-    </div>
+    </a>
   </div>
 </template>
 
@@ -206,7 +213,7 @@ export default defineComponent({
       }
     }
 
-    const colors = ['#9692E6', '#40C3F0', '#FF9895', '#FEC165', '#FED4A4', '#3370FF', '#FF4F6E', '#6957ED', '#22C4C6', '#BC51EC', '#FFA86A', '#22C68D']
+    const colors = ['#9692E6', '#40C3F0', '#FF9895', '#FEC165', '#E96565', '#3370FF', '#FF4F6E', '#6957ED', '#22C4C6', '#BC51EC', '#FFA86A', '#22C68D']
     let index = 0
     for (let i = 0; i < props.nft.name.length; i++) {
       index += props.nft.name.charCodeAt(i)
