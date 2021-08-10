@@ -6,7 +6,7 @@ export const INJECTED_BITCC_ACCOUNT = 'INJECTED_BITCC_ACCOUNT'
 
 export default function redirectPlugin (context: Context): void {
   // only apply to DAS account page
-  if (context.route.name === 'ACCOUNT_BIT') {
+  if (context.route.name === 'ACCOUNT_BIT' || context.route.name === 'index') {
     onGlobalSetup(() => {
       let url
 
