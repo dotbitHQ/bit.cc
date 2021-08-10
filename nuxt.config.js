@@ -43,7 +43,7 @@ export default {
   ],
 
   serverMiddleware: [
-    '~/serverMiddleware/api_mibao'
+    // '~/serverMiddleware/api_mibao'
   ],
 
   router: {
