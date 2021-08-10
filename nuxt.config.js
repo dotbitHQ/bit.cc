@@ -19,7 +19,7 @@ export default {
       { name: 'viewport', content: 'width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no' },
     ],
     script: [{
-      src: '//at.alicdn.com/t/font_2675899_l801nzmcfyp.js',
+      src: '//at.alicdn.com/t/font_2675899_7qnmb934w9f.js',
       async: true,
     }]
   },
@@ -37,17 +37,21 @@ export default {
   ** Plugins to load before mounting the App
   */
   plugins: [
-    '~/plugins/redirect',
+    '~/plugins/resolve',
     '~/plugins/i18n',
     '~/plugins/service',
+  ],
+
+  serverMiddleware: [
+    '~/serverMiddleware/api_mibao'
   ],
 
   router: {
     middleware: [],
     extendRoutes (routes, resolve) {
       routes.push({
-        name: 'account',
-        path: '*',
+        name: 'ACCOUNT_BIT',
+        path: '*.bit',
         component: resolve(__dirname, 'src/pages/index.vue')
       })
     }

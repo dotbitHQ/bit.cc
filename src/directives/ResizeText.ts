@@ -49,6 +49,7 @@ const onResize = function (element: HTMLElement): void {
     )
 
     element.style.whiteSpace = size <= ctx.minSize ? 'normal' : 'nowrap'
+    element.style.wordBreak = size <= ctx.minSize ? 'break-all' : ''
     element.style.fontSize = `${size}px`
   }
 }

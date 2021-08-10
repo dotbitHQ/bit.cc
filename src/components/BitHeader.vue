@@ -6,66 +6,74 @@
   display: flex;
   justify-content: flex-end;
   box-sizing: border-box;
-  width: 960px;
   height: $header_height;
   padding-top: 8px;
+  padding-right: 30px;
   margin: 0 auto;
+  color: #fff;
 
   a {
+    margin: 0 10px;
     font-size: 14px;
     font-weight: 400;
     font-family: sans-serif;
-    color: #11142d;
     transition: color ease-out 200ms;
-  }
-
-  &:hover {
-    a {
-      color: white;
-    }
-  }
-
-  @media all and (max-width: $screen_xl) {
-    width: 700px;
-  }
-
-  @media all and (max-width: $screen_md) {
-    width: unset;
-    padding-right: 10px;
+    color: #fff;
   }
 }
 
-.theme_dark {
+@media all and (max-width: $screen_sm) {
   .bit-header {
-    a {
-      color: #6b7384;
-
-      &:hover {
-        color: white;
-      }
-    }
+    padding-right: 0;
   }
 }
 </style>
 
 <template>
   <div class="bit-header">
-    <IconfontButton>
-      <a href="https://da.systems">{{ $tt('About DAS') }}→</a>
-    </IconfontButton>
+    <a :href="intent" target="_blank">
+      <IconfontButton :message="$tt('Share to Twitter')" message-position="bottom">
+        <Iconfont name="twitter" :size="18" />
+      </IconfontButton>
+    </a>
+
+    <a href="https://github.com/DeAccountSystems/bit.cc" target="_blank">
+      <IconfontButton :message="$tt('Guide')" message-position="bottom">
+        <Iconfont name="help" :size="18" />
+      </IconfontButton>
+    </a>
+
+    <a href="https://da.systems" target="_blank">
+      <IconfontButton :message="$tt('DAS')" message-position="bottom">
+        <Iconfont name="das" :size="18" />
+      </IconfontButton>
+    </a>
   </div>
 </template>
 
 <script>
+import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
 import IconfontButton from './IconfontButton'
+import Iconfont from './Iconfont'
 
-export default {
+export default defineComponent({
   name: 'BitHeader',
   components: {
     IconfontButton,
+    Iconfont,
   },
-  data () {
-    return {}
-  },
-}
+  setup () {
+    const intent = ref('')
+
+    onMounted(() => {
+      const text = 'Hey! It\'s time to DAS! \nCome to my DAS profile card and view all my NFTs, crypto addresses, and social contacts!\n'
+      const url = window.location.href
+      intent.value = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
+    })
+
+    return {
+      intent,
+    }
+  }
+})
 </script>

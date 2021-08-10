@@ -93,3 +93,4 @@ yarn.lock
 src/locales/*.json
 
 package-lock.json
+config/local.js

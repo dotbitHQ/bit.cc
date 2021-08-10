@@ -38,6 +38,17 @@
       width: 8px;
       background-color: $color;
     }
+
+    &._bottom {
+      top: unset;
+      bottom: -100%;
+      transform: translateX(-50%) translateY(-20%);
+
+      &::after {
+        bottom: unset;
+        top: -4px;
+      }
+    }
   }
 
   &:hover {
@@ -56,13 +67,18 @@
 
 <template>
   <span class="iconfont-button">
-    <span v-if="message" class="button_message">{{ message }}</span>
+    <span v-if="message" class="button_message" :class="`_${messagePosition}`">{{ message }}</span>
 
     <slot />
   </span>
 </template>
 
 <script>
+
+const MessagePosition = {
+  top: 'top',
+  bottom: 'bottom',
+}
 
 export default {
   name: 'IconfontButton',
@@ -71,6 +87,10 @@ export default {
     message: {
       type: String,
       default: '',
+    },
+    messagePosition: {
+      type: String,
+      default: MessagePosition.top
     }
   },
   data () {

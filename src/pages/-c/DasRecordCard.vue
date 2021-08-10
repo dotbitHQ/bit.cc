@@ -12,7 +12,7 @@
   }
 
   .card_name {
-    font-size: 28px;
+    font-size: 24px;
     font-weight: 500;
     color: #11142d;
   }
@@ -49,7 +49,7 @@
     font-size: 14px;
     border-radius: 5px;
     background: rgba(50, 54, 61, 0.1);
-    color: rgba(30, 34, 42, 1);
+    color: rgba(30, 34, 42, 0.6);
   }
 
   .card_copy,
@@ -87,7 +87,7 @@
   <BitCard class="das-record-card">
     <div class="card_title">
       <span class="card_name">{{ record.name }}</span>
-      <IconRecord :record="record.name" :size="30" />
+      <IconRecord :record="record.name" :size="24" />
     </div>
 
     <p class="card_content" :class="{'_address': record.type === DasRecordType.address}">

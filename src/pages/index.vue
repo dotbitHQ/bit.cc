@@ -22,157 +22,49 @@
 
   .index_content {
     margin: 0 auto;
-    width: 960px;
+    width: 1080px;
+    max-width: 100vw;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-
-    .index_nav {
-      position: absolute;
-      margin-top: -100px;
-      left: 12px;
-      width: 180px;
-      flex-shrink: 0;
-    }
-
-    .index_center {
-      order: 1;
-      flex: 1;
-      box-sizing: border-box;
-      height: calc(100vh - #{$header_height});
-      overflow: auto;
-
-      &::-webkit-scrollbar {
-        width: 0;
-      }
-
-      .center_emoji {
-        font-size: 68px;
-        line-height: 1;
-      }
-
-      .center_welcome {
-        margin-top: 30px;
-        margin-bottom: 30px;
-        font-size: 68px;
-        line-height: 1.2;
-        font-weight: 900;
-        color: #11142d;
-      }
-
-      .center_intro {
-        margin-bottom: 55px;
-        font-size: 20px;
-        line-height: 1.2;
-        font-weight: 500;
-        color: #11142d;
-      }
-
-      .center_profile {
-        display: none;
-      }
-
-      .center_footer {
-        display: none;
-      }
-    }
+    flex-direction: column;
 
     .index_profile {
-      order: 2;
-      align-self: stretch;
-      margin-top: 12%;
-      margin-bottom: 5%;
-      margin-left: 20px;
-      flex-shrink: 0;
+      margin-bottom: 25px;
+    }
+
+    .index_nav {
+      margin-bottom: 30px;
+    }
+
+    .center_footer {
+      display: none;
     }
   }
 
   &.theme_dark {
     background: no-repeat top right/300px url('/imgs/background_planet_dark.svg') #030303;
-
-    .index_content {
-      .center_welcome {
-        background-image: radial-gradient(circle farthest-corner at 0% 0%, #ecfcff, hsla(0, 0%, 100%, 0) 32%), radial-gradient(circle farthest-corner at 100% 100%, #fefaef, hsla(0, 0%, 100%, 0) 36%), radial-gradient(circle farthest-corner at 50% 50%, #fdfcfc, hsla(0, 0%, 100%, 0)), radial-gradient(circle farthest-side at 100% 0%, #e376be, hsla(0, 0%, 100%, 0) 94%), radial-gradient(circle farthest-corner at 0% 100%, #a0e9fc, hsla(0, 0%, 100%, 0) 85%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-
-      .center_intro {
-        background-image: radial-gradient(circle farthest-corner at 0% 0%, #ecfcff, hsla(0, 0%, 100%, 0) 32%), radial-gradient(circle farthest-corner at 100% 100%, #fefaef, hsla(0, 0%, 100%, 0) 36%), radial-gradient(circle farthest-corner at 50% 50%, #fdfcfc, hsla(0, 0%, 100%, 0)), radial-gradient(circle farthest-side at 100% 0%, #e376be, hsla(0, 0%, 100%, 0) 94%), radial-gradient(circle farthest-corner at 0% 100%, #a0e9fc, hsla(0, 0%, 100%, 0) 85%);
-        -webkit-background-clip: text;
-        -webkit-text-fill-color: transparent;
-      }
-    }
-  }
-
-  @media all and (max-width: $screen_xl) {
-    .index_content {
-      width: 700px;
-
-      .index_nav {
-        display: none;
-      }
-
-      .index_center {
-        .center_welcome {
-          margin-bottom: 10px;
-          font-size: 44px;
-        }
-
-        .center_intro {
-          margin-bottom: 26px;
-        }
-      }
-
-      .index_profile {
-        margin-left: 55px;
-      }
-    }
   }
 
   @media all and (max-width: $screen_md) {
     .index_content {
       width: unset;
-      flex-direction: column;
+      min-height: 95%;
+      padding: 0 15px;
 
       .index_nav {
-        display: none;
+        margin-bottom: 15px;
       }
 
-      .index_profile {
-        display: none;
-      }
+      .center_footer {
+        margin-top: auto;
+        margin-bottom: 20px;
+        display: block;
+        text-align: center;
 
-      .index_center {
-        margin-top: 0;
-        padding: 20px 40px;
-        overflow: unset; // use page scroll
-
-        .center_welcome {
-          font-size: 44px;
-        }
-
-        .center_intro {
-          margin-top: 15px;
-          margin-bottom: 35px;
-        }
-
-        .center_profile {
-          display: flex;
-          margin-bottom: 35px;
-        }
-
-        .center_footer {
-          margin-top: 20px;
-          display: block;
-          text-align: center;
-
-          a {
-            font-size: 14px;
-            font-family: sans-serif;
-            font-weight: 500;
-            color: #22c68d;
-          }
+        a {
+          font-size: 14px;
+          font-family: sans-serif;
+          font-weight: 500;
+          color: #22c68d;
         }
       }
     }
@@ -188,17 +80,6 @@
       radial-gradient(circle farthest-side at 0% 100%, #f3fcff 7%, hsla(0, 0%, 100%, 0) 50%),
       radial-gradient(circle farthest-side at 100% 0%, #fc75de, hsla(0, 0%, 100%, 0)),
       radial-gradient(circle farthest-corner at 10% 10%, #55c1fb, hsla(0, 0%, 100%, 0));
-
-    .index_content {
-      .index_center {
-        width: 100%;
-        padding: 0 20px 20px;
-
-        .center_emoji {
-          margin-top: -10px;
-        }
-      }
-    }
   }
 }
 </style>
@@ -210,210 +91,38 @@
 
     <DasUnregistered v-if="account.status === AccountStatus.unregistered" :account="account.account" />
     <div v-else-if="account.status === AccountStatus.successful" class="index_content">
-      <div class="index_center">
-        <div id="J_overview" class="center_emoji">
-          👋
-        </div>
-
-        <div class="center_welcome">
-          {{ account.welcome || $tt('Hi, Welcome to my DAS Planet') }}
-        </div>
-
-        <p class="center_intro">{{ $tt('Here are all my DAS records') }}</p>
-
-        <ProfileCard class="center_profile" :account="account" />
-
-        <DasRecords :addresses="account.addresses"
-                    :profiles="account.profiles"
-                    :customs="account.customs"
-        />
-
-        <div class="center_footer">
-          <img class="profile-logo" src="/imgs/logo-profile.png" width="50%" alt="Profile Logo">
-          <div style="margin-top: 10px;">
-            <a href="https://app.da.systems">{{ $tt('Register DAS') }}→</a>
-          </div>
-        </div>
-      </div>
       <ProfileCard class="index_profile" :account="account" />
       <SideNav class="index_nav" v-model="activeNav" />
+
+      <DasRecords :addresses="account.addresses"
+                  :profiles="account.profiles"
+                  :customs="account.customs"
+                  :nfts="nfts"
+                  :account="account.account"
+      />
+
+      <div class="center_footer">
+        <img class="profile-logo" src="/imgs/logo-profile.png" width="50%" alt="Profile Logo">
+        <div style="margin-top: 10px;">
+          <a href="https://app.da.systems">{{ $tt('Register DAS') }}→</a>
+        </div>
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  inject,
-  useFetch,
-  ref,
-  useMeta, useContext, useRoute,
-} from '@nuxtjs/composition-api'
-import DasSDK, { AccountRecord, AccountRecordType, AccountRecordTypes } from 'das-sdk'
-import { AccountData } from 'das-sdk/build/module/types/AccountData'
-import { DasRecordType } from '~/constant/das'
-import { ResolveResult } from '~/modules/das'
-import { socialMeta } from '~/modules/social-media'
-import DasUnregistered from '~/pages/-c/DasUnregistered.vue'
+import { defineComponent, inject, onMounted, ref, useContext, useFetch, useRoute } from '@nuxtjs/composition-api'
 import BitHeader from '~/components/BitHeader.vue'
+import { AccountStatus, useAccount } from '~/hooks/useAccount'
+import { useMetaAccount } from '~/hooks/useMetaAccount'
+import { useNFT } from '~/hooks/useNFT'
+import { ResolveResult } from '~/modules/das'
 import DasRecords from '~/pages/-c/DasRecords.vue'
+import DasUnregistered from '~/pages/-c/DasUnregistered.vue'
 import ProfileCard from '~/pages/-c/ProfileCard.vue'
-import SideNav, { NavItem } from '~/pages/-c/SideNav.vue'
-import { INJECTED_BITCC_ACCOUNT } from '~/plugins/redirect'
-
-async function getDasAccount (account: string): Promise<AccountData> {
-  const das = await new DasSDK({
-    url: 'https://indexer.da.systems',
-  })
-
-  return das.account(account)
-}
-
-enum AccountStatus {
-  loading,
-  unregistered,
-  failed,
-  successful,
-}
-
-function useAccount (resolveResult: ResolveResult): any {
-  const account = ref({
-    status: AccountStatus.loading,
-
-    account: resolveResult.account,
-    owner_address: '',
-    manager_address: '',
-    owner_address_chain: '',
-    manager_address_chain: '',
-
-    description: '',
-    avatar: '',
-    welcome: '',
-    theme: '',
-    backgroundImage: '',
-
-    addresses: [] as AccountRecord[],
-    profiles: [] as AccountRecord[],
-    customs: [] as AccountRecord[],
-  })
-
-  const context = useContext()
-  const route = useRoute()
-
-  // @ts-ignore
-  useMeta(() => {
-    const title = `${resolveResult.account} - Share your crypto identity`
-    const icon = `https://identicons.da.systems/identicon/${resolveResult.account}`
-    // const icon = 'https://phone.bit.cc/favicon.png'
-    return {
-      title,
-      meta: socialMeta({
-        url: resolveResult.url,
-        title,
-        site_name: title,
-        description: account.value.description || 'Welcome to My DAS planet, the most decentralized bio systems',
-        img: icon,
-        twitter: '@realDASystems',
-        twitter_card: 'summary_large_image',
-        theme_color: '#000000',
-      }),
-      link: [{
-        hid: 'apple-touch-icon',
-        rel: 'apple-touch-icon',
-        href: icon,
-      }, {
-        hid: 'favicon',
-        rel: 'icon',
-        type: 'image/png',
-        href: icon,
-      }]
-    }
-  })
-
-  const { fetch } = useFetch(async () => {
-    let accountData: AccountData
-    try {
-      accountData = await getDasAccount(resolveResult.account)
-    }
-    catch (err) {
-      if (err.code === 'UnregisteredDomain') {
-        account.value.status = AccountStatus.unregistered
-      }
-      else {
-        account.value.status = AccountStatus.failed
-        console.error(err)
-      }
-      return
-    }
-
-    const records: AccountRecord[] = accountData.records.map(record => {
-      const keyParts = record.key.split('.') // address.btc
-
-      return {
-        ...record,
-        type: keyParts.shift() as AccountRecordType, // address
-        name: keyParts.join('.'), // btc
-      }
-    })
-
-    const addresses = records.filter(record => {
-      if (record.type === DasRecordType.address) {
-        // crypto name should be all uppercase, btc => BTC
-        // @ts-ignore
-        record.name = record.name.toUpperCase()
-        return true
-      }
-      return false
-    })
-
-    const profiles = records.filter(record => {
-      if (record.type === DasRecordType.profile) {
-        // First letter should be uppercase, youtube => Youtube
-        // @ts-ignore
-        record.name = record.name.charAt(0).toUpperCase() + record.name.slice(1)
-        return true
-      }
-      return false
-    })
-
-    const customs = records.filter(record => record.type === AccountRecordTypes.custom)
-    const descriptionRecord = profiles.find(record => record.key === 'profile.description')
-    const avatarRecord = profiles.find(record => record.key === 'profile.avatar')
-    const welcomeRecord = customs.find(record => record.key === 'custom_key.bitcc_welcome')
-    const themeRecord = customs.find(record => record.key === 'custom_key.bitcc_theme')
-    const redirectRecord = customs.find(record => record.key === 'custom_key.bitcc_redirect')
-    const backgroundImageRecord = customs.find(record => record.key === 'custom_key.bitcc_background_image')
-
-    if (redirectRecord?.value && !route.value.query.noredirect) {
-      context.redirect(redirectRecord.value)
-    }
-
-    account.value = {
-      account: accountData.account,
-      status: AccountStatus.successful,
-
-      owner_address: accountData.owner_address,
-      owner_address_chain: accountData.owner_address_chain.toLowerCase(),
-      manager_address: accountData.manager_address,
-      manager_address_chain: accountData.manager_address_chain.toLowerCase(),
-
-      description: descriptionRecord?.value || '',
-      avatar: avatarRecord?.value || '',
-      welcome: welcomeRecord?.value || '',
-      theme: themeRecord?.value || '',
-      backgroundImage: backgroundImageRecord?.value || '',
-
-      addresses,
-      profiles,
-      customs,
-    }
-  })
-
-  return {
-    account,
-    fetch,
-  }
-}
+import SideNav, { NavItem } from '~/pages/-c/RecordsNav.vue'
+import { INJECTED_BITCC_ACCOUNT } from '~/plugins/resolve'
 
 export default defineComponent({
   head: {},
@@ -425,14 +134,44 @@ export default defineComponent({
     DasUnregistered,
   },
   setup () {
-    const { account, fetch } = useAccount(inject(INJECTED_BITCC_ACCOUNT) as ResolveResult)
+    const resolveResult = inject(INJECTED_BITCC_ACCOUNT) as ResolveResult
 
-    fetch()
+    const route = useRoute()
+    const context = useContext()
+
+    const { account, fetchAccount } = useAccount(resolveResult)
+    const { nfts, fetchNFTs, loading: loadingNFT } = useNFT(account)
+
+    useMetaAccount(account.value, resolveResult.url)
+
+    const { fetch: fetchAccountServer } = useFetch(async () => {
+      await fetchAccount()
+
+      if (account.value.redirect && !route.value.query.noredirect) {
+        context.redirect(account.value.redirect)
+      }
+    })
+
+    if (process.server) {
+      fetchAccountServer()
+    }
+
+    if (process.browser) {
+      onMounted(() => {
+        if (account.value.status === AccountStatus.successful) {
+          fetchNFTs()
+        }
+      })
+    }
 
     return {
       account,
       AccountStatus,
-      activeNav: ref(NavItem.overview)
+
+      nfts,
+      loadingNFT,
+
+      activeNav: ref(NavItem.nft)
     }
   }
 })
