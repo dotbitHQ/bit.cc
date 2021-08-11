@@ -36,7 +36,7 @@ pipeline:
       - cd /data/code/bit.cc
       - npm run reload_production
     when:
-      branch: [master]
+      branch: [main]
 
   # deploy_test_env
   deploy_test:
