@@ -120,6 +120,7 @@
     }
   }
 
+  .nft_video,
   .nft_img {
     width: 100%;
     height: 100%;
@@ -159,7 +160,12 @@
   <div class="nft-record">
     <a class="nft_wrap" :href="nft.link" target="_blank">
       <div v-if="nft.providerType !== NFTProviderType.das" class="nft_content">
-        <img class="nft_img" :src="nft.imageUrl" :alt="nft.name">
+        <video v-if="nft.imageUrl.match(/\.mp4$/)" class="nft_video"
+               playsinline
+               autoplay loop
+               :src="nft.imageUrl" />
+        <img v-else class="nft_img" :src="nft.imageUrl" :alt="nft.name">
+
         <div class="nft_info">
           <div class="nft_name">{{ nft.name }}</div>
           <div class="nft_price">{{ nft.price }} {{ nft.priceToken }}</div>
@@ -167,7 +173,7 @@
       </div>
 
       <div v-else class="nft_content _das" :style="{backgroundColor: color}">
-        <div class="das_card" :class="isNarrow ? '_narrow': ''" >
+        <div class="das_card" :class="isNarrow ? '_narrow': ''">
           <DasAvatar class="das_avatar" :account="nft.name" size="" />
           <div class="das_name" v-resize-text="{minSize: minNameSize, maxSize: maxNameSize}">{{ nft.name.replace('.bit', '') }}</div>
           <div class="das_suffix">.bit</div>
