@@ -22,6 +22,7 @@
     "reload_test1": "pm2 reload ecosystem.config.js --only bit.cc_test1"
   },
   "dependencies": {
+    "@lay2/pw-core": "^0.4.0-alpha.9",
     "@nuxtjs/pwa": "^3.3.5",
     "axios": "^0.21.1",
     "config": "^3.3.6",

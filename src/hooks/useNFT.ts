@@ -38,7 +38,7 @@ function normalizeJinseAssets (assets: JinseAsset[]): NFT[] {
     return {
       name: asset.class_name,
       imageUrl: asset.class_bg_image_url,
-      link: `https://explorer.jinse.cc/nft/${asset.token_uuid}`,
+      link: `https://explorer.jinse.cc/nft/${asset.class_uuid}`,
       providerType: NFTProviderType.jinse,
     }
   })
@@ -61,7 +61,7 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
 
   function fetchNFTs (): void {
     const ownerAddress = account.value.owner_address
-    const ckbAddressRecords = account.value.addresses.filter(record => record.key === 'address.ckb')
+    // const ckbAddressRecords = account.value.addresses.filter(record => record.key === 'address.ckb')
 
     // const ethAddressRecords = account.value.addresses.filter(record => record.key === 'address.eth')
     // for (const record of ethAddressRecords) {
@@ -70,20 +70,57 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
     //   })
     // }
 
+    let openseaAssets: NFT[] = []
+    let jinseAssets: NFT[] = []
+    let dasAccounts: NFT[] = []
+
     if (account.value.owner_address_chain === 'eth') {
       void services.getOpenseaAssets(ownerAddress).then(res => {
-        nfts.value = normalizeOpenseaAssets(res.assets).concat(nfts.value)
+        openseaAssets = normalizeOpenseaAssets(res.assets)
+
+        nfts.value = openseaAssets.concat(jinseAssets).concat(dasAccounts)
       })
+
+      if (process.browser) {
+        // @ts-ignore
+        void import('@lay2/pw-core').then(async (PWCoreImported) => {
+          const { Platform, Address, AddressType, Provider, PwCollector, default: PWCore } = PWCoreImported
+
+          // only used as a placeholder for pw-core initialization
+          class DummyProvider extends Provider {
+            async init (): Promise<DummyProvider> {
+              this.address = new Address(ownerAddress, AddressType.eth)
+              return this
+            }
+
+            async sign (message: string): Promise<string> {
+              return ''
+            }
+
+            close (): any {
+              return this
+            }
+          }
+
+          // PWCore need to initialized to use Address
+          await new PWCore('https://mainnet.ckb.dev/').init(
+            new DummyProvider(),
+            new PwCollector(),
+          )
+
+          const ethAddressForPW = new Address(ownerAddress, AddressType.eth).toCKBAddress()
+
+          void services.getJinseAssets(ethAddressForPW).then((res) => {
+            jinseAssets = normalizeJinseAssets(res)
+            nfts.value = openseaAssets.concat(jinseAssets).concat(dasAccounts)
+          })
+        })
+      }
     }
 
-    // for (const record of ckbAddressRecords) {
-    //   void services.getJinseAssets(record.value).then(res => {
-    //     nfts.value = nfts.value.concat(normalizeJinseAssets(res))
-    //   })
-    // }
-
     void das.accountsForOwner(ownerAddress).then(res => {
-      nfts.value = nfts.value.concat(normalizeDASAccounts(res))
+      dasAccounts = normalizeDASAccounts(res)
+      nfts.value = openseaAssets.concat(jinseAssets).concat(dasAccounts)
     })
   }
 
