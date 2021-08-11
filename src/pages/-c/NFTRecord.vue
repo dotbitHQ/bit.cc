@@ -39,7 +39,7 @@
           width: 90%;
           max-width: 90%;
           height: 57%;
-          padding: 15px 15px 5px 15px;
+          padding: 30px 15px 5px 15px;
           display: flex;
           flex-direction: column;
           align-items: center;
@@ -132,8 +132,8 @@
     .nft_wrap {
       .nft_content {
         &._das {
-          .das_card_content {
-            padding: 0 10px;
+          .das_card {
+            padding-top: 15px;
           }
 
           .das_avatar {

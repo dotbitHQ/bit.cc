@@ -48,7 +48,7 @@
     .index_content {
       width: unset;
       min-height: 95%;
-      padding: 0 15px;
+      padding: 0 10px;
 
       .index_nav {
         margin-bottom: 15px;

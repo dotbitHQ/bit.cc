@@ -72,7 +72,7 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
 
     if (account.value.owner_address_chain === 'eth') {
       void services.getOpenseaAssets(ownerAddress).then(res => {
-        nfts.value = nfts.value.concat(normalizeOpenseaAssets(res.assets))
+        nfts.value = normalizeOpenseaAssets(res.assets).concat(nfts.value)
       })
     }
 
