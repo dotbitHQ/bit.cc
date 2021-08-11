@@ -33,7 +33,9 @@ You can change the description field on bit.cc by setting `description` field un
 You can change the avatar image on bit.cc by setting `avatar` field under `profile`.
 ![Configure avatar](./docs/set_avatar.png)
 
-#### Configure welcome
+#### ~~Configure welcome~~
+> The welcome field is no longer in use.
+
 You can change the welcome message on bit.cc by setting custom records.
 
 Please fill in the custom key with `bitcc_welcome`, and value with any message you want.
