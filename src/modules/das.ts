@@ -62,6 +62,9 @@ export function resolveAccountFromUrl (url: string): ResolveResult {
 }
 
 export function buildProfileUrl<T extends Pick<AccountRecord, 'value'|'key'>> (record: T): string {
+  if (record.value.match(/https?:\/\//)) {
+    return record.value
+  }
   if (record.key === 'profile.twitter') {
     return `https://twitter.com/${record.value.replace(/^@/, '')}`
   }
