@@ -24,6 +24,7 @@ function normalizeOpenseaAssets (assets: OpenSeaAsset[]): NFT[] {
   return assets.map(asset => {
     return {
       name: asset.name,
+      // imageUrl: asset.animation_url || asset.image_url,
       imageUrl: asset.image_url,
       link: asset.permalink,
       providerType: NFTProviderType.opensea,
