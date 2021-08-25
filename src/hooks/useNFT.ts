@@ -83,7 +83,6 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
       })
 
       if (process.browser) {
-        // @ts-ignore
         void import('@lay2/pw-core').then(async (PWCoreImported) => {
           const { Platform, Address, AddressType, Provider, PwCollector, default: PWCore } = PWCoreImported
 
@@ -105,8 +104,8 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
 
           // PWCore need to initialized to use Address
           await new PWCore('https://mainnet.ckb.dev/').init(
-            new DummyProvider(),
-            new PwCollector(),
+            new DummyProvider(Platform.eth),
+            new PwCollector('https://mainnet.ckb.dev/'),
           )
 
           const ethAddressForPW = new Address(ownerAddress, AddressType.eth).toCKBAddress()

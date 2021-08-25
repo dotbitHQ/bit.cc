@@ -45,6 +45,13 @@
     }
   }
 
+  .records-desc {
+    margin-top: 10px;
+    text-align: center;
+    font-size: 12px;
+    color: #ccc;
+  }
+
   @media all and (max-width: $screen_lg) {
     .das-records_group {
       margin-left: 0;
@@ -100,7 +107,8 @@
       <div id="J_nft" class="das-records_group _nft">
         <NFTRecord v-for="nft in nfts" :key="nft.name + nft.link" :nft="nft" />
       </div>
-      <RecordsSeparator />
+      <div class="records-desc">{{ $tt('Above are all the NFTs of the owner address') }}</div>
+      <RecordsSeparator style="margin-top: 20px;" />
     </template>
 
     <template v-if="addresses.length">
