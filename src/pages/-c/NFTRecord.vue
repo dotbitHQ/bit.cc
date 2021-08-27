@@ -160,7 +160,7 @@
   <div class="nft-record">
     <a class="nft_wrap" :href="nft.link" target="_blank">
       <div v-if="nft.providerType !== NFTProviderType.das" class="nft_content">
-        <video v-if="nft.imageUrl.match(/\.mp4$/)" class="nft_video"
+        <video v-if="nft.imageUrl.match(/\.(mp4|mov)$/)" class="nft_video"
                playsinline
                autoplay loop
                :src="nft.imageUrl" />
