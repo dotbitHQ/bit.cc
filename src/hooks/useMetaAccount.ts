@@ -7,6 +7,7 @@ export function useMetaAccount (account: AccountInfo, url: string): void {
   useMeta(() => {
     const title = `${account.account} - Share your crypto identity`
     const img = 'https://bit.host/imgs/social-preview.png'
+    const icon = `https://identicons.da.systems/identicon/${account.account}`
     // const icon = 'https://phone.bit.cc/favicon.png'
     return {
       title,
@@ -15,7 +16,7 @@ export function useMetaAccount (account: AccountInfo, url: string): void {
         title,
         site_name: title,
         description: account.description || 'Welcome to My DAS planet, the most decentralized bio systems',
-        img: img,
+        img,
         twitter: '@realDASystems',
         twitter_card: 'summary_large_image',
         theme_color: '#000000',
@@ -23,12 +24,12 @@ export function useMetaAccount (account: AccountInfo, url: string): void {
       link: [{
         hid: 'apple-touch-icon',
         rel: 'apple-touch-icon',
-        href: img,
+        href: icon,
       }, {
         hid: 'favicon',
         rel: 'icon',
         type: 'image/png',
-        href: img,
+        href: icon,
       }]
     }
   })
