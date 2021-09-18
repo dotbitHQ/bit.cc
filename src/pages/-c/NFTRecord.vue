@@ -210,12 +210,22 @@ export default defineComponent({
 
     if (process.browser) {
       if (window.screen.availWidth < 540) {
-        minNameSize = 12
-        maxNameSize = 30
-      }
+        if (props.nft.providerType === NFTProviderType.das) {
+          minNameSize = 12
+          maxNameSize = 30
 
-      if (props.nft.name.length > 60) {
-        isNarrow = true
+          // adjust for emoji, a quick fix for ResizeText.ts
+          const name = props.nft.name.split('.')[0]
+          const visibleLength = [...name].length
+          const isAllEmoji = name.length >= visibleLength * 2
+          if (isAllEmoji && visibleLength >= 5) {
+            maxNameSize = 20
+          }
+        }
+
+        if (props.nft.name.length > 60) {
+          isNarrow = true
+        }
       }
     }
 
