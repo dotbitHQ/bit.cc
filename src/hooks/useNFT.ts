@@ -79,7 +79,7 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
       void services.getOpenseaAssets(ownerAddress).then(res => {
         openseaAssets = normalizeOpenseaAssets(res.assets)
 
-        nfts.value = openseaAssets.concat(jinseAssets).concat(dasAccounts)
+        nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets)
       })
 
       if (process.browser) {
@@ -112,7 +112,7 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
 
           void services.getJinseAssets(ethAddressForPW).then((res) => {
             jinseAssets = normalizeJinseAssets(res)
-            nfts.value = openseaAssets.concat(jinseAssets).concat(dasAccounts)
+            nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets)
           })
         })
       }
@@ -120,7 +120,7 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
 
     void das.accountsForOwner(ownerAddress).then(res => {
       dasAccounts = normalizeDASAccounts(res)
-      nfts.value = openseaAssets.concat(jinseAssets).concat(dasAccounts)
+      nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets)
     })
   }
 
