@@ -39,7 +39,7 @@ function normalizeJinseAssets (assets: JinseAsset[]): NFT[] {
     return {
       name: asset.class_name,
       imageUrl: asset.class_bg_image_url,
-      link: `https://explorer.jinse.cc/nft/${asset.class_uuid}`,
+      link: `https://explorer.mibao.net/nft/${asset.class_uuid}`,
       providerType: NFTProviderType.jinse,
     }
   })
