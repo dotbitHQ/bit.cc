@@ -19,7 +19,7 @@ export default {
       { name: 'viewport', content: 'width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no' },
     ],
     script: [{
-      src: '//at.alicdn.com/t/font_2675899_7qnmb934w9f.js',
+      src: '//at.alicdn.com/t/font_2675899_5g5ata58efg.js',
       async: true,
     }]
   },
@@ -118,7 +118,7 @@ export default {
   build: {
     // For debug purpose
     'html.minify': !abcConfig.isDev,
-    'babel': {
+    babel: {
       presets (ctx) {
         let targets
         // Keep default target in server side
@@ -148,6 +148,14 @@ export default {
     extend (config, ctx) {
       // Disable webpack devtool for better typescript debug experience
       config.devtool = false
+
+      // allow importing .mjs, fixing the problem importing @vueuse/core (the code below can be delete after nuxt@2.16.0)
+      // https://github.com/nuxt/nuxt.js/pull/9180/files#diff-4b8d1a6115f7d4a733f4132901f1dfc80c69504b68679ecf21e657bb5e9d9491R333
+      config.module.rules.push({
+        test: /\.mjs$/,
+        include: /node_modules/,
+        type: 'javascript/auto'
+      })
     }
   }
 }

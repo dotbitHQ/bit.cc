@@ -31,12 +31,6 @@
 
 <template>
   <div class="bit-header">
-    <a :href="intent" target="_blank">
-      <IconfontButton :message="$tt('Share to Twitter')" message-position="bottom">
-        <Iconfont name="twitter" :size="18" />
-      </IconfontButton>
-    </a>
-
     <a href="https://github.com/DeAccountSystems/bit.cc" target="_blank">
       <IconfontButton :message="$tt('Guide')" message-position="bottom">
         <Iconfont name="help" :size="18" />
@@ -62,18 +56,5 @@ export default defineComponent({
     IconfontButton,
     Iconfont,
   },
-  setup () {
-    const intent = ref('')
-
-    onMounted(() => {
-      const text = 'Hey! It\'s time to DAS! \nCome to my DAS profile card and view all my NFTs, crypto addresses, and social contacts! @realDASystems\n'
-      const url = window.location.href
-      intent.value = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
-    })
-
-    return {
-      intent,
-    }
-  }
 })
 </script>
