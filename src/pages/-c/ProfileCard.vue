@@ -103,6 +103,12 @@
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
     }
+
+    .profile_share {
+      .profile_share_button {
+        color: #fff;
+      }
+    }
   }
 }
 </style>

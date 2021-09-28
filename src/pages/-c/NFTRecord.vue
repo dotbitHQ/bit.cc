@@ -207,35 +207,40 @@ export default defineComponent({
     let minNameSize = 15
     let maxNameSize = 44
     let isNarrow = false
+    let color = ''
 
     if (process.browser) {
-      if (window.screen.availWidth < 540) {
-        if (props.nft.providerType === NFTProviderType.das) {
+      if (props.nft.providerType === NFTProviderType.das) {
+        if (window.screen.availWidth < 540) {
           minNameSize = 12
           maxNameSize = 30
-
           // adjust for emoji, a quick fix for ResizeText.ts
           const name = props.nft.name.split('.')[0]
           const visibleLength = [...name].length
           const isAllEmoji = name.length >= visibleLength * 2
+
           if (isAllEmoji && visibleLength >= 5) {
             maxNameSize = 20
+
+            if (visibleLength >= 10) {
+              maxNameSize = 12
+            }
+          }
+
+          if (props.nft.name.length > 60) {
+            isNarrow = true
           }
         }
 
-        if (props.nft.name.length > 60) {
-          isNarrow = true
+        const colors = ['#9692E6', '#40C3F0', '#FF9895', '#FEC165', '#E96565', '#3370FF', '#FF4F6E', '#6957ED', '#22C4C6', '#BC51EC', '#FFA86A', '#22C68D']
+        let index = 0
+        for (let i = 0; i < props.nft.name.length; i++) {
+          index += props.nft.name.charCodeAt(i)
         }
+        index = index % colors.length
+        color = colors[index]
       }
     }
-
-    const colors = ['#9692E6', '#40C3F0', '#FF9895', '#FEC165', '#E96565', '#3370FF', '#FF4F6E', '#6957ED', '#22C4C6', '#BC51EC', '#FFA86A', '#22C68D']
-    let index = 0
-    for (let i = 0; i < props.nft.name.length; i++) {
-      index += props.nft.name.charCodeAt(i)
-    }
-    index = index % colors.length
-    const color = colors[index]
 
     return {
       NFTProviderType,
