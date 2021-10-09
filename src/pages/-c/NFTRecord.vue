@@ -20,65 +20,13 @@
     padding-bottom: 100%;
     background-color: #fff;
 
-    .nft_content {
+    .nft_content,
+    .das-account-card {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-
-      &._das {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-
-        .das_card {
-          position: relative;
-          margin-top: 10%;
-          box-sizing: border-box;
-          width: 90%;
-          max-width: 90%;
-          height: 57%;
-          padding: 30px 15px 5px 15px;
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          justify-content: space-around;
-          background: url('/imgs/nft/das-card.svg') no-repeat center/contain;
-
-          &._narrow {
-            padding-left: 5px;
-            padding-right: 5px;
-          }
-        }
-
-        .das_avatar {
-          position: absolute;
-          top: -$avatarSize / 2.2;
-          height: $avatarSize;
-          width: $avatarSize;
-        }
-
-        .das_name {
-          font-size: 44px;
-          font-weight: bold;
-          text-align: center;
-          line-height: 1;
-          color: #fff;
-        }
-
-        .das_suffix {
-          padding: 0 20px 4px 20px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 44px;
-          font-weight: bold;
-          border-radius: 45px;
-          background: rgba(0, 0, 0, 0.1);
-          color: #fff;
-        }
-      }
     }
 
     .nft_info {
@@ -99,10 +47,6 @@
       .nft_name {
         font-size: 16px;
         font-weight: bold;
-        //overflow: hidden;
-        //word-break: keep-all;
-        //white-space: nowrap;
-        //text-overflow: ellipsis;
       }
 
       .nft_price {
@@ -126,33 +70,6 @@
     height: 100%;
     object-fit: cover;
   }
-
-  @media all and (max-width: $screen_sm) {
-    $avatarSize: 30px;
-
-    .nft_wrap {
-      .nft_content {
-        &._das {
-          .das_card {
-            padding-top: 15px;
-          }
-
-          .das_avatar {
-            top: -$avatarSize / 2.2;
-            height: $avatarSize;
-            width: $avatarSize;
-          }
-
-          .das_name {
-          }
-
-          .das_suffix {
-            font-size: 20px;
-          }
-        }
-      }
-    }
-  }
 }
 </style>
 
@@ -172,30 +89,21 @@
         </div>
       </div>
 
-      <div v-else class="nft_content _das" :style="{backgroundColor: color}">
-        <div class="das_card" :class="isNarrow ? '_narrow': ''">
-          <DasAvatar class="das_avatar" :account="nft.name" size="" />
-          <div class="das_name" v-resize-text="{minSize: minNameSize, maxSize: maxNameSize}">{{ nft.name.replace('.bit', '') }}</div>
-          <div class="das_suffix">.bit</div>
-        </div>
-      </div>
+      <DasAccountCard v-else :account="nft.name" />
     </a>
   </div>
 </template>
 
 <script lang="ts">
-import ResizeText from '~/directives/ResizeText'
+import { DasAccountCard } from 'das-ui-shared'
 import { NFT, NFTProviderType } from '~/hooks/useNFT'
-import DasAvatar from '~/components/DasAvatar.vue'
+import 'das-ui-shared/dist/style.css'
 const { defineComponent } = require('@nuxtjs/composition-api')
 
 export default defineComponent({
   name: 'NFTRecord',
   components: {
-    DasAvatar
-  },
-  directives: {
-    ResizeText,
+    DasAccountCard,
   },
   props: {
     nft: {
@@ -204,50 +112,8 @@ export default defineComponent({
     }
   },
   setup (props: {nft: NFT}) {
-    let minNameSize = 15
-    let maxNameSize = 44
-    let isNarrow = false
-    let color = ''
-
-    if (process.browser) {
-      if (props.nft.providerType === NFTProviderType.das) {
-        if (window.screen.availWidth < 540) {
-          minNameSize = 12
-          maxNameSize = 30
-          // adjust for emoji, a quick fix for ResizeText.ts
-          const name = props.nft.name.split('.')[0]
-          const visibleLength = [...name].length
-          const isAllEmoji = name.length >= visibleLength * 2
-
-          if (isAllEmoji && visibleLength >= 5) {
-            maxNameSize = 20
-
-            if (visibleLength >= 10) {
-              maxNameSize = 12
-            }
-          }
-
-          if (props.nft.name.length > 60) {
-            isNarrow = true
-          }
-        }
-
-        const colors = ['#9692E6', '#40C3F0', '#FF9895', '#FEC165', '#E96565', '#3370FF', '#FF4F6E', '#6957ED', '#22C4C6', '#BC51EC', '#FFA86A', '#22C68D']
-        let index = 0
-        for (let i = 0; i < props.nft.name.length; i++) {
-          index += props.nft.name.charCodeAt(i)
-        }
-        index = index % colors.length
-        color = colors[index]
-      }
-    }
-
     return {
       NFTProviderType,
-      minNameSize,
-      maxNameSize,
-      isNarrow,
-      color,
     }
   }
 })

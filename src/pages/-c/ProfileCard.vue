@@ -151,9 +151,8 @@
 <script>
 
 import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { DasAvatar, ResizeText } from 'das-ui-shared'
 import { useToggle } from '@vueuse/core'
-import DasAvatar from '~/components/DasAvatar'
-import ResizeText from '~/directives/ResizeText'
 import Iconfont from '~/components/Iconfont'
 import { collapseString } from '~/modules/tools'
 
