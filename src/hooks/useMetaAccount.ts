@@ -6,7 +6,7 @@ export function useMetaAccount (account: AccountInfo, url: string): void {
   // @ts-expect-error
   useMeta(() => {
     const title = `${account.account} - Share your crypto identity`
-    const img = 'https://bit.host/imgs/social-preview.png'
+    const img = `https://identicons.da.systems/seo/${account.account}`
     const icon = `https://identicons.da.systems/identicon/${account.account}`
     // const icon = 'https://phone.bit.cc/favicon.png'
     return {
