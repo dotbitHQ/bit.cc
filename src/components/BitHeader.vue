@@ -31,22 +31,21 @@
 
 <template>
   <div class="bit-header">
+    <a :href="`https://app.da.systems/explorer?inviter=${account}`" target="_blank" style="margin-top: 10px;">
+      {{ $tt('Register DAS') }}
+    </a>
+
     <a href="https://github.com/DeAccountSystems/bit.cc" target="_blank">
       <IconfontButton :message="$tt('Guide')" message-position="bottom">
         <Iconfont name="help" :size="18" />
-      </IconfontButton>
-    </a>
-
-    <a href="https://da.systems" target="_blank">
-      <IconfontButton :message="$tt('DAS')" message-position="bottom">
-        <Iconfont name="das" :size="18" />
       </IconfontButton>
     </a>
   </div>
 </template>
 
 <script>
-import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { defineComponent, inject } from '@nuxtjs/composition-api'
+import { INJECTED_BITCC_ACCOUNT } from '~/plugins/resolve'
 import IconfontButton from './IconfontButton'
 import Iconfont from './Iconfont'
 
@@ -56,5 +55,11 @@ export default defineComponent({
     IconfontButton,
     Iconfont,
   },
+  setup () {
+    const resolveResult = inject(INJECTED_BITCC_ACCOUNT)
+    return {
+      account: resolveResult.account
+    }
+  }
 })
 </script>
