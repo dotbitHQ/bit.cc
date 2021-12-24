@@ -4,11 +4,13 @@ import { AccountInfo } from '~/hooks/useAccount'
 import { das, services } from '~/services'
 import { JinseAsset } from '../../types/jinse'
 import { OpenSeaAsset } from '../../types/opensea'
+import { XdaiPoap } from '../../types/xdai.poap'
 
 export enum NFTProviderType {
   opensea,
   jinse,
   das,
+  xdai
 }
 
 export interface NFT {
@@ -32,6 +34,17 @@ function normalizeOpenseaAssets (assets: OpenSeaAsset[]): NFT[] {
       priceToken: asset.last_sale ? asset.last_sale.payment_token.symbol : undefined
     }
   }).filter(asset => asset.imageUrl)
+}
+
+function normalizeXdaiPoap (poaps: XdaiPoap[]): NFT[] {
+  return poaps.map(poap => {
+    return {
+      name: poap.event.name,
+      imageUrl: poap.event.image_url,
+      link: `https://app.poap.xyz/token/${poap.tokenId}`,
+      providerType: NFTProviderType.xdai,
+    }
+  })
 }
 
 function normalizeJinseAssets (assets: JinseAsset[]): NFT[] {
@@ -72,6 +85,7 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
     // }
 
     let openseaAssets: NFT[] = []
+    let xdaiPoap: NFT[] = []
     let jinseAssets: NFT[] = []
     let dasAccounts: NFT[] = []
 
@@ -79,7 +93,12 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
       void services.getOpenseaAssets(ownerAddress).then(res => {
         openseaAssets = normalizeOpenseaAssets(res.assets)
 
-        nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets)
+        nfts.value = xdaiPoap.concat(dasAccounts).concat(openseaAssets).concat(jinseAssets)
+      })
+
+      void services.getXdaiPoap(ownerAddress).then(res => {
+        xdaiPoap = normalizeXdaiPoap(res)
+        nfts.value = xdaiPoap.concat(dasAccounts).concat(openseaAssets).concat(jinseAssets)
       })
 
       if (process.browser) {
@@ -112,7 +131,7 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
 
           void services.getJinseAssets(ethAddressForPW).then((res) => {
             jinseAssets = normalizeJinseAssets(res)
-            nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets)
+            nfts.value = xdaiPoap.concat(dasAccounts).concat(openseaAssets).concat(jinseAssets)
           })
         })
       }
@@ -120,7 +139,7 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
 
     void das.accountsForOwner(ownerAddress).then(res => {
       dasAccounts = normalizeDASAccounts(res)
-      nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets)
+      nfts.value = xdaiPoap.concat(dasAccounts).concat(openseaAssets).concat(jinseAssets)
     })
   }
 

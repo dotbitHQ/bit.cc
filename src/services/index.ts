@@ -2,6 +2,7 @@ import DasSDK from 'das-sdk'
 import { BasicService } from '~/services/BasicService'
 import { JinseAsset } from '../../types/jinse'
 import { OpenSeaAsset } from '../../types/opensea'
+import { XdaiPoap } from '../../types/xdai.poap'
 
 // for simple app, service can all be placed under BasicService
 export class Services extends BasicService {
@@ -23,6 +24,15 @@ export class Services extends BasicService {
         // 'X-API-KEY': '',
       }
     })
+  }
+
+  /**
+   * get xDai POAP assets for address
+   * @param owner eth address
+   * @doc https://app.poap.xyz
+   */
+  getXdaiPoap (owner: string): Promise<XdaiPoap[]> {
+    return this.axios.get(`https://api.poap.xyz/actions/scan/${owner}`)
   }
 
   getJinseAssets (address: string): Promise<JinseAsset[]> {
