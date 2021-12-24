@@ -93,12 +93,12 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
       void services.getOpenseaAssets(ownerAddress).then(res => {
         openseaAssets = normalizeOpenseaAssets(res.assets)
 
-        nfts.value = xdaiPoaps.concat(dasAccounts).concat(openseaAssets).concat(jinseAssets)
+        nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets).concat(xdaiPoaps)
       })
 
       void services.getXdaiPoaps(ownerAddress).then(res => {
         xdaiPoaps = normalizeXdaiPoaps(res)
-        nfts.value = xdaiPoaps.concat(dasAccounts).concat(openseaAssets).concat(jinseAssets)
+        nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets).concat(xdaiPoaps)
       })
 
       if (process.browser) {
@@ -131,7 +131,7 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
 
           void services.getJinseAssets(ethAddressForPW).then((res) => {
             jinseAssets = normalizeJinseAssets(res)
-            nfts.value = xdaiPoaps.concat(dasAccounts).concat(openseaAssets).concat(jinseAssets)
+            nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets).concat(xdaiPoaps)
           })
         })
       }
@@ -139,7 +139,7 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
 
     void das.accountsForOwner(ownerAddress).then(res => {
       dasAccounts = normalizeDASAccounts(res)
-      nfts.value = xdaiPoaps.concat(dasAccounts).concat(openseaAssets).concat(jinseAssets)
+      nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets).concat(xdaiPoaps)
     })
   }
 
