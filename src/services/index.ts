@@ -31,7 +31,7 @@ export class Services extends BasicService {
    * @param owner eth address
    * @doc https://app.poap.xyz
    */
-  getXdaiPoap (owner: string): Promise<XdaiPoap[]> {
+  getXdaiPoaps (owner: string): Promise<XdaiPoap[]> {
     return this.axios.get(`https://api.poap.xyz/actions/scan/${owner}`)
   }
 
