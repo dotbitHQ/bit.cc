@@ -7,6 +7,7 @@
   .nav_item {
     display: inline-block;
     padding: 4px 2px;
+    overflow: hidden;
 
     span {
       display: inline-grid;
