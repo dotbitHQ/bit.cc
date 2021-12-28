@@ -49,7 +49,7 @@
     margin-top: 10px;
     text-align: center;
     font-size: 12px;
-    color: #ccc;
+    color: black;
   }
 
   @media all and (max-width: $screen_lg) {

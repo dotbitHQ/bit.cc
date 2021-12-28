@@ -18,6 +18,7 @@ export function $tt (key: string, params?: any): string {
   key = makeCrcKey(key)
   return window.i18n.t(key, params)
 }
+
 /**
  * Match users language with the languages we supported
  * @param acceptLanguage {string} comma split string
