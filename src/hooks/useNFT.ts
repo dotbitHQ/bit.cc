@@ -1,16 +1,20 @@
-import { Ref, ref } from '@nuxtjs/composition-api'
+import { Ref, ref, watch } from '@nuxtjs/composition-api'
 import { AccountData } from 'das-sdk'
 import { AccountInfo } from '~/hooks/useAccount'
 import { das, services } from '~/services'
 import { JinseAsset } from '../../types/jinse'
 import { OpenSeaAsset } from '../../types/opensea'
 import { XdaiPoap } from '../../types/xdai.poap'
+import { TreasurelandAsset } from '../../types/treasureland'
+import { AirNFTsNft } from '../../types/airnfts'
 
 export enum NFTProviderType {
   opensea,
   jinse,
   das,
-  xdai
+  xdai,
+  treasureland,
+  airnfts
 }
 
 export interface NFT {
@@ -69,6 +73,38 @@ function normalizeDASAccounts (accounts: AccountData[]): NFT[] {
   })
 }
 
+function normalizeTreasurelandAssets (assets: TreasurelandAsset[]): NFT[] {
+  return assets.map(asset => {
+    let imageUrl = ''
+    if (asset.resource_type === 'image') {
+      if (asset.resource && asset.resource.includes('https://')) {
+        imageUrl = asset.resource
+      }
+      else if (asset.resource) {
+        imageUrl = `https://d3ky2du9j9kl06.cloudfront.net/${asset.resource}`
+      }
+    }
+
+    return {
+      name: asset.name,
+      imageUrl: imageUrl,
+      link: asset.order_id ? `https://treasureland.market/assets/${asset.contract}/${asset.token_id}/${asset.order_id}?chain_id=${asset.chain_id}` : `https://treasureland.market/assets/${asset.contract}/${asset.token_id}?chain_id=${asset.chain_id}`,
+      providerType: NFTProviderType.treasureland,
+    }
+  }).filter(asset => asset.imageUrl)
+}
+
+function normalizeAirNFTsAssets (assets: AirNFTsNft[]): NFT[] {
+  return assets.map(asset => {
+    return {
+      name: asset.name,
+      imageUrl: asset.image,
+      link: asset.external_url,
+      providerType: NFTProviderType.airnfts,
+    }
+  }).filter(asset => asset.imageUrl)
+}
+
 export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts: Ref<NFT[]>, fetchNFTs: Function} {
   const nfts = ref<NFT[]>([])
   const loading = ref(true)
@@ -84,21 +120,84 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
     //   })
     // }
 
-    let openseaAssets: NFT[] = []
-    let xdaiPoaps: NFT[] = []
-    let jinseAssets: NFT[] = []
-    let dasAccounts: NFT[] = []
+    let openseaAssets = ref<NFT[]>([])
+    let xdaiPoaps = ref<NFT[]>([])
+    let treasurelandBSCAssets = ref<NFT[]>([])
+    let treasurelandPolygonAssets = ref<NFT[]>([])
+    let treasurelandETHAssets = ref<NFT[]>([])
+    let treasurelandMoonriverAssets = ref<NFT[]>([])
+    let treasurelandIotexAssets = ref<NFT[]>([])
+    let airNFTsAssets = ref<NFT[]>([])
+    let jinseAssets = ref<NFT[]>([])
+    let dasAccounts = ref<NFT[]>([])
+
+    watch([
+      dasAccounts,
+      openseaAssets,
+      jinseAssets,
+      xdaiPoaps,
+      treasurelandBSCAssets,
+      treasurelandPolygonAssets,
+      treasurelandETHAssets,
+      treasurelandMoonriverAssets,
+      treasurelandIotexAssets,
+      airNFTsAssets,
+    ], () => {
+      nfts.value = dasAccounts.value
+        .concat(openseaAssets.value)
+        .concat(jinseAssets.value)
+        .concat(xdaiPoaps.value)
+        .concat(treasurelandBSCAssets.value)
+        .concat(treasurelandPolygonAssets.value)
+        .concat(treasurelandETHAssets.value)
+        .concat(treasurelandMoonriverAssets.value)
+        .concat(treasurelandIotexAssets.value)
+        .concat(airNFTsAssets.value)
+    })
 
     if (account.value.owner_address_chain === 'eth') {
       void services.getOpenseaAssets(ownerAddress).then(res => {
-        openseaAssets = normalizeOpenseaAssets(res.assets)
-
-        nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets).concat(xdaiPoaps)
+        openseaAssets.value = normalizeOpenseaAssets(res.assets)
       })
 
       void services.getXdaiPoaps(ownerAddress).then(res => {
-        xdaiPoaps = normalizeXdaiPoaps(res)
-        nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets).concat(xdaiPoaps)
+        xdaiPoaps.value = normalizeXdaiPoaps(res)
+      })
+
+      void services.getTreasurelandBscAssets(ownerAddress).then(res => {
+        if (res && res.data && res.data.list && res.data.list.length > 0) {
+          treasurelandBSCAssets.value = normalizeTreasurelandAssets(res.data.list)
+        }
+      })
+
+      void services.getTreasurelandPolygonAssets(ownerAddress).then(res => {
+        if (res && res.data && res.data.list && res.data.list.length > 0) {
+          treasurelandPolygonAssets.value = normalizeTreasurelandAssets(res.data.list)
+        }
+      })
+
+      void services.getTreasurelandETHAssets(ownerAddress).then(res => {
+        if (res && res.data && res.data.list && res.data.list.length > 0) {
+          treasurelandETHAssets.value = normalizeTreasurelandAssets(res.data.list)
+        }
+      })
+
+      void services.getTreasurelandMoonriverAssets(ownerAddress).then(res => {
+        if (res && res.data && res.data.list && res.data.list.length > 0) {
+          treasurelandMoonriverAssets.value = normalizeTreasurelandAssets(res.data.list)
+        }
+      })
+
+      void services.getTreasurelandIotexAssets(ownerAddress).then(res => {
+        if (res && res.data && res.data.list && res.data.list.length > 0) {
+          treasurelandIotexAssets.value = normalizeTreasurelandAssets(res.data.list)
+        }
+      })
+
+      void services.getAirNFTsAssets(ownerAddress).then(res => {
+        if (res && res.nfts && res.nfts.length > 0) {
+          airNFTsAssets.value = normalizeAirNFTsAssets(res.nfts)
+        }
       })
 
       if (process.browser) {
@@ -130,16 +229,14 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
           const ethAddressForPW = new Address(ownerAddress, AddressType.eth).toCKBAddress()
 
           void services.getJinseAssets(ethAddressForPW).then((res) => {
-            jinseAssets = normalizeJinseAssets(res)
-            nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets).concat(xdaiPoaps)
+            jinseAssets.value = normalizeJinseAssets(res)
           })
         })
       }
     }
 
     void das.accountsForOwner(ownerAddress).then(res => {
-      dasAccounts = normalizeDASAccounts(res)
-      nfts.value = dasAccounts.concat(openseaAssets).concat(jinseAssets).concat(xdaiPoaps)
+      dasAccounts.value = normalizeDASAccounts(res)
     })
   }
 

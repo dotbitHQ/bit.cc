@@ -5,17 +5,29 @@
   display: flex;
   justify-content: center;
   overflow: auto;
+  background: rgba(126, 126, 126, 0.2);
+  border-radius: 12px;
+  padding: 4px 2px;
+  scrollbar-width: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+    width: 0 !important;
+  }
 
   .nav_item {
+    flex: 1;
+
     a {
-      display: inline-block;
-      margin: 0 14px;
-      padding: 7px 16px;
+      display: block;
+      margin: 0 2px;
+      padding: 8px 12px;
       font-size: 14px;
-      line-height: 1;
+      line-height: 16px;
       white-space: nowrap;
-      border-radius: 20px;
-      color: #22262e;
+      border-radius: 8px;
+      color: #2F3238;
+      text-align: center;
 
       &:hover {
         background: rgba(3, 3, 3, 0.03);
@@ -24,10 +36,10 @@
 
     &._active {
       a {
-        border: 1px solid rgba(151, 151, 151, 0.08);
+        box-shadow: 0px 1px 1px 0px rgb(24 33 77 / 10%);
         font-weight: bold;
         color: #11142d;
-        background: rgba(255, 255, 255, 0.66);
+        background: #FFFFFF;
       }
     }
   }
@@ -41,17 +53,17 @@
   .records-nav {
     .nav_item {
       a {
-        color: #6f7684;
+        color: #7C7F84;
 
         &:hover {
-          background-color: black;
+          background: rgba(126, 126, 126, 0.2);
         }
       }
 
       &._active {
         a {
-          color: rgba(255, 255, 255, 0.8);
-          background-color: #6f7684;
+          color: #FFFFFF;
+          background-color: rgba(126, 126, 126, 0.5);
         }
       }
     }
@@ -102,7 +114,7 @@ export default defineComponent({
       text: root.$tt('NFTs')
     }, {
       value: NavItem.address,
-      text: root.$tt('Crypto Address'),
+      text: root.$tt('Addresses'),
     }, {
       value: NavItem.profile,
       text: root.$tt('Profile'),

@@ -19,7 +19,7 @@ export default {
       { name: 'viewport', content: 'width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no' },
     ],
     script: [{
-      src: '//at.alicdn.com/t/font_2675899_5g5ata58efg.js',
+      src: '//at.alicdn.com/t/font_2675899_i72e741pxl.js',
       async: true,
     }]
   },

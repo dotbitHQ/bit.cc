@@ -32,7 +32,12 @@
     }
 
     .index_nav {
-      margin-bottom: 30px;
+      width: 500px;
+      margin: 0 auto 30px auto;
+    }
+
+    .index_brand-filters {
+      margin: 0 auto 30px auto;
     }
 
     .center_footer {
@@ -51,7 +56,12 @@
       padding: 0 10px;
 
       .index_nav {
-        margin-bottom: 15px;
+        width: unset;
+        margin: 0 0 12px 0;
+      }
+
+      .index_brand-filters {
+        margin-bottom: 24px;
       }
 
       .center_footer {
@@ -92,12 +102,17 @@
     <DasUnregistered v-if="account.status === AccountStatus.unregistered" :account="account.account" />
     <div v-else-if="account.status === AccountStatus.successful" class="index_content">
       <ProfileCard class="index_profile" :account="account" />
-      <SideNav class="index_nav" v-model="activeNav" />
+      <SideNav v-model="activeNav" class="index_nav" />
+      <BrandFilters
+        v-if="activeNav === NavItem.nft"
+        v-model="activeBrandFilter"
+        class="index_brand-filters"
+      />
 
       <DasRecords :addresses="account.addresses"
                   :profiles="account.profiles"
                   :customs="account.customs"
-                  :nfts="nfts"
+                  :nfts="filteredNfts"
                   :account="account.account"
       />
 
@@ -112,16 +127,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, onMounted, ref, useContext, useFetch, useRoute } from '@nuxtjs/composition-api'
+import { defineComponent, inject, onMounted, ref, useContext, useFetch, useRoute, computed } from '@nuxtjs/composition-api'
 import BitHeader from '~/components/BitHeader.vue'
 import { AccountStatus, useAccount } from '~/hooks/useAccount'
 import { useMetaAccount } from '~/hooks/useMetaAccount'
-import { useNFT } from '~/hooks/useNFT'
+import { NFTProviderType, useNFT } from '~/hooks/useNFT'
 import { ResolveResult } from '~/modules/das'
 import DasRecords from '~/pages/-c/DasRecords.vue'
 import DasUnregistered from '~/pages/-c/DasUnregistered.vue'
 import ProfileCard from '~/pages/-c/ProfileCard.vue'
 import SideNav, { NavItem } from '~/pages/-c/RecordsNav.vue'
+import BrandFilters, { BrandItem } from '~/pages/-c/BrandFilters.vue'
 import { INJECTED_BITCC_ACCOUNT } from '~/plugins/resolve'
 
 export default defineComponent({
@@ -132,15 +148,45 @@ export default defineComponent({
     SideNav,
     DasRecords,
     DasUnregistered,
+    BrandFilters,
   },
   setup () {
     const resolveResult = inject(INJECTED_BITCC_ACCOUNT) as ResolveResult
-
     const route = useRoute()
     const context = useContext()
+    const activeNav = ref(NavItem.nft)
+    const activeBrandFilter = ref(BrandItem.all)
 
     const { account, fetchAccount } = useAccount(resolveResult)
     const { nfts, fetchNFTs, loading: loadingNFT } = useNFT(account)
+    const filteredNfts = computed(() => {
+      if (activeNav.value === NavItem.nft) {
+        if (activeBrandFilter.value === BrandItem.opensea) {
+          return nfts.value.filter(nft => {
+            return nft.providerType === NFTProviderType.opensea
+          })
+        }
+        else if (activeBrandFilter.value === BrandItem.poap) {
+          return nfts.value.filter(nft => {
+            return nft.providerType === NFTProviderType.xdai
+          })
+        }
+        else if (activeBrandFilter.value === BrandItem.treasureland) {
+          return nfts.value.filter(nft => {
+            return nft.providerType === NFTProviderType.treasureland
+          })
+        }
+        else if (activeBrandFilter.value === BrandItem.airnfts) {
+          return nfts.value.filter(nft => {
+            return nft.providerType === NFTProviderType.airnfts
+          })
+        }
+        else {
+          return nfts.value
+        }
+      }
+      return nfts.value
+    })
 
     useMetaAccount(account.value, resolveResult.url)
 
@@ -165,13 +211,16 @@ export default defineComponent({
     }
 
     return {
+      NavItem,
       account,
       AccountStatus,
 
       nfts,
       loadingNFT,
 
-      activeNav: ref(NavItem.nft)
+      activeNav,
+      activeBrandFilter,
+      filteredNfts,
     }
   }
 })
