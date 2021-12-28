@@ -165,37 +165,37 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
       })
 
       void services.getTreasurelandBscAssets(ownerAddress).then(res => {
-        if (res && res.data && res.data.list && res.data.list.length > 0) {
+        if (res?.data?.list?.length > 0) {
           treasurelandBSCAssets.value = normalizeTreasurelandAssets(res.data.list)
         }
       })
 
       void services.getTreasurelandPolygonAssets(ownerAddress).then(res => {
-        if (res && res.data && res.data.list && res.data.list.length > 0) {
+        if (res?.data?.list?.length > 0) {
           treasurelandPolygonAssets.value = normalizeTreasurelandAssets(res.data.list)
         }
       })
 
       void services.getTreasurelandETHAssets(ownerAddress).then(res => {
-        if (res && res.data && res.data.list && res.data.list.length > 0) {
+        if (res?.data?.list?.length > 0) {
           treasurelandETHAssets.value = normalizeTreasurelandAssets(res.data.list)
         }
       })
 
       void services.getTreasurelandMoonriverAssets(ownerAddress).then(res => {
-        if (res && res.data && res.data.list && res.data.list.length > 0) {
+        if (res?.data?.list?.length > 0) {
           treasurelandMoonriverAssets.value = normalizeTreasurelandAssets(res.data.list)
         }
       })
 
       void services.getTreasurelandIotexAssets(ownerAddress).then(res => {
-        if (res && res.data && res.data.list && res.data.list.length > 0) {
+        if (res?.data?.list?.length > 0) {
           treasurelandIotexAssets.value = normalizeTreasurelandAssets(res.data.list)
         }
       })
 
       void services.getAirNFTsAssets(ownerAddress).then(res => {
-        if (res && res.nfts && res.nfts.length > 0) {
+        if (res?.nfts?.length > 0) {
           airNFTsAssets.value = normalizeAirNFTsAssets(res.nfts)
         }
       })
