@@ -35,7 +35,7 @@
       {{ $tt('Register DAS') }}
     </a>
 
-    <a href="https://github.com/DeAccountSystems/bit.cc" target="_blank">
+    <a :href="$i18n.locale === LANGUAGE.zhCN ? 'https://talk.da.systems/t/bit-cc/280' : 'https://talk.da.systems/t/bit-cc-faq/281'" target="_blank">
       <IconfontButton :message="$tt('Guide')" message-position="bottom">
         <Iconfont name="help" :size="18" />
       </IconfontButton>
@@ -48,6 +48,7 @@ import { defineComponent, inject } from '@nuxtjs/composition-api'
 import { INJECTED_BITCC_ACCOUNT } from '~/plugins/resolve'
 import IconfontButton from './IconfontButton'
 import Iconfont from './Iconfont'
+import { LANGUAGE } from '~/constant'
 
 export default defineComponent({
   name: 'BitHeader',
@@ -58,6 +59,7 @@ export default defineComponent({
   setup () {
     const resolveResult = inject(INJECTED_BITCC_ACCOUNT)
     return {
+      LANGUAGE,
       account: resolveResult.account
     }
   }
