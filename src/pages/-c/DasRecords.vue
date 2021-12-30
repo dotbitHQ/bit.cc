@@ -144,7 +144,7 @@
         {{ $tt('Add Records') }} →
       </a>
 
-      <a href="https://dasystems.medium.com/the-first-das-app-bit-cc-is-now-live-dbb44cf75703" target="_blank">
+      <a :href="$i18n.locale === LANGUAGE.zhCN ? 'https://talk.da.systems/t/bit-cc/280' : 'https://talk.da.systems/t/bit-cc-faq/281'" target="_blank">
         {{ $tt('Guide') }}
       </a>
     </div>
@@ -152,6 +152,7 @@
 </template>
 
 <script lang="ts">
+import { LANGUAGE } from '~/constant'
 import DasRecordCard from '~/pages/-c/DasRecordCard.vue'
 import NFTRecord from '~/pages/-c/NFTRecord.vue'
 import RecordsSeparator from './RecordsSeparator.vue'
@@ -178,5 +179,10 @@ export default {
     profiles: RecordsPropType,
     customs: RecordsPropType,
   },
+  data () {
+    return {
+      LANGUAGE
+    }
+  }
 }
 </script>
