@@ -38,7 +38,8 @@
     "nuxt": "^2.15.7",
     "nuxt-i18n": "^6.28.0",
     "url-parse": "^1.5.1",
-    "vue-i18n": "^8.24.5"
+    "vue-i18n": "^8.24.5",
+    "web3-utils": "^1.6.1"
   },
   "devDependencies": {
     "@nuxt/types": "^2.15.7",
