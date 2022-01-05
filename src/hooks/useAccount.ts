@@ -54,6 +54,7 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
       accountData = await das.account(account.value.account)
     }
     catch (err) {
+      // @ts-ignore
       if (err.code === 'UnregisteredDomain') {
         account.value.status = AccountStatus.unregistered
       }

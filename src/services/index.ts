@@ -1,4 +1,5 @@
 import DasSDK from 'das-sdk'
+import Web3Utils from 'web3-utils'
 import { BasicService } from '~/services/BasicService'
 import { JinseAsset } from '../../types/jinse'
 import { OpenSeaAsset } from '../../types/opensea'
@@ -124,7 +125,8 @@ export class Services extends BasicService {
    * @doc https://api.airnfts.com/v1/users/0xa0b96533FEdDc37Cd46ED9c9f587073F8E678e32/nfts/simple
    */
   getAirNFTsAssets (owner: string): Promise<AirNFTs> {
-    return this.axios.get(`https://api.airnfts.com/v1/users/${owner}/nfts/simple`)
+    owner = Web3Utils.toChecksumAddress(owner)
+    return this.axios.get(`https://api.airnfts.com/v1/users/${owner}/nfts/simple?page=1&limit=200`)
   }
 
   getJinseAssets (address: string): Promise<JinseAsset[]> {
