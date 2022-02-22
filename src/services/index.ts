@@ -20,6 +20,9 @@ export class Services extends BasicService {
    */
   getOpenseaAssets (owner: string): Promise<{ assets: OpenSeaAsset[] }> {
     return this.axios.get('https://api.opensea.io/api/v1/assets', {
+      headers: {
+        'x-api-key': 'f12d1e8b7b7f4aa585182333858b7177', // borrowed from cyber connect
+      },
       params: {
         owner,
         order_direction: 'desc',
