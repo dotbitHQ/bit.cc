@@ -28,7 +28,7 @@ export default {
           {
             'key': 'custom_key.host.welcome',
             'label': '',
-            'value': 'Hi, Welcome to my DAS Planet',
+            'value': 'Hi, Welcome to my .bit Planet',
             'ttl': '300'
           },
           {

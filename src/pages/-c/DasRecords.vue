@@ -140,11 +140,11 @@
       <p>{{ $tt('There is a void here') }}</p>
       <p>{{ $tt('You can add DAS records if you are the owner') }}</p>
 
-      <a class="record_empty_button" :href="`https://app.da.systems/me/account/${account}`" target="_blank">
+      <a class="record_empty_button" :href="`https://app.did.id/me/account/${account}`" target="_blank">
         {{ $tt('Add Records') }} →
       </a>
 
-      <a :href="$i18n.locale === LANGUAGE.zhCN ? 'https://talk.da.systems/t/bit-cc/280' : 'https://talk.da.systems/t/bit-cc-faq/281'" target="_blank">
+      <a :href="$i18n.locale === LANGUAGE.zhCN ? 'https://talk.did.id/t/bit-cc/280' : 'https://talk.did.id/t/bit-cc-faq/281'" target="_blank">
         {{ $tt('Guide') }}
       </a>
     </div>
