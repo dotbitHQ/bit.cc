@@ -28,7 +28,6 @@ export class Services extends BasicService {
         order_direction: 'desc',
         offset: 0,
         limit: 50, // maximum 50
-        // 'X-API-KEY': '',
       }
     })
   }

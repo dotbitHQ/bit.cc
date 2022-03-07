@@ -190,20 +190,21 @@ export default defineComponent({
 
     useMetaAccount(account.value, resolveResult.url)
 
-    const { fetch: fetchAccountServer } = useFetch(async () => {
+    useFetch(async () => {
       await fetchAccount()
+
+      console.log('fetch', JSON.stringify(account.value, null, 2))
 
       if (account.value.redirect && !route.value.query.noredirect) {
         context.redirect(account.value.redirect)
       }
     })
 
-    if (process.server) {
-      fetchAccountServer()
-    }
+    console.log('server', process.server)
 
     if (process.browser) {
       onMounted(() => {
+        console.log('browser', account.value)
         if (account.value.status === AccountStatus.successful) {
           fetchNFTs()
         }

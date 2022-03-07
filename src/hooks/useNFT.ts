@@ -77,7 +77,7 @@ function normalizeTreasurelandAssets (assets: TreasurelandAsset[]): NFT[] {
   return assets.map(asset => {
     let imageUrl = ''
     if (asset.resource_type === 'image') {
-      if (asset.resource && asset.resource.includes('https://')) {
+      if (asset.resource?.includes('https://')) {
         imageUrl = asset.resource
       }
       else if (asset.resource) {
@@ -120,16 +120,16 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
     //   })
     // }
 
-    let openseaAssets = ref<NFT[]>([])
-    let xdaiPoaps = ref<NFT[]>([])
-    let treasurelandBSCAssets = ref<NFT[]>([])
-    let treasurelandPolygonAssets = ref<NFT[]>([])
-    let treasurelandETHAssets = ref<NFT[]>([])
-    let treasurelandMoonriverAssets = ref<NFT[]>([])
-    let treasurelandIotexAssets = ref<NFT[]>([])
-    let airNFTsAssets = ref<NFT[]>([])
-    let jinseAssets = ref<NFT[]>([])
-    let dasAccounts = ref<NFT[]>([])
+    const openseaAssets = ref<NFT[]>([])
+    const xdaiPoaps = ref<NFT[]>([])
+    const treasurelandBSCAssets = ref<NFT[]>([])
+    const treasurelandPolygonAssets = ref<NFT[]>([])
+    const treasurelandETHAssets = ref<NFT[]>([])
+    const treasurelandMoonriverAssets = ref<NFT[]>([])
+    const treasurelandIotexAssets = ref<NFT[]>([])
+    const airNFTsAssets = ref<NFT[]>([])
+    const jinseAssets = ref<NFT[]>([])
+    const dasAccounts = ref<NFT[]>([])
 
     watch([
       dasAccounts,
@@ -154,6 +154,8 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
         .concat(treasurelandIotexAssets.value)
         .concat(airNFTsAssets.value)
     })
+
+    console.log(account.value)
 
     if (account.value.owner_address_chain === 'eth') {
       void services.getOpenseaAssets(ownerAddress).then(res => {
