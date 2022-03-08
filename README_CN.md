@@ -15,7 +15,7 @@ bit.cc 会将链上存储的 .bit 记录，以更加个性化的设计风格进�
 
 如果你还不知道怎么设置 .bit 的解析记录，可以查看下面的链接了解。
 
-[如何设置 .bit 解析记录](https://mp.weixin.qq.com/s/9LWZES3CxyQGTPP3t0AJPA)
+[如何设置 .bit 解析记录](https://talk.did.id/t/imtoken-bit/404)
 
 ### 网页跳转
 如果设置的记录是一个网页链接，或者记录本身可以跳转到一个网页，你可以直接跳转到对应的链接。

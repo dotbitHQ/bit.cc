@@ -15,7 +15,7 @@ All records added on .bit will be displayed on bit.cc.
 
 If you don't know how to add .bit records, please checkout the link below.
 
-[Manage .bit records](https://dasystems.medium.com/das-is-now-listed-on-imtoken-619b1052b788)
+[Manage .bit records](https://dotbit.medium.com/das-is-now-listed-on-imtoken-619b1052b788)
 
 ### Visit a url
 If the record is a web url, or the record itself can jump to a web page, you can jump directly to the corresponding link.
