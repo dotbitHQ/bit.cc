@@ -22,6 +22,11 @@ const defaultAccount = {
 
   account: '',
 
+  owner_algorithm_id: 3,
+  manager_algorithm_id: 3,
+  owner_key: '',
+  manager_key: '',
+
   owner_address: '',
   manager_address: '',
   owner_address_chain: '',
@@ -48,10 +53,12 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
   })
 
   async function fetchAccount (): Promise<void> {
-    let accountData: AccountData
+    let accountData: AccountInfo
+    let rawRecords: AccountRecord[]
 
     try {
       accountData = await das.account(account.value.account)
+      rawRecords = await das.records(account.value.account)
     }
     catch (err) {
       // @ts-ignore
@@ -66,7 +73,7 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
       return
     }
 
-    const records: AccountRecord[] = accountData.records.map(record => {
+    const records: AccountRecord[] = rawRecords.map(record => {
       const keyParts = record.key.split('.') // address.btc
 
       return {
@@ -104,13 +111,22 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
 
     customs = customs.filter(record => record.key.indexOf('custom_key.bitcc_') !== 0)
 
+    const algorithm2Chain = {
+      3: 'eth',
+      4: 'tron',
+      5: 'eth',
+    }
+
     Object.assign(account.value, {
       status: AccountStatus.successful,
 
-      owner_address: accountData.owner_address,
-      owner_address_chain: accountData.owner_address_chain.toLowerCase(),
-      manager_address: accountData.manager_address,
-      manager_address_chain: accountData.manager_address_chain.toLowerCase(),
+      owner_address: accountData.owner_key,
+      manager_address: accountData.manager_key,
+
+      // @ts-ignore
+      owner_address_chain: algorithm2Chain[accountData.owner_algorithm_id] || 'eth',
+      // @ts-ignore
+      manager_address_chain: algorithm2Chain[accountData.manager_algorithm_id] || 'eth',
 
       description: descriptionRecord?.value || '',
       avatar: avatarRecord?.value || '',
