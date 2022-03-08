@@ -204,9 +204,13 @@ export default defineComponent({
 
     if (process.browser) {
       onMounted(() => {
-        console.log('browser', account.value)
         if (account.value.status === AccountStatus.successful) {
           fetchNFTs()
+        }
+        // it's weird that account.value.status will always be AccountStatus.loading when visiting xxx.bit.cc, while everything works fine for xxx.bit.host,
+        // so we have to invoke fetchNFTs again
+        else {
+          setTimeout(() => fetchNFTs(), 2000)
         }
       })
     }

@@ -62,7 +62,7 @@ function normalizeJinseAssets (assets: JinseAsset[]): NFT[] {
   })
 }
 
-function normalizeDASAccounts (accounts: AccountInfo[]): NFT[] {
+function normalizeDASAccounts (accounts: Array<{account: string}>): NFT[] {
   return accounts.map(account => {
     return {
       name: account.account,
