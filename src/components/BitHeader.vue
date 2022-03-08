@@ -31,11 +31,11 @@
 
 <template>
   <div class="bit-header">
-    <a :href="`https://app.da.systems/explorer?inviter=${account}`" target="_blank" style="margin-top: 10px;">
+    <a :href="`https://app.did.id/explorer?inviter=${account}`" target="_blank" style="margin-top: 10px;">
       {{ $tt('Register DAS') }}
     </a>
 
-    <a :href="$i18n.locale === LANGUAGE.zhCN ? 'https://talk.da.systems/t/bit-cc/280' : 'https://talk.da.systems/t/bit-cc-faq/281'" target="_blank">
+    <a :href="$i18n.locale === LANGUAGE.zhCN ? 'https://talk.did.id/t/bit-cc/280' : 'https://talk.did.id/t/bit-cc-faq/281'" target="_blank">
       <IconfontButton :message="$tt('Guide')" message-position="bottom">
         <Iconfont name="help" :size="18" />
       </IconfontButton>

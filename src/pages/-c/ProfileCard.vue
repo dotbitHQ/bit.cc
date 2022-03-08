@@ -138,7 +138,7 @@
 
     <div v-if="isShowingCard" class="profile_card_mask">
       <div class="profile_card_container">
-        <img class="profile_card_img" :src="`https://identicons.da.systems/card/bitcc/${account.account}`" alt="">
+        <img class="profile_card_img" :src="`https://identicons.did.id/card/bitcc/${account.account}`" alt="">
         <div style="margin-top: 12px;">{{ $tt('Press to save image') }}</div>
         <div style="margin-top: 30px;">
           <Iconfont name="close" :size="28" @click="toggleCard" />
@@ -178,7 +178,7 @@ export default defineComponent({
     const [isShowingCard, toggleCard] = useToggle()
 
     onMounted(() => {
-      const text = 'Hey! It\'s time to DAS! \nCome to my DAS profile card and view all my NFTs, crypto addresses, and social contacts! @realDASystems\n'
+      const text = 'Hey! Come to my #NFT gallery! 😎 \nYou can see my multi-chain NFTs and my .bit profile.  @dotbitHQ \n'
       const url = window.location.href
       intent.value = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
     })

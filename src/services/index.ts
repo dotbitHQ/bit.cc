@@ -139,5 +139,5 @@ export class Services extends BasicService {
 export const services = new Services()
 
 export const das = new DasSDK({
-  url: 'https://indexer.da.systems',
+  url: 'https://indexer.did.id',
 })
