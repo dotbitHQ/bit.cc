@@ -237,7 +237,13 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
       }
     }
 
-    das.accountsForOwner(ownerAddress).then(res => {
+    const addressChain2CoinType = {
+      'tron': '195',
+      'eth': '60',
+    }
+    const coinType = (addressChain2CoinType as any)[account.value.owner_address_chain]
+
+    das.accountsForOwner(ownerAddress, coinType).then(res => {
       dasAccounts.value = normalizeDASAccounts(res)
     })
   }
