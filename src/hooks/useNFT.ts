@@ -55,7 +55,7 @@ function normalizeJinseAssets (assets: JinseAsset[]): NFT[] {
   return assets.map(asset => {
     return {
       name: asset.class_name,
-      imageUrl: asset.class_bg_image_url,
+      imageUrl: `${asset.class_bg_image_url}?tid=${asset.n_token_id}`,
       link: `https://explorer.mibao.net/nft/${asset.class_uuid}`,
       providerType: NFTProviderType.jinse,
     }
