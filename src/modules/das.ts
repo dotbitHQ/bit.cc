@@ -38,7 +38,13 @@ export function resolveAccountFromUrl (url: string): ResolveResult {
   else {
     fromHost = true
     // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
-    account = parsed.hostname.split('.').shift() || ''
+    const accountSplitList = parsed.hostname.split('.')
+    if (accountSplitList.length === 4) {
+      account = accountSplitList[0] + '.' + accountSplitList[1]
+    }
+    else {
+      account = accountSplitList.shift() || ''
+    }
 
     if (account.match(/^xn--/)) {
       isPunyCode = true
