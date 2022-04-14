@@ -21,7 +21,8 @@ export class Services extends BasicService {
   getOpenseaAssets (owner: string): Promise<{ assets: OpenSeaAsset[] }> {
     return this.axios.get('https://api.opensea.io/api/v1/assets', {
       headers: {
-        'x-api-key': 'f12d1e8b7b7f4aa585182333858b7177', // borrowed from cyber connect
+        // 'x-api-key': '29930174fbb94c91bd30a31e79153922', // borrowed from https://github.com/node777/playsk8/blob/7b74269cb495adcfd9697ad46ed1fffb67a9f7c9/www/scripts/play.js#L38
+        'x-api-key': '4714cd73a39041bf9cffda161163f8a5', // borrowed from https://github.com/mobile1st/sudocoins-svc/blob/30604184f2222b6058883fdc58be185e13d3b867/src/art/chat/add_chat.py#L158
       },
       params: {
         owner,
