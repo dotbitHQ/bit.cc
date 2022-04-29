@@ -5,8 +5,8 @@ import { createHmac } from 'crypto'
 import { JinseAssetsRes } from '../../types/jinse'
 
 function mibaoAuthInterceptor (axiosRequestConfig: AxiosRequestConfig): AxiosRequestConfig {
-  const key: string = config.jinse.key
-  const secret = config.jinse.secret
+  const key: string = (config as any).jinse.key
+  const secret = (config as any).jinse.secret
   const date = new Date().toUTCString()
 
   const plaintext = [
@@ -24,8 +24,8 @@ function mibaoAuthInterceptor (axiosRequestConfig: AxiosRequestConfig): AxiosReq
   Object.assign(axiosRequestConfig.headers, {
     'content-md5': '',
     'content-type': 'application/json',
-    'date': date,
-    'authorization': authorization,
+    date: date,
+    authorization: authorization,
   })
 
   return axiosRequestConfig

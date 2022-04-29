@@ -155,8 +155,6 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
         .concat(airNFTsAssets.value)
     })
 
-    console.log(account.value)
-
     if (account.value.owner_address_chain === 'eth') {
       void services.getOpenseaAssets(ownerAddress).then(res => {
         openseaAssets.value = normalizeOpenseaAssets(res.assets)

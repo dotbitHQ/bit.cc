@@ -57,11 +57,12 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
     let rawRecords: AccountRecord[]
 
     try {
+      // @ts-ignore
       accountData = await das.account(account.value.account)
       rawRecords = await das.records(account.value.account)
     }
     catch (err) {
-      // @ts-ignore
+      // @ts-expect-error
       if (err.code === 'UnregisteredDomain') {
         account.value.status = AccountStatus.unregistered
       }
@@ -103,11 +104,12 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
 
     let customs = records.filter(record => record.type === AccountRecordTypes.custom)
     const descriptionRecord = profiles.find(record => record.key === 'profile.description')
-    const avatarRecord = profiles.find(record => record.key === 'profile.avatar')
     const welcomeRecord = customs.find(record => record.key === 'custom_key.bitcc_welcome')
     const themeRecord = customs.find(record => record.key === 'custom_key.bitcc_theme')
     const redirectRecord = customs.find(record => record.key === 'custom_key.bitcc_redirect')
     const backgroundImageRecord = customs.find(record => record.key === 'custom_key.bitcc_background_image')
+
+    const avatar = await das.getAvatar(account.value.account)
 
     customs = customs.filter(record => record.key.indexOf('custom_key.bitcc_') !== 0)
 
@@ -123,13 +125,13 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
       owner_address: accountData.owner_key,
       manager_address: accountData.manager_key,
 
-      // @ts-ignore
+      // @ts-expect-error
       owner_address_chain: algorithm2Chain[accountData.owner_algorithm_id] || 'eth',
-      // @ts-ignore
+      // @ts-expect-error
       manager_address_chain: algorithm2Chain[accountData.manager_algorithm_id] || 'eth',
 
       description: descriptionRecord?.value || '',
-      avatar: avatarRecord?.value || '',
+      avatar: avatar?.url || '',
       welcome: welcomeRecord?.value || '',
       theme: themeRecord?.value || '',
       backgroundImage: backgroundImageRecord?.value || '',
