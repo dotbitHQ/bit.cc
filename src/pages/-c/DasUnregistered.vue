@@ -73,7 +73,7 @@
     <p class="unregistered_desc">
       {{ $tt('{account} is not yet registered, you can register and have it.', { account: account }) }}
     </p>
-    <a class="unregistered_button" href="https://app.did.id" target="_blank">
+    <a class="unregistered_button" :href="`https://app.did.id/explorer?searchWord=${account}&utm_source=bitcc`" target="_blank">
       {{ $tt('Register') }} →
     </a>
 

@@ -62,7 +62,7 @@ function normalizeJinseAssets (assets: JinseAsset[]): NFT[] {
   })
 }
 
-function normalizeDASAccounts (accounts: Array<{account: string}>): NFT[] {
+function normalizeDASAccounts (accounts: Array<{account: string}> = []): NFT[] {
   return accounts.map(account => {
     return {
       name: account.account,
@@ -236,12 +236,12 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
     }
 
     const addressChain2CoinType = {
-      'tron': '195',
-      'eth': '60',
+      tron: '195',
+      eth: '60',
     }
     const coinType = (addressChain2CoinType as any)[account.value.owner_address_chain]
 
-    das.accountsForOwner(ownerAddress, coinType).then(res => {
+    void das.accountsForOwner(ownerAddress, coinType).then(res => {
       dasAccounts.value = normalizeDASAccounts(res)
     })
   }

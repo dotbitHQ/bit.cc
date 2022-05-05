@@ -57,13 +57,13 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
     let rawRecords: AccountRecord[]
 
     try {
-      // @ts-ignore
+      // @ts-expect-error
       accountData = await das.account(account.value.account)
       rawRecords = await das.records(account.value.account)
     }
     catch (err) {
       // @ts-expect-error
-      if (err.code === 'UnregisteredDomain') {
+      if (err.code === 'UnregisteredAccount') {
         account.value.status = AccountStatus.unregistered
       }
       else {
