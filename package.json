@@ -30,7 +30,7 @@
     "copy-to-clipboard": "^3.3.1",
     "cross-env": "^7.0.3",
     "das-sdk": "^1.8.0",
-    "das-ui-shared": "^0.2.0",
+    "das-ui-shared": "^0.2.1",
     "idna-uts46-hx": "^3.4.0",
     "js-cookie": "^3.0.1",
     "koa": "^2.13.4",
