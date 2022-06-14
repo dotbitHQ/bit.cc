@@ -140,7 +140,7 @@
       <p>{{ $tt('There is a void here') }}</p>
       <p>{{ $tt('You can add DAS records if you are the owner') }}</p>
 
-      <a class="record_empty_button" :href="`https://app.did.id/me/account/${account}`" target="_blank">
+      <a class="record_empty_button" :href="`https://data.did.id/${account}`" target="_blank">
         {{ $tt('Add Records') }} →
       </a>
 
