@@ -12,7 +12,6 @@ pipeline:
   build:
     image: node:lts
     commands:
-      - npm -g install yarn
       - yarn install
       - npm run build
 
