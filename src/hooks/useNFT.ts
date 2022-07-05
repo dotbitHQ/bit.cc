@@ -67,7 +67,7 @@ function normalizeDASAccounts (accounts: Array<{account: string}> = []): NFT[] {
     return {
       name: account.account,
       imageUrl: '',
-      link: window.location.host.includes('bit.cc') ? `https://${account.account}.cc` : `https://${account.account}.host`,
+      link: `https://data.did.id/${account.account}`,
       providerType: NFTProviderType.das,
     }
   })
