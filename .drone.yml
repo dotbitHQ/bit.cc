@@ -12,7 +12,8 @@ pipeline:
   build:
     image: node:lts
     commands:
-      - npm install
+      - npm -g install yarn
+      - yarn install
       - npm run build
 
   # write node_modules back to cache
