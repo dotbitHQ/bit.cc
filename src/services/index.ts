@@ -1,17 +1,31 @@
 import DasSDK from 'das-sdk'
 import Web3Utils from 'web3-utils'
+import { CHAIN_ID } from '~/constant'
 import { BasicService } from '~/services/BasicService'
+import { AirNFTs } from '../../types/airnfts'
 import { JinseAsset } from '../../types/jinse'
 import { OpenSeaAsset } from '../../types/opensea'
-import { XdaiPoap } from '../../types/xdai.poap'
 import { Treasureland } from '../../types/treasureland'
-import { CHAIN_ID } from '~/constant'
-import { AirNFTs } from '../../types/airnfts'
+import { XdaiPoap } from '../../types/xdai.poap'
 
 // for simple app, service can all be placed under BasicService
 export class Services extends BasicService {
   // for complicated app, other service goes here
   // other = new OtherService()
+
+  // @ts-expect-error
+  async runOpenSeaTasks (tasks: Array<() => Promise<{ assets: OpenSeaAsset[] }>>): Promise<{ assets: OpenSeaAsset[] }> {
+    for (let i = 0; i < tasks.length; i++) {
+      try {
+        const task = tasks[i]
+
+        return await task()
+      }
+      catch (e) {
+        console.log('Opensea: Running next task', i)
+      }
+    }
+  }
 
   /**
    * get opensea assets for address
@@ -19,10 +33,17 @@ export class Services extends BasicService {
    * @doc https://docs.opensea.io/reference/getting-assets
    */
   getOpenseaAssets (owner: string): Promise<{ assets: OpenSeaAsset[] }> {
-    return this.axios.get('https://api.opensea.io/api/v1/assets', {
+    return this.runOpenSeaTasks([
+      this._getOpenseaAssetsTask(owner, '2065401f46a84c019b3945684dbfa278'), // borrowed from https://github.com/Amad-Ahmed/NFT-marketplace/blob/53ff7d7cb9f3df1c16c4b39490989ae93de0a7d1/app/Http/Controllers/ActivityController.php#L16
+      this._getOpenseaAssetsTask(owner, '29930174fbb94c91bd30a31e79153922'), // borrowed from https://github.com/node777/playsk8/blob/7b74269cb495adcfd9697ad46ed1fffb67a9f7c9/www/scripts/play.js#L38
+      this._getOpenseaAssetsTask(owner, '4714cd73a39041bf9cffda161163f8a5'), // borrowed from https://github.com/mobile1st/sudocoins-svc/blob/30604184f2222b6058883fdc58be185e13d3b867/src/art/chat/add_chat.py#L158
+    ])
+  }
+
+  _getOpenseaAssetsTask (owner: string, apiKey: string): () => Promise<{ assets: OpenSeaAsset[] }> {
+    return () => this.axios.get('https://api.opensea.io/api/v1/assets', {
       headers: {
-        // 'x-api-key': '29930174fbb94c91bd30a31e79153922', // borrowed from https://github.com/node777/playsk8/blob/7b74269cb495adcfd9697ad46ed1fffb67a9f7c9/www/scripts/play.js#L38
-        'x-api-key': '4714cd73a39041bf9cffda161163f8a5', // borrowed from https://github.com/mobile1st/sudocoins-svc/blob/30604184f2222b6058883fdc58be185e13d3b867/src/art/chat/add_chat.py#L158
+        'x-api-key': apiKey,
       },
       params: {
         owner,
@@ -140,5 +161,5 @@ export class Services extends BasicService {
 export const services = new Services()
 
 export const das = new DasSDK({
-  url: 'https://indexer-not-use-in-production-env.did.id',
+  url: 'https://indexer-v1.did.id',
 })
