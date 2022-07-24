@@ -1704,10 +1704,10 @@
     jsbi "^3.1.4"
     keccak "^3.0.0"
 
-"@mail3/mail3-me@^0.1.3":
-  version "0.1.3"
-  resolved "https://registry.yarnpkg.com/@mail3/mail3-me/-/mail3-me-0.1.3.tgz#27da65a313c50c63cc0a6ffff4ed4d508992cdd9"
-  integrity sha512-an22vsy7UGxMy7laCzGXtvL1JOoMd6MAWYeUKJ1HBnl/WGe3R6KFkZs0jwmhfwwvUHaWgD0E309spSGzgFgNZA==
+"@mail3/mail3-me@0.1.4":
+  version "0.1.4"
+  resolved "https://registry.yarnpkg.com/@mail3/mail3-me/-/mail3-me-0.1.4.tgz#9764db1cffb427e442e5323a6cd9a209cc45d38d"
+  integrity sha512-7psoczoJyVizEqoFOfNdfCRC7H2+dE4z/lncnH8PjvN/g319iUw7UyuLCig0DORxC/JMoxXI45foBWbVy8UTFg==
 
 "@nervosnetwork/ckb-sdk-utils@0.101.0":
   version "0.101.0"
