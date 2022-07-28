@@ -81,6 +81,21 @@
         margin: 0 16px 0 4px;
       }
       &.profile_button_contact {
+        .profile_button_contact_icon {
+          position: relative;
+          width: 16px;
+          height: 16px;
+          .profile_button_contact_icon_dot {
+            width: 4px;
+            height: 4px;
+            border-radius: 50%;
+            background: #E93723;
+            border: 2px solid #fff;
+            position: absolute;
+            top: -2px;
+            right: -2px;
+          }
+        }
         margin-left: 10px;
         background: #49B4C1;
         color: #fff;
@@ -159,26 +174,29 @@
     <div class="profile_share">
       <Dropdown>
         <button class="profile_button">
-          <IconProfile name="share" size="16" />
+          <IconProfile name="share" :size="16" />
           <span class="profile_button_text">{{ $tt('Share') }}</span>
           <IconProfile name="dropdown-black" :size="10" />
         </button>
         <template #popper>
           <div class="popover_content">
             <a class="popover_content_button" :href="intent" target="_blank" v-close-popper>
-              <IconProfile name="twitter" size="20" />
+              <IconProfile name="twitter" :size="20" />
               <span>{{ $tt('Share to Twitter') }}</span>
             </a>
             <button class="popover_content_button" type="button" @click="toggleCard" v-close-popper>
-              <IconProfile name="share-card" size="20" />
+              <IconProfile name="share-card" :size="20" />
               <span>{{ $tt('Share Card') }}</span>
             </button>
           </div>
         </template>
       </Dropdown>
-      <Dropdown>
+      <Dropdown ref="contactDropdown">
         <button class="profile_button profile_button_contact">
-          <IconProfile name="contact" size="16" />
+          <div class="profile_button_contact_icon">
+            <IconProfile name="contact" :size="16" />
+            <div class="profile_button_contact_icon_dot" v-if="hasUnreadMail"></div>
+          </div>
           <span class="profile_button_text">{{ $tt('Contact') }}</span>
           <IconProfile name="dropdown-white" :size="10" />
         </button>
@@ -220,7 +238,6 @@ export default defineComponent({
   components: {
     DasAvatar,
     Iconfont,
-    IconProfile,
     Dropdown,
     IconProfile,
   },
@@ -235,11 +252,11 @@ export default defineComponent({
     },
   },
 
-  setup (props) {
+  setup (_, ctx) {
     const intent = ref('')
     const mail3MeButton = ref(null)
     const [isShowingCard, toggleCard] = useToggle()
-
+    const hasUnreadMail = ref(false)
     onMounted(() => {
       const text = 'Hey! Come to my #NFT gallery! 😎 \nYou can see my multi-chain NFTs and my .bit profile.  @dotbitHQ \n'
       const url = window.location.href
@@ -247,6 +264,17 @@ export default defineComponent({
       // since web component is not supported in SSR
       // load the component in the client side
       mail3MeButton.value = () => import('./Mai3MeButton.vue')
+
+      // ensure dropdown content is mounted before first shown
+      ctx.refs.contactDropdown.$refs.popper.$_ensureTeleport()
+      const handleMail3MessageEvent = (event) => {
+        if (event.origin === 'https://app.mail3.me' && event.data.total) {
+          hasUnreadMail.value = true
+        }
+      }
+
+      window.addEventListener('message', handleMail3MessageEvent)
+      return () => window.removeEventListener('message', handleMail3MessageEvent)
     })
 
     return {
@@ -254,6 +282,7 @@ export default defineComponent({
       mail3MeButton,
       isShowingCard,
       toggleCard,
+      hasUnreadMail,
 
       collapseString
     }

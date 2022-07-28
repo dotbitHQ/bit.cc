@@ -13,7 +13,7 @@
     class="mail-me-button"
     variant="ghost"
     icon_style="margin-right: 8px;color: #000;width: 20px;height: 20px"
-    css="font-size: 16px; color: #121314"
+    css="font-size: 16px; color: #121314; justify-content: flex-start; width: auto;"
     v-close-popper
   />
 </template>
