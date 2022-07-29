@@ -202,7 +202,7 @@
         </button>
         <template #popper>
           <div class="popover_content">
-            <component :is="mail3MeButton" v-if="mail3MeButton" />
+            <component :is="mail3MeButton" v-if="mail3MeButton" :account="account.account" />
           </div>
         </template>
       </Dropdown>
@@ -268,7 +268,7 @@ export default defineComponent({
       // ensure dropdown content is mounted before first shown
       ctx.refs.contactDropdown.$refs.popper.$_ensureTeleport()
       const handleMail3MessageEvent = (event) => {
-        if (event.origin === 'https://app.mail3.me' && event.data.total) {
+        if (event.origin === 'https://app.mail3.me' && Number.isInteger(event.data.total) && event.data.total > 0) {
           hasUnreadMail.value = true
         }
       }
