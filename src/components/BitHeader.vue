@@ -37,7 +37,7 @@
 
     <a :href="$i18n.locale === LANGUAGE.zhCN ? 'https://talk.did.id/t/bit-cc/280' : 'https://talk.did.id/t/bit-cc-faq/281'" target="_blank">
       <IconfontButton :message="$tt('Guide')" message-position="bottom">
-        <Iconfont name="help" :size="18" />
+        <Iconfont name="help" :size="16" />
       </IconfontButton>
     </a>
   </div>

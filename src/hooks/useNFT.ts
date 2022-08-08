@@ -30,8 +30,7 @@ function normalizeOpenseaAssets (assets: OpenSeaAsset[]): NFT[] {
   return assets.map(asset => {
     return {
       name: asset.name,
-      // imageUrl: asset.animation_url || asset.image_url,
-      imageUrl: asset.image_url,
+      imageUrl: asset.animation_url || asset.image_url,
       link: asset.permalink,
       providerType: NFTProviderType.opensea,
       price: asset.last_sale ? Number(asset.last_sale.total_price) / (Math.pow(10, asset.last_sale.payment_token.decimals)) : undefined,
