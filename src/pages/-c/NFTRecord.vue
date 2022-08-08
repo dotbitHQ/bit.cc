@@ -29,6 +29,28 @@
       height: 100%;
     }
 
+    .nft_video_controls {
+      position: absolute;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      top: 8px;
+      right: 8px;
+      height: 44px;
+      width: 44px;
+      z-index: 1;
+      color: rgb(4, 17, 29);
+      background-color: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      cursor: pointer;
+
+      &:hover {
+        background-color: rgba(255, 255, 255, 0.8);
+        color: rgba(4, 17, 29, 0.8);
+      }
+    }
+
     .nft_info {
       opacity: 0;
       position: absolute;
@@ -77,10 +99,21 @@
   <div class="nft-record">
     <a class="nft_wrap" :href="nft.link" target="_blank">
       <div v-if="nft.providerType !== NFTProviderType.das" class="nft_content">
-        <video v-if="nft.imageUrl.match(/\.(mp4|mov)$/)" class="nft_video"
-               playsinline
-               autoplay loop
-               :src="nft.imageUrl" />
+        <template v-if="nft.imageUrl.match(/\.(mp4|mov)$/)">
+          <video
+            class="nft_video"
+            ref="video"
+            loop
+            playsinline
+            :src="nft.imageUrl" />
+          <span
+            class="nft_video_controls"
+            @click.prevent.stop="playPause"
+          >
+            <Iconfont v-if="isPlay" name="suspend" :size="16" />
+            <Iconfont v-else name="play" :size="16" />
+          </span>
+        </template>
         <img v-else class="nft_img" :src="nft.imageUrl" :alt="nft.name">
 
         <div class="nft_info">
@@ -98,12 +131,15 @@
 import { DasAccountCard } from 'das-ui-shared'
 import { NFT, NFTProviderType } from '~/hooks/useNFT'
 import 'das-ui-shared/dist/style.css'
+import Iconfont from '~/components/Iconfont.vue'
+import { ref } from '@nuxtjs/composition-api'
 const { defineComponent } = require('@nuxtjs/composition-api')
 
 export default defineComponent({
   name: 'NFTRecord',
   components: {
     DasAccountCard,
+    Iconfont
   },
   props: {
     nft: {
@@ -111,9 +147,26 @@ export default defineComponent({
       default: null
     }
   },
-  setup (props: {nft: NFT}) {
+  setup (props: {nft: NFT}, { refs }) {
+    const isPlay = ref(false)
+
+    function playPause () {
+      const video = refs.video
+      if (video.paused) {
+        isPlay.value = true
+        video.play()
+      }
+      else {
+        video.pause()
+        isPlay.value = false
+      }
+    }
+
     return {
       NFTProviderType,
+      isPlay,
+
+      playPause
     }
   }
 })

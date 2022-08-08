@@ -19,7 +19,7 @@ export default {
       { name: 'viewport', content: 'width=device-width,height=device-height,initial-scale=1.0,maximum-scale=1.0,user-scalable=no' },
     ],
     script: [{
-      src: '/iconfont.js',
+      src: 'https://lf1-cdn-tos.bytegoofy.com/obj/iconpark/svg_15572_12.27ec46fc62a5e02b6174eb8451b00c8f.js',
       async: true,
     }]
   },
