@@ -5369,10 +5369,10 @@ das-sdk@^1.8.0:
   dependencies:
     node-fetch "^2.6.6"
 
-das-ui-shared@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.yarnpkg.com/das-ui-shared/-/das-ui-shared-0.2.1.tgz#32e5b2aacffe8f18ed5f7b03dc3eaa4a47e0a991"
-  integrity sha512-9TKdiRsd2HeI+OthEA07Un/Cg1kBe4K2aSPi++kDoXX15rTbhYMKTLcgyTD0tSRttcNmne/yEw4c6zHvR1fBgw==
+das-ui-shared@^0.2.2:
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/das-ui-shared/-/das-ui-shared-0.2.2.tgz#d58fce9054a5c286e7d6598cb12b7fde3a1a8d78"
+  integrity sha512-xPEpI+lEorxRuWTSppRM32JkKKHV6P5tuKQGC4XC+g+ALWfBHfHAVyFvS0z2wX4r61E0ZVuOrsz2jVT3Ots7fg==
 
 dashdash@^1.12.0:
   version "1.14.1"
