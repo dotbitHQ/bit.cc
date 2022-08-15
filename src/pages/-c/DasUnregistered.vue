@@ -77,7 +77,7 @@
       {{ $tt('Register') }} →
     </a>
 
-    <img class="profile-logo" src="/imgs/logo-profile.png" width="55%" alt="Profile Logo">
+    <img class="profile-logo" src="/imgs/logo-profile.png?v=1" width="55%" alt="Profile Logo">
   </div>
 </template>
 

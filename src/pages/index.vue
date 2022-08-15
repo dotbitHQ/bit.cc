@@ -117,7 +117,7 @@
       />
 
       <div class="center_footer">
-        <img class="profile-logo" src="/imgs/logo-profile.png" width="50%" alt="Profile Logo">
+        <img class="profile-logo" src="/imgs/logo-profile.png?v=1" width="50%" alt="Profile Logo">
         <div style="margin-top: 10px;">
           <a :href="`https://app.did.id/explorer?searchWord=${account.account}&utm_source=bitcc`">{{ $tt('Register DAS') }}→</a>
         </div>
