@@ -74,6 +74,24 @@ export function buildProfileUrl<T extends Pick<AccountRecord, 'value'|'key'>> (r
   if (record.key === 'profile.twitter') {
     return `https://twitter.com/${record.value.replace(/^@/, '')}`
   }
+  if (record.key === 'profile.facebook') {
+    return `https://www.facebook.com/${record.value}`
+  }
+  if (record.key === 'profile.reddit') {
+    return `https://www.reddit.com/user/${record.value}`
+  }
+  if (record.key === 'profile.bilibili') {
+    return `https://space.bilibili.com/${record.value}`
+  }
+  if (record.key === 'profile.github') {
+    return `https://github.com/${record.value}`
+  }
+  if (record.key === 'profile.mirror') {
+    return `https://mirror.xyz/${record.value}`
+  }
+  if (record.key === 'profile.medium') {
+    return `https://medium.com/@${record.value}`
+  }
   if (record.key === 'profile.website') {
     return record.value.indexOf('http') === 0 ? record.value : `http://${record.value}`
   }
