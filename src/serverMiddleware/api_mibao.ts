@@ -32,7 +32,7 @@ function mibaoAuthInterceptor (axiosRequestConfig: AxiosRequestConfig): AxiosReq
 }
 
 const axios = Axios.create({
-  baseURL: 'https://goldenlegend.nervina.cn',
+  baseURL: 'https://api.nftbox.me',
 })
 
 axios.interceptors.request.use(mibaoAuthInterceptor)
