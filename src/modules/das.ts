@@ -1,6 +1,7 @@
 import { AccountRecord } from 'das-sdk'
 import uts46 from 'idna-uts46-hx'
 import UrlParse from 'url-parse'
+import { digitalEmojiUnifiedHandle } from '~/modules/tools'
 
 export interface ResolveResult {
   account: string, // xxx.bit
@@ -26,7 +27,7 @@ export function resolveAccountFromUrl (url: string): ResolveResult {
     const accountBit = decodeURIComponent(parsed.pathname.split('/')[1]) // '/das.bit/aabbcc' => ['', 'das.bit', 'aabbcc']
 
     if (accountBit.match(/\.bit$/)) {
-      account = accountBit
+      account = digitalEmojiUnifiedHandle(accountBit)
     }
     else if (!accountBit) {
       account = ''
@@ -49,12 +50,12 @@ export function resolveAccountFromUrl (url: string): ResolveResult {
     if (account.match(/^xn--/)) {
       isPunyCode = true
 
-      account = uts46.toUnicode(account)
+      account = digitalEmojiUnifiedHandle(uts46.toUnicode(account))
 
       redirectTo = `https://${domain}/${account}.bit`
     }
 
-    account = account + '.bit'
+    account = digitalEmojiUnifiedHandle(account) + '.bit'
   }
 
   return {
