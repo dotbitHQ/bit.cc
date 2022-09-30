@@ -1,3 +1,6 @@
+import GraphemeSplitter from 'grapheme-splitter'
+import { DigitalEmojiUnifiedMap } from '~/constant'
+
 /**
  * strip '0x' prefix of hex string
  * @param {string} str
@@ -59,4 +62,24 @@ export function extractFirstLetter ([first]: string): string {
 
 export function capitalizeFirstLetter ([first, ...rest]: string): string {
   return first.toLocaleUpperCase() + rest.join('')
+}
+
+/**
+ * handles the mapping of digital emoji
+ * @param str
+ */
+export function digitalEmojiUnifiedHandle (str: string): string {
+  const splitter = new GraphemeSplitter()
+  const split = splitter.splitGraphemes(str)
+  const list = split.map((item) => {
+    // @ts-ignore
+    if (DigitalEmojiUnifiedMap[item]) {
+      // @ts-ignore
+      return DigitalEmojiUnifiedMap[item]
+    }
+    else {
+      return item
+    }
+  })
+  return list.join('')
 }
