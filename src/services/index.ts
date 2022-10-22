@@ -1,4 +1,4 @@
-import DasSDK from 'das-sdk'
+import { createInstance } from 'dotbit'
 import Web3Utils from 'web3-utils'
 import { CHAIN_ID } from '~/constant'
 import { BasicService } from '~/services/BasicService'
@@ -160,6 +160,4 @@ export class Services extends BasicService {
 
 export const services = new Services()
 
-export const das = new DasSDK({
-  url: 'https://indexer-v1.did.id',
-})
+export const dotbit = createInstance()

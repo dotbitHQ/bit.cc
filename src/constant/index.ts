@@ -30,3 +30,5 @@ export enum DigitalEmojiUnifiedMap {
   '8⃣' = '8️⃣',
   '9⃣' = '9️⃣'
 }
+
+export const CrossEthContract = '0x60eB332Bd4A0E2a9eEB3212cFdD6Ef03Ce4CB3b5'

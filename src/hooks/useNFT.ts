@@ -1,7 +1,6 @@
 import { Ref, ref, watch } from '@nuxtjs/composition-api'
-import { AccountData } from 'das-sdk'
-import { AccountInfo } from '~/hooks/useAccount'
-import { das, services } from '~/services'
+import { AccountInfoExtended } from '~/hooks/useAccount'
+import { dotbit, services } from '~/services'
 import { JinseAsset } from '../../types/jinse'
 import { OpenSeaAsset } from '../../types/opensea'
 import { XdaiPoap } from '../../types/xdai.poap'
@@ -104,7 +103,7 @@ function normalizeAirNFTsAssets (assets: AirNFTsNft[]): NFT[] {
   }).filter(asset => asset.imageUrl)
 }
 
-export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts: Ref<NFT[]>, fetchNFTs: Function} {
+export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolean>, nfts: Ref<NFT[]>, fetchNFTs: Function} {
   const nfts = ref<NFT[]>([])
   const loading = ref(true)
 
@@ -240,7 +239,9 @@ export function useNFT (account: Ref<AccountInfo>): {loading: Ref<boolean>, nfts
     }
     const coinType = (addressChain2CoinType as any)[account.value.owner_address_chain]
 
-    void das.accountsForOwner(ownerAddress, coinType).then(res => {
+    void dotbit.accountsOfOwner({
+      key: ownerAddress
+    }).then(res => {
       dasAccounts.value = normalizeDASAccounts(res)
     })
   }

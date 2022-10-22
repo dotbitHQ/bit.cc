@@ -1,7 +1,7 @@
-import { AccountRecord } from 'das-sdk'
 import uts46 from 'idna-uts46-hx'
 import UrlParse from 'url-parse'
 import { digitalEmojiUnifiedHandle } from '~/modules/tools'
+import { BitAccountRecord } from 'dotbit/lib/fetchers/BitIndexer.type'
 
 export interface ResolveResult {
   account: string, // xxx.bit
@@ -68,7 +68,7 @@ export function resolveAccountFromUrl (url: string): ResolveResult {
   }
 }
 
-export function buildProfileUrl<T extends Pick<AccountRecord, 'value'|'key'>> (record: T): string {
+export function buildProfileUrl<T extends Pick<BitAccountRecord, 'value'|'key'>> (record: T): string {
   if (record.value.match(/https?:\/\//)) {
     return record.value
   }

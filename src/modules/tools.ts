@@ -1,5 +1,9 @@
 import GraphemeSplitter from 'grapheme-splitter'
 import { DigitalEmojiUnifiedMap } from '~/constant'
+import { Buffer } from 'buffer'
+import BN from 'bn.js'
+// @ts-ignore
+import blake2b from 'blake2b'
 
 /**
  * strip '0x' prefix of hex string
@@ -82,4 +86,19 @@ export function digitalEmojiUnifiedHandle (str: string): string {
     }
   })
   return list.join('')
+}
+
+/**
+ * the account is converted to an NFT ID.
+ * @param account
+ */
+export function dotbitToNftTokenId (account: string): string {
+  const personal = Buffer.from('ckb-default-hash')
+  const accountBuf = Buffer.from(account)
+  const hasher = blake2b(32, null, null, personal)
+  hasher.update(accountBuf)
+  const hashBuffer = hasher.digest('binary') as Uint8Array
+  const first20Bytes = Buffer.from(hashBuffer.slice(0, 20))
+  const tokenId = new BN(first20Bytes.toString('hex'), 16).toString(10)
+  return tokenId
 }

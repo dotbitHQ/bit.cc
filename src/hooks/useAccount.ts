@@ -1,20 +1,20 @@
 import { Ref, ref } from '@nuxtjs/composition-api'
-import DasSDK, { AccountData, AccountRecord, AccountRecordType, AccountRecordTypes } from 'das-sdk'
-import { DasRecordType } from '~/constant/das'
 import { ResolveResult } from '~/modules/das'
-import { das } from '~/services'
+import { dotbit } from '~/services'
+import {
+  AccountInfo,
+  BitAccountRecord,
+  BitAccountRecordAddress,
+  BitAccountRecordExtended
+} from 'dotbit/lib/fetchers/BitIndexer.type'
+import { RecordType } from 'dotbit'
 
 export enum AccountStatus {
   loading,
   unregistered,
   failed,
   successful,
-}
-
-declare module 'das-sdk' {
-  interface AccountRecord {
-    name: string,
-  }
+  onCross
 }
 
 const defaultAccount = {
@@ -39,14 +39,14 @@ const defaultAccount = {
   backgroundImage: '',
   redirect: '',
 
-  addresses: [] as AccountRecord[],
-  profiles: [] as AccountRecord[],
-  customs: [] as AccountRecord[],
+  addresses: [] as BitAccountRecordAddress[],
+  profiles: [] as BitAccountRecordExtended[],
+  customs: [] as BitAccountRecord[],
 }
 
-export type AccountInfo = typeof defaultAccount
+export type AccountInfoExtended = typeof defaultAccount
 
-export function useAccount (resolveResult: ResolveResult): {account: Ref<AccountInfo>, fetchAccount: Function} {
+export function useAccount (resolveResult: ResolveResult): {account: Ref<AccountInfoExtended>, fetchAccount: Function} {
   const account = ref({
     ...defaultAccount,
     account: resolveResult.account,
@@ -54,17 +54,20 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
 
   async function fetchAccount (): Promise<void> {
     let accountData: AccountInfo
-    let rawRecords: AccountRecord[]
+    let rawRecords: BitAccountRecordExtended[]
 
     try {
-      // @ts-expect-error
-      accountData = await das.account(account.value.account)
-      rawRecords = await das.records(account.value.account)
+      accountData = await dotbit.accountInfo(account.value.account)
+      rawRecords = await dotbit.records(account.value.account)
     }
     catch (err) {
       // @ts-expect-error
-      if (err.code === 'UnregisteredAccount') {
+      if (err.code === 20007) {
         account.value.status = AccountStatus.unregistered
+      }
+      // @ts-expect-error
+      else if (err.code === 20008) {
+        account.value.status = AccountStatus.onCross
       }
       else {
         account.value.status = AccountStatus.failed
@@ -74,43 +77,33 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
       return
     }
 
-    const records: AccountRecord[] = rawRecords.map(record => {
-      const keyParts = record.key.split('.') // address.btc
-
-      return {
-        ...record,
-        type: keyParts.shift() as AccountRecordType, // address
-        name: keyParts.join('.'), // btc
-      }
-    })
-
-    const addresses = records.filter(record => {
-      if (record.type === DasRecordType.address) {
+    const addresses = rawRecords.filter(record => {
+      if (record.type === RecordType.address) {
         // crypto name should be all uppercase, btc => BTC
-        record.name = record.name.toUpperCase()
+        record.subtype = record.subtype.toUpperCase()
         return true
       }
       return false
     })
 
-    const profiles = records.filter(record => {
-      if (record.type === DasRecordType.profile) {
+    const profiles = rawRecords.filter(record => {
+      if (record.type === RecordType.profile) {
         // First letter should be uppercase, youtube => Youtube
-        record.name = record.name.charAt(0).toUpperCase() + record.name.slice(1)
+        record.subtype = record.subtype.charAt(0).toUpperCase() + record.subtype.slice(1)
         return true
       }
       return false
     })
 
-    let customs = records.filter(record => record.type === AccountRecordTypes.custom)
+    let customs = rawRecords.filter(record => record.type === RecordType.custom)
     const descriptionRecord = profiles.find(record => record.key === 'profile.description')
     const welcomeRecord = customs.find(record => record.key === 'custom_key.bitcc_welcome')
     const themeRecord = customs.find(record => record.key === 'custom_key.bitcc_theme')
     const redirectRecord = customs.find(record => record.key === 'custom_key.bitcc_redirect')
     const backgroundImageRecord = customs.find(record => record.key === 'custom_key.bitcc_background_image')
 
-    const avatar = await das.getAvatar(account.value.account)
-
+    // const avatar = await dotbit.avatar(account.value.account)
+    const avatar = profiles.find(record => record.key === 'profile.avatar')
     customs = customs.filter(record => record.key.indexOf('custom_key.bitcc_') !== 0)
 
     const algorithm2Chain = {
@@ -131,7 +124,7 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
       manager_address_chain: algorithm2Chain[accountData.manager_algorithm_id] || 'eth',
 
       description: descriptionRecord?.value || '',
-      avatar: avatar?.url || '',
+      avatar: avatar?.value || '',
       welcome: welcomeRecord?.value || '',
       theme: themeRecord?.value || '',
       backgroundImage: backgroundImageRecord?.value || '',
