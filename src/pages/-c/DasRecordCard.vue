@@ -86,8 +86,8 @@
 <template>
   <BitCard class="das-record-card">
     <div class="card_title">
-      <span class="card_name">{{ record.name }}</span>
-      <IconRecord :record="record.name" :size="24" />
+      <span class="card_name">{{ record.subtype }}</span>
+      <IconRecord :record="record.subtype" :size="24" />
     </div>
 
     <p class="card_content" :class="{'_address': record.type === DasRecordType.address}">
@@ -107,7 +107,6 @@
 
 <script lang="ts">
 import { defineComponent } from '@nuxtjs/composition-api'
-import { AccountRecord } from 'das-sdk'
 import BitCard from '~/components/BitCard.vue'
 import BitCopy from '~/components/BitCopy.vue'
 import BitOpen from '~/components/BitOpen.vue'
@@ -115,6 +114,7 @@ import IconRecord from '~/components/IconRecord.vue'
 import { DasRecordType } from '~/constant/das'
 import { buildProfileUrl } from '~/modules/das'
 import { collapseString } from '~/modules/tools'
+import { BitAccountRecord } from 'dotbit/lib/fetchers/BitIndexer.type'
 
 export default defineComponent({
   name: 'DasRecord',
@@ -131,7 +131,7 @@ export default defineComponent({
     }
   },
   setup (props) {
-    const valueAsUrl = buildProfileUrl(props.record as AccountRecord)
+    const valueAsUrl = buildProfileUrl(props.record as BitAccountRecord)
     return {
       collapseString,
 

@@ -100,6 +100,7 @@
     <BitHeader />
 
     <DasUnregistered v-if="account.status === AccountStatus.unregistered" :account="account.account" />
+    <DasOnCross v-else-if="account.status === AccountStatus.onCross" :account="account.account" />
     <div v-else-if="account.status === AccountStatus.successful" class="index_content">
       <ProfileCard class="index_profile" :account="account" />
       <SideNav v-model="activeNav" class="index_nav" />
@@ -135,6 +136,7 @@ import { NFTProviderType, useNFT } from '~/hooks/useNFT'
 import { ResolveResult } from '~/modules/das'
 import DasRecords from '~/pages/-c/DasRecords.vue'
 import DasUnregistered from '~/pages/-c/DasUnregistered.vue'
+import DasOnCross from '~/pages/-c/DasOnCross.vue'
 import ProfileCard from '~/pages/-c/ProfileCard.vue'
 import SideNav, { NavItem } from '~/pages/-c/RecordsNav.vue'
 import BrandFilters, { BrandItem } from '~/pages/-c/BrandFilters.vue'
@@ -149,6 +151,7 @@ export default defineComponent({
     DasRecords,
     DasUnregistered,
     BrandFilters,
+    DasOnCross,
   },
   setup () {
     const resolveResult = inject(INJECTED_BITCC_ACCOUNT) as ResolveResult
