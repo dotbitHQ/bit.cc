@@ -108,6 +108,8 @@ export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolea
   const loading = ref(true)
 
   function fetchNFTs (): void {
+    console.log('===fetchNFTs===')
+    console.log(account)
     const ownerAddress = account.value.owner_address
     // const ckbAddressRecords = account.value.addresses.filter(record => record.key === 'address.ckb')
 
