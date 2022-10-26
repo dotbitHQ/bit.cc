@@ -240,7 +240,8 @@ export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolea
       eth: '60',
     }
     const coinType = (addressChain2CoinType as any)[account.value.owner_address_chain]
-
+    console.log('====accountsOfOwner====')
+    console.log(ownerAddress)
     void dotbit.accountsOfOwner({
       key: ownerAddress
     }).then(res => {
