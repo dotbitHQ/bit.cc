@@ -242,8 +242,10 @@ export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolea
     const coinType = (addressChain2CoinType as any)[account.value.owner_address_chain]
     console.log('====accountsOfOwner====')
     console.log(ownerAddress)
+    console.log(account)
     void dotbit.accountsOfOwner({
-      key: ownerAddress
+      key: ownerAddress,
+      coin_type: coinType
     }).then(res => {
       dasAccounts.value = normalizeDASAccounts(res)
     })
