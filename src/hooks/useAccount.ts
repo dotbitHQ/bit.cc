@@ -135,8 +135,7 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
       customs,
     })
   }
-  console.log('==useAccount===')
-  console.log(account)
+
   return {
     account,
     fetchAccount,

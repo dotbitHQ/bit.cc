@@ -54,6 +54,10 @@ export function resolveAccountFromUrl (url: string): ResolveResult {
 
       redirectTo = `https://${domain}/${account}.bit`
     }
+    else if (/^-/.test(account) || /-$/.test(account)) {
+      account = digitalEmojiUnifiedHandle(account)
+      redirectTo = `https://${domain}/${account}.bit`
+    }
 
     account = digitalEmojiUnifiedHandle(account) + '.bit'
   }
