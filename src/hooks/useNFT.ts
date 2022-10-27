@@ -108,8 +108,6 @@ export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolea
   const loading = ref(true)
 
   function fetchNFTs (): void {
-    console.log('===fetchNFTs===')
-    console.log(account)
     const ownerAddress = account.value.owner_address
     // const ckbAddressRecords = account.value.addresses.filter(record => record.key === 'address.ckb')
 
@@ -240,9 +238,6 @@ export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolea
       eth: '60',
     }
     const coinType = (addressChain2CoinType as any)[account.value.owner_address_chain]
-    console.log('====accountsOfOwner====')
-    console.log(ownerAddress)
-    console.log(account)
     void dotbit.accountsOfOwner({
       key: ownerAddress,
       coin_type: coinType
