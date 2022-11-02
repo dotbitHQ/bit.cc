@@ -10,7 +10,7 @@ pipeline:
 
   # build
   build:
-    image: node:lts
+    image: node:16
     commands:
       - yarn install
       - npm run build
@@ -33,6 +33,7 @@ pipeline:
     source: ./
     target: /data/code/bit.cc
     script:
+      - source ~/.zshrc
       - cd /data/code/bit.cc
       - npm run reload_production
     when:
@@ -47,6 +48,7 @@ pipeline:
     source: ./
     target: /data/code/bit.cc_test1
     script:
+      - source ~/.zshrc
       - cd /data/code/bit.cc_test1
       - npm run reload_test1
     when:

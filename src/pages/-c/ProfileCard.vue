@@ -212,7 +212,7 @@
 
     <div v-if="isShowingCard" class="profile_card_mask">
       <div class="profile_card_container">
-        <img class="profile_card_img" :src="`https://identicons.did.id/card/bitcc/${account.account}`" alt="">
+        <img class="profile_card_img" :src="`https://display.did.id/card/bitcc/${account.account}`" alt="">
         <div style="margin-top: 12px;">{{ $tt('Press to save image') }}</div>
         <div style="margin-top: 30px;">
           <Iconfont name="close" :size="28" @click="toggleCard" />
