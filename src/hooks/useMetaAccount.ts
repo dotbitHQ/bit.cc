@@ -1,13 +1,13 @@
 import { useMeta } from '@nuxtjs/composition-api'
-import { AccountInfo } from '~/hooks/useAccount'
+import { AccountInfoExtended } from '~/hooks/useAccount'
 import { socialMeta } from '~/modules/social-media'
 
-export function useMetaAccount (account: AccountInfo, url: string): void {
+export function useMetaAccount (account: AccountInfoExtended, url: string): void {
   // @ts-expect-error
   useMeta(() => {
     const title = `${account.account} - My decentralized identity`
-    const img = `https://identicons.did.id/seo/${account.account}`
-    const icon = `https://identicons.did.id/identicon/${account.account}`
+    const img = `https://display.did.id/seo/${account.account}`
+    const icon = `https://display.did.id/identicon/${account.account}`
     // const icon = 'https://phone.bit.cc/favicon.png'
     return {
       title,
