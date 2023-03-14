@@ -74,6 +74,11 @@
           class="nav_item_logo"
           :src="`/imgs/${item.value}-logo.png`"
         />
+        <img
+          v-else-if="item.value === BrandItem.kolo"
+          class="nav_item_logo"
+          :src="`/imgs/${item.value}-logo.png`"
+        />
         <Iconfont v-else-if="item.value !== BrandItem.all" :name="item.value" />
         {{ item.text }}
       </span>
@@ -96,6 +101,7 @@ export const BrandItem = {
   poap: 'poap',
   treasureland: 'treasureland',
   airnfts: 'airnfts',
+  kolo: 'kolo',
 }
 
 export default defineComponent({
@@ -126,6 +132,9 @@ export default defineComponent({
     }, {
       value: BrandItem.treasureland,
       text: 'Treasureland',
+    }, {
+      value: BrandItem.kolo,
+      text: 'KOLO',
     }]
 
     function onClickItem (item: IOption): void {

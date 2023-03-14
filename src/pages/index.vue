@@ -151,7 +151,7 @@ export default defineComponent({
     DasRecords,
     DasUnregistered,
     BrandFilters,
-    DasOnCross,
+    DasOnCross
   },
   setup () {
     const resolveResult = inject(INJECTED_BITCC_ACCOUNT) as ResolveResult
@@ -159,6 +159,7 @@ export default defineComponent({
     const context = useContext()
     const activeNav = ref(NavItem.nft)
     const activeBrandFilter = ref(BrandItem.all)
+    // const store = useStore()
 
     const { account, fetchAccount } = useAccount(resolveResult)
     const { nfts, fetchNFTs, loading: loadingNFT } = useNFT(account)
@@ -182,6 +183,11 @@ export default defineComponent({
         else if (activeBrandFilter.value === BrandItem.airnfts) {
           return nfts.value.filter(nft => {
             return nft.providerType === NFTProviderType.airnfts
+          })
+        }
+        else if (activeBrandFilter.value === BrandItem.kolo) {
+          return nfts.value.filter(nft => {
+            return nft.providerType === NFTProviderType.kolo
           })
         }
         else {

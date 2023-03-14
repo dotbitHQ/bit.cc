@@ -6,6 +6,7 @@ import { OpenSeaAsset } from '../../types/opensea'
 import { XdaiPoap } from '../../types/xdai.poap'
 import { TreasurelandAsset } from '../../types/treasureland'
 import { AirNFTsNft } from '../../types/airnfts'
+import { KoloAssets, KoloNftAsset } from '../../types/kolo'
 
 export enum NFTProviderType {
   opensea,
@@ -13,7 +14,8 @@ export enum NFTProviderType {
   das,
   xdai,
   treasureland,
-  airnfts
+  airnfts,
+  kolo
 }
 
 export interface NFT {
@@ -23,6 +25,11 @@ export interface NFT {
   providerType: NFTProviderType,
   price?: number,
   priceToken?: string,
+  workId?: number,
+  audioUrl?: string,
+  subNfts?: KoloNftAsset[],
+  tokenId?: number,
+  targetId?: number
 }
 
 function normalizeOpenseaAssets (assets: OpenSeaAsset[]): NFT[] {
@@ -103,6 +110,20 @@ function normalizeAirNFTsAssets (assets: AirNFTsNft[]): NFT[] {
   }).filter(asset => asset.imageUrl)
 }
 
+function normalizeKoloAssets(assets: KoloAssets[]): NFT[] {
+  return assets.map(asset => {
+    return {
+      name: asset.title,
+      imageUrl: asset.cover,
+      link: asset.workId ? `https://www.kolo.market/mintDetail?id=${asset.workId}` : asset.targetId ? `https://www.kolo.market/mintDetail?id=${asset.targetId}` : 'https://www.kolo.market',
+      providerType: NFTProviderType.kolo,
+      tokenId: asset.tokenId,
+      audioUrl: asset.audioUrl,
+      subNfts: asset.subNfts || []
+    }
+  }).filter(asset => asset.imageUrl)
+}
+
 export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolean>, nfts: Ref<NFT[]>, fetchNFTs: Function} {
   const nfts = ref<NFT[]>([])
   const loading = ref(true)
@@ -128,6 +149,7 @@ export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolea
     const airNFTsAssets = ref<NFT[]>([])
     const jinseAssets = ref<NFT[]>([])
     const dasAccounts = ref<NFT[]>([])
+    const koloAssets = ref<NFT[]>([])
 
     watch([
       dasAccounts,
@@ -140,6 +162,7 @@ export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolea
       treasurelandMoonriverAssets,
       treasurelandIotexAssets,
       airNFTsAssets,
+      koloAssets
     ], () => {
       nfts.value = dasAccounts.value
         .concat(openseaAssets.value)
@@ -151,6 +174,7 @@ export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolea
         .concat(treasurelandMoonriverAssets.value)
         .concat(treasurelandIotexAssets.value)
         .concat(airNFTsAssets.value)
+        .concat(koloAssets.value)
     })
 
     if (account.value.owner_address_chain === 'eth') {
@@ -197,6 +221,22 @@ export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolea
           airNFTsAssets.value = normalizeAirNFTsAssets(res.nfts)
         }
       })
+
+      void services.getKoloAssets(ownerAddress).then(res => {
+        if (res) {
+          let arr = []
+          for (let key in res) {
+            arr.push({
+              ...res[key],
+              tokenId: key
+            })
+          }
+          console.log('arr', arr)
+          koloAssets.value = normalizeKoloAssets(arr)
+        }
+      })
+
+      console.log('ownerAddress', ownerAddress)
 
       if (process.browser) {
         void import('@lay2/pw-core').then(async (PWCoreImported) => {
