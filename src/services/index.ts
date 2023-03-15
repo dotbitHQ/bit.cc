@@ -165,6 +165,7 @@ export class Services extends BasicService {
    */
   getKoloAssets (owner: string): Promise<any> {
     owner = Web3Utils.toChecksumAddress(owner)
+    // 'https://www.kolo.market/api/outer/nftinfo/0x364056980867d1655897299889bca4e7d465b395'
     return this.axios.get(`https://www.kolo.market/api/outer/nftinfo/0x81a5788a4b635f6d5ead3d9d7b447967d8b2d30a`)
   }
 }

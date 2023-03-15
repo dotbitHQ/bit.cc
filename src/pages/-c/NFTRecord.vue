@@ -77,6 +77,25 @@
       }
     }
 
+    .nft_play {
+      position: absolute;
+      bottom: 70px;
+      right: 30px;
+      width: 50px;
+      height: 50px;
+      z-index: 999;
+      .nft_icon_play {
+        width: 100%;
+        height: 100%;
+      }
+      @media screen and (max-width: 640px) {
+        bottom: 16px;
+        right: 16px;
+        width: 40px;
+        height: 40px;
+      }
+    }
+
     &:hover {
       .nft_info {
         display: flex;
@@ -115,6 +134,9 @@
           </span>
         </template>
         <img v-else class="nft_img" :src="nft.imageUrl" :alt="nft.name">
+        <div class="nft_play" v-if="nft.subNfts">
+          <img class="nft_icon_play" src="/imgs/kolo/icon-play.png" alt="" @click.prevent.stop="handlePlay(nft.subNfts)" />
+        </div>
 
         <div class="nft_info">
           <div class="nft_name">{{ nft.name }}</div>
@@ -132,7 +154,7 @@ import { DasAccountCard } from 'das-ui-shared'
 import { NFT, NFTProviderType } from '~/hooks/useNFT'
 import 'das-ui-shared/dist/style.css'
 import Iconfont from '~/components/Iconfont.vue'
-import { ref } from '@nuxtjs/composition-api'
+import { ref, useStore } from '@nuxtjs/composition-api'
 const { defineComponent } = require('@nuxtjs/composition-api')
 
 export default defineComponent({
@@ -149,6 +171,7 @@ export default defineComponent({
   },
   setup (props: {nft: NFT}, { refs }) {
     const isPlay = ref(false)
+    const store = useStore()
 
     function playPause () {
       const video = refs.video
@@ -162,11 +185,21 @@ export default defineComponent({
       }
     }
 
+    function handlePlay(nfts: any) {
+      if (nfts.length > 0) {
+        store.dispatch('music/selectAddPlayList', {
+          list: nfts,
+          index: 0
+        })
+      }
+    }
+
     return {
       NFTProviderType,
       isPlay,
 
-      playPause
+      playPause,
+      handlePlay
     }
   }
 })

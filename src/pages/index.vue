@@ -102,7 +102,7 @@
     <DasUnregistered v-if="account.status === AccountStatus.unregistered" :account="account.account" />
     <DasOnCross v-else-if="account.status === AccountStatus.onCross" :account="account.account" />
     <div v-else-if="account.status === AccountStatus.successful" class="index_content">
-      <ProfileCard class="index_profile" :account="account" />
+      <ProfileCard class="index_profile" :account="account" :activeNav="activeBrandFilter" />
       <SideNav v-model="activeNav" class="index_nav" />
       <BrandFilters
         v-if="activeNav === NavItem.nft"
@@ -124,12 +124,14 @@
         </div>
       </div>
     </div>
+    <Player></Player>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent, inject, onMounted, ref, useContext, useFetch, useRoute, computed } from '@nuxtjs/composition-api'
 import BitHeader from '~/components/BitHeader.vue'
+import Player from '~/components/Player/index.vue'
 import { AccountStatus, useAccount } from '~/hooks/useAccount'
 import { useMetaAccount } from '~/hooks/useMetaAccount'
 import { NFTProviderType, useNFT } from '~/hooks/useNFT'
@@ -151,7 +153,8 @@ export default defineComponent({
     DasRecords,
     DasUnregistered,
     BrandFilters,
-    DasOnCross
+    DasOnCross,
+    Player
   },
   setup () {
     const resolveResult = inject(INJECTED_BITCC_ACCOUNT) as ResolveResult

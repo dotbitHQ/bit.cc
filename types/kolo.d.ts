@@ -9,7 +9,7 @@ export interface KoloAssets {
   workIndex: number;
   audioUrl?: string;
   workTitle?: string;
-  tokenId?: number;
+  tokenId?: string;
   subNfts?: KoloNftAsset[];
 }
 
@@ -23,5 +23,6 @@ export interface KoloNftAsset {
   trackIndex: number,
   audioUrl: string;
   workTitle: string;
-  workIndex: number
+  workIndex: number;
+  tokenId?: string;
 }

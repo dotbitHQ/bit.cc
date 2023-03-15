@@ -28,7 +28,7 @@ export interface NFT {
   workId?: number,
   audioUrl?: string,
   subNfts?: KoloNftAsset[],
-  tokenId?: number,
+  tokenId?: string,
   targetId?: number
 }
 
@@ -224,15 +224,34 @@ export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolea
 
       void services.getKoloAssets(ownerAddress).then(res => {
         if (res) {
-          let arr = []
-          for (let key in res) {
-            arr.push({
-              ...res[key],
-              tokenId: key
-            })
-          }
-          console.log('arr', arr)
-          koloAssets.value = normalizeKoloAssets(arr)
+          const newArr = Object.entries(res).flatMap(
+            ([key, item]: [string, any]): KoloAssets[] => {
+              if (item.nftType === 2) {
+                const subNfts = item.subNfts && item.subNfts.map(
+                  (i: KoloNftAsset): KoloNftAsset => ({ ...i, tokenId: key })
+                );
+                return {
+                  ...item,
+                  tokenId: key,
+                  subNfts,
+                };
+              }
+              else if (item.nftType === 1) {
+                return {
+                  ...item,
+                  tokenId: key,
+                  subNfts: [
+                    {
+                      ...item,
+                      tokenId: key,
+                    },
+                  ],
+                };
+              }
+              return [];
+            }
+          );
+          koloAssets.value = normalizeKoloAssets(newArr)
         }
       })
 

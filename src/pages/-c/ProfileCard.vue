@@ -224,7 +224,7 @@
 
 <script>
 
-import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, watch } from '@nuxtjs/composition-api'
 import { DasAvatar, ResizeText } from 'das-ui-shared'
 import { useToggle } from '@vueuse/core'
 import Iconfont from '~/components/Iconfont'
@@ -250,9 +250,13 @@ export default defineComponent({
       type: Object,
       default: () => ({})
     },
+    activeNav: {
+      type: String,
+      default: ''
+    },
   },
 
-  setup (_, ctx) {
+  setup (props, ctx) {
     const intent = ref('')
     const mail3MeButton = ref(null)
     const [isShowingCard, toggleCard] = useToggle()
@@ -276,6 +280,22 @@ export default defineComponent({
       window.addEventListener('message', handleMail3MessageEvent)
       return () => window.removeEventListener('message', handleMail3MessageEvent)
     })
+
+    watch(
+      () => props.activeNav,
+      (newActiveNav) => {
+        console.log('new', newActiveNav)
+        if (newActiveNav === 'kolo') {
+          const text = 'Hey! Come to my #NFT gallery! I set XX song as Kolo, 😎 \nYou can see my multi-chain NFTs and my .bit profile.  @dotbitHQ \n'
+          const url = window.location.href
+          intent.value = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
+        } else {
+          const text = 'Hey! Come to my #NFT gallery! 😎 \nYou can see my multi-chain NFTs and my .bit profile.  @dotbitHQ \n'
+          const url = window.location.href
+          intent.value = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
+        }
+      }
+    )
 
     return {
       intent,
