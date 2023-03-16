@@ -69,14 +69,12 @@ export default {
       setCurrenIndex: 'SET_CURRENTINDEX',
       setCurrentTime: 'SET_CURRENTTIME'
     }),
-    // 获取列表是否有播放
     getPlaying(index) {
       return this.currentIndex === index
     },
     handleItem(index) {
       this.currentIndex === index ? this.setPlaying(!this.playing) : this.setCurrenIndex(index)
     },
-    // 清除全部歌曲
     handleClear() {
       this.clearPlayList()
       this.hideList()

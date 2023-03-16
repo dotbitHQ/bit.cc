@@ -1,13 +1,12 @@
 import * as lodash from 'lodash'
-// 重试次数
+// number of retries
 let retry = 3
 let retryMusic = 5
 
 const playerMusic = {
   initAudio(that) {
     const ele = that.audioEle
-    console.log('that.audioEle', that.audioEle)
-    // 音频缓冲事件
+
     ele.onprogress = () => {
       try {
         if (ele.buffered.length > 0) {
@@ -22,7 +21,7 @@ const playerMusic = {
         console.error(e)
       }
     }
-    // 开始播放音乐
+    // start playing music
     ele.onplay = () => {
       let timer
       clearTimeout(timer)
@@ -39,22 +38,20 @@ const playerMusic = {
         }
       }
     }, 1000)
-    // 当前音乐播放完毕
+
     ele.onended = () => {
       that.playNextMusic()
     }
-    // 音乐播放出错
+
     ele.onerror = () => {
       if (retry === 0) {
         retry = 3
         that.playNextMusic()
       } else {
-        console.log(`重试${retry}次`)
         retry -= 1
       }
-      console.log('播放出错啦！')
     }
-    // 音乐进度拖动大于加载时重载音乐或音频数据不可用时
+
     ele.onstalled = () => {
       if (retryMusic === 0) {
         retryMusic = 5
@@ -65,17 +62,16 @@ const playerMusic = {
         retryMusic -= 1
         let timer
         clearTimeout(timer)
-        console.log('音频不可用呀~~', retryMusic)
         timer = setTimeout(() => {
           that.setPlaying(true)
         }, 10)
       }
     }
-    // 将能播放的音乐加入播放历史
+
     ele.oncanplay = () => {
       retry = 1
     }
-    // 当音频已暂停时
+
     ele.onpause = () => {
       that.setPlaying(false)
     }

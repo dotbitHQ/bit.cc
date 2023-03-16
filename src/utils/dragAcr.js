@@ -30,7 +30,7 @@ export default class DragAcr {
     this.styleWidth = el.offsetWidth;
     this.styleHeight = el.offsetHeight;
     this.center = this.width / 2
-    this.radius = this.width / 2 - 7; //滑动路径半径
+    this.radius = this.width / 2 - 7;
     this.isMove = false
 
 
@@ -73,7 +73,7 @@ export default class DragAcr {
     dom.appendChild(this.canvas);
     this.isMobile = /Android|webOS|iPhone|iPod|BlackBerry/i.test(navigator.userAgent);
   }
-  //绘图
+
   draw(value) {
     this.ctx.clearRect(0, 0, this.width, this.width);
 
@@ -81,26 +81,9 @@ export default class DragAcr {
 
     let startDeg = this.counterclockwise ? Math.PI * (2 - this.startDeg) : Math.PI * this.startDeg
     let endDeg = this.counterclockwise ? Math.PI * (2 - this.endDeg) : Math.PI * this.endDeg
-
-    // 绘制内层圆弧
-    // this.ctx.beginPath();
-    // this.ctx.lineWidth = 1;
-    // this.ctx.arc(this.center, this.center, this.radius - 20, startDeg, endDeg, this.counterclockwise); // 绘制内层圆弧
-    // this.ctx.strokeStyle = this.innerColor;
-    // this.ctx.stroke();
-
-    // 绘制外侧圆弧
-    // this.ctx.beginPath();
-    // this.ctx.arc(this.center, this.center, this.radius, startDeg, endDeg, this.counterclockwise); // 绘制外侧圆弧
-    // this.ctx.strokeStyle = this.outColor;
-    // this.ctx.lineCap = "round";
-    // this.ctx.lineWidth = this.outLineWidth;
-    // this.ctx.stroke();
-
     let Deg = this.valToDeg(value)
 
 
-    // 绘制可变圆弧
     let themeColor = (typeof this.color == 'String') ? this.color : this.setLinearGradient()
     this.ctx.beginPath();
     this.ctx.arc(this.center, this.center, this.radius, startDeg, Deg, this.counterclockwise); // 可变圆弧
@@ -111,7 +94,6 @@ export default class DragAcr {
 
 
     this.P = this.DegToXY(Deg)
-    // 控制绘制滑块
     if (this.isMove) {
       this.ctx.beginPath();
       this.ctx.moveTo(this.center, this.center,);
@@ -125,10 +107,6 @@ export default class DragAcr {
       this.ctx.fill();
     }
 
-
-
-
-    // 文字
     if (!this.textShow) return;
     this.ctx.font = `${this.center / 4}px serif`;
     this.ctx.fillStyle = themeColor;
@@ -139,7 +117,6 @@ export default class DragAcr {
 
   }
 
-  // 获取分辨率
   getPixelRatio(context) {
     var backingStore = context.backingStorePixelRatio ||
       context.webkitBackingStorePixelRatio ||
@@ -166,7 +143,7 @@ export default class DragAcr {
     })
   }
 
-  //canvas坐标转化为中心坐标
+  // Canvas coordinates are converted to center coordinates
   spotchangeXY(point) {
     const spotchangeX = (i) => {
       return i - this.center
@@ -180,7 +157,7 @@ export default class DragAcr {
     }
   }
 
-  //中心坐标转化为canvas坐标
+  // Center coordinates are converted to canvas coordinates
   respotchangeXY(point) {
     const spotchangeX = (i) => {
       return i + this.center
@@ -208,7 +185,7 @@ export default class DragAcr {
     return grad;
   }
 
-  event(dom) {  //事件绑定
+  event(dom) {
     if (this.isMobile) {
       dom.addEventListener("touchstart", this.OnMouseDown.bind(this), false);
       dom.addEventListener("touchmove", this.throttle(this.OnMouseMove.bind(this)), false);
@@ -224,23 +201,16 @@ export default class DragAcr {
 
   OnMouseMove(evt) {
     let evpoint = {};
-    // const threshold = 5
     evpoint.x = this.getx(evt);
     evpoint.y = this.gety(evt);
     const isInRing = this.isInRing(evpoint.x, evpoint.y)
     this.isMove = isInRing
-    // if (evpoint.x <= threshold || evpoint.x >= this.width - threshold || evpoint.y <= threshold || evpoint.y >= this.width - threshold) {
-    //   this.isDown = false
-    //   this.isMove = false
-    //   return
-    // }
     if (!this.isDown) return;
     let point = this.spotchangeXY(evpoint);
     let deg = this.XYToDeg(point.x, point.y);
     deg = this.counterclockwise ? deg : Math.PI * 2 - deg;
     let val = (deg / Math.PI - this.startDeg) / (this.endDeg - this.startDeg) * 100
     if (val < 0) val = 100 + val;
-    // if(val>100 || val<0) return;
     if (val >= 100) val = 100;
     if (val <= 0) val = 0;
     if (Math.abs(val - this.value) > 10) return;
@@ -262,14 +232,12 @@ export default class DragAcr {
     let maxX = P.x + this.slider + range;
     let minY = P.y - this.slider - range;
     let maxY = P.y + this.slider + range;
-    // console.log('鼠标的位置', X, Y, minX < X && X < maxX && minY < Y && Y < maxY)
-    console.log('鼠标是否在圆内', this.isInCircle(X, Y))
 
-    if (minX < X && X < maxX && minY < Y && Y < maxY) {   //判断鼠标是否在滑块上 
+    if (minX < X && X < maxX && minY < Y && Y < maxY) {
       this.isDown = true;
     } else {
       this.isDown = false;
-      const inCircle = this.isInCircle(X, Y) // 验证点击是否在圆内
+      const inCircle = this.isInCircle(X, Y)
       if (inCircle) {
         this.inCircleCallback()
       } else {
@@ -279,8 +247,7 @@ export default class DragAcr {
           let maxRX = R.x + range;
           let minRY = R.y - range;
           let maxRY = R.y + range;
-          if (minRX < X && X < maxRX && minRY < Y && Y < maxRY) {   //判断鼠标是否在滑块上
-            console.log('鼠标点击的位置', X, Y, R, i)
+          if (minRX < X && X < maxRX && minRY < Y && Y < maxRY) {   // Determine if the mouse is over the slider
             this.animate = requestAnimationFrame(this.draw.bind(this, i));
             this.changeEnd(i)
             this.value = i
@@ -292,24 +259,22 @@ export default class DragAcr {
     }
   }
 
-  // 设置滑块的位置
+  // Set the position of the slider
   setValue(value) {
     this.value = value
     this.animate = requestAnimationFrame(this.draw.bind(this, value));
   }
 
-  // 判断点是否在圆内
+  // Determine if a point is inside a circle
   isInCircle(x, y) {
-    // 求点到圆心的距离
     const a = this.center
     const b = this.center
     let dis = Math.sqrt((x - a) * (x - a) + (y - b) * (y - b))
     return dis <= this.radius - 5
   }
 
-  // 判断点是否在圆环线条上
+  // Determine whether the point is on the circle line
   isInRing(x, y) {
-    // 求点到圆心的距离
     let range = 4
     const a = this.center
     const b = this.center
@@ -319,18 +284,17 @@ export default class DragAcr {
 
 
 
-  OnMouseUp() {  //鼠标释放
+  OnMouseUp() {
     const _this = this
     this.isMove = false
     cancelAnimationFrame(_this.animate);
-    console.log('鼠标释放', this.value)
     if (this.isDown) {
       this.changeEnd(this.value)
     }
     this.isDown = false
   }
 
-  OnMouseOut() { //鼠标移出
+  OnMouseOut() {
     this.isMove = false
     cancelAnimationFrame(this.animate);
     if (this.isDown) {
@@ -339,7 +303,6 @@ export default class DragAcr {
     this.isDown = false
   }
 
-  // 将坐标点转化为弧度
   XYToDeg(lx, ly) {
     let adeg = Math.atan(ly / lx)
     let deg;
@@ -358,19 +321,16 @@ export default class DragAcr {
     return deg
   }
 
-  //获取鼠标在canvas内坐标x
   getx(ev) {
     if (!this.isMobile) return ev.clientX - this.el.getBoundingClientRect().left;
     return ev.touches[0].pageX - this.el.getBoundingClientRect().left;
   }
 
-  //获取鼠标在canvas内坐标y
   gety(ev) {
     if (!this.isMobile) return ev.clientY - this.el.getBoundingClientRect().top;
     return ev.touches[0].pageY - this.el.getBoundingClientRect().top;
   }
 
-  //节流
   throttle(func) {
     let previous = 0;
     return function () {

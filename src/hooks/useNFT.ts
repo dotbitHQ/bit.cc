@@ -255,8 +255,6 @@ export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolea
         }
       })
 
-      console.log('ownerAddress', ownerAddress)
-
       if (process.browser) {
         void import('@lay2/pw-core').then(async (PWCoreImported) => {
           const { Platform, Address, AddressType, Provider, PwCollector, default: PWCore } = PWCoreImported

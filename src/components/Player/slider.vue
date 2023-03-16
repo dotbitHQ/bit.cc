@@ -1,8 +1,6 @@
 <template>
-  <!--进度条拖动-->
   <div ref="koloProgress" class="koloProgress" @click="barClick">
     <div class="koloProgress-bar"></div>
-    <div ref="voPercentProgress" class="koloProgress-outer"></div>
     <div ref="koloProgressInner" class="koloProgress-inner">
       <div class="koloProgress-dot" @mousedown="barDown" @touchstart.prevent="barDown"></div>
     </div>
@@ -14,13 +12,7 @@ const dotHeight = 10
 export default {
   name: 'koloProgress',
   props: {
-    // 进度值一
     percent: {
-      type: [Number],
-      default: 0
-    },
-    // 进度值二（歌曲缓冲进度用）
-    percentProgress: {
       type: [Number],
       default: 0
     }
@@ -28,9 +20,9 @@ export default {
   data() {
     return {
       move: {
-        status: false, // 是否可拖动
-        startY: 0, // 记录最开始点击的X坐标
-        bottom: 0 // 记录当前已经移动的距离
+        status: false,
+        startY: 0,
+        bottom: 0
       }
     }
   },
@@ -41,10 +33,6 @@ export default {
         const offsetHeight = newPercent * barHeight
         this.moveSlide(offsetHeight)
       }
-    },
-    percentProgress(newValue) {
-      let offsetHeight = this.$refs.koloProgress.clientHeight * newValue
-      this.$refs.voPercentProgress.style.height = `${offsetHeight}px`
     }
   },
   mounted() {
@@ -59,7 +47,7 @@ export default {
     this.unbindEvents()
   },
   methods: {
-    // 添加绑定事件
+    // binding event
     bindEvents() {
       document.addEventListener('mousemove', this.barMove)
       document.addEventListener('mouseup', this.barUp)
@@ -67,7 +55,7 @@ export default {
       document.addEventListener('touchmove', this.barMove)
       document.addEventListener('touchend', this.barUp)
     },
-    // 移除绑定事件
+    // bind event
     unbindEvents() {
       document.removeEventListener('mousemove', this.barMove)
       document.removeEventListener('mouseup', this.barUp)
@@ -75,21 +63,20 @@ export default {
       document.removeEventListener('touchmove', this.barMove)
       document.removeEventListener('touchend', this.barUp)
     },
-    // 点击事件
+    // click event
     barClick(e) {
       let rect = this.$refs.koloProgress.getBoundingClientRect()
-      console.log('rect.bottom', e.clientY, rect)
       let offsetHeight = Math.min(this.$refs.koloProgress.clientHeight - dotHeight, Math.max(0, rect.bottom - e.clientY))
       this.moveSlide(offsetHeight)
       this.covoitPercent(true)
     },
-    // 鼠标按下事件
+    // mouse down event
     barDown(e) {
       this.move.status = true
       this.move.startY = e.clientY || e.touches[0].pageY
       this.move.bottom = this.$refs.koloProgressInner.clientHeight
     },
-    // 鼠标/触摸移动事件
+    // Mouse/touch move events
     barMove(e) {
       if (!this.move.status) {
         return false
@@ -98,24 +85,22 @@ export default {
       let endY = e.clientY || e.touches[0].pageY
       let dist = this.move.startY - endY
       let offsetHeight = Math.min(this.$refs.koloProgress.clientHeight - dotHeight, Math.max(0, this.move.bottom + dist))
-      console.log('offsetHeight', offsetHeight)
       if (offsetHeight > 0) {
         this.moveSlide(offsetHeight)
         this.covoitPercent()
       }
     },
-    // 鼠标/触摸释放事件
+    // mouse/touch release event
     barUp(e) {
       if (this.move.status) {
         this.covoitPercent(true)
         this.move.status = false
       }
     },
-    // 移动滑块
+    // move slider
     moveSlide(offsetHeight) {
       this.$refs.koloProgressInner.style.height = `${offsetHeight}px`
     },
-    // 修改 percent
     covoitPercent(isEnd = false) {
       const { koloProgress, koloProgressInner } = this.$refs
       const lineHeight = koloProgress.clientHeight - dotHeight
@@ -138,17 +123,6 @@ export default {
     width: 6px;
     background: rgba(0, 0, 0, 0.8);
     border-radius: 6px;
-    // background: linear-gradient(180deg, #ffee6a, #ff8800 33%, #ff7f00);
-  }
-  .koloProgress-outer {
-    position: absolute;
-    left: 50%;
-    bottom: 5px;
-    display: inline-block;
-    width: 6px;
-    height: 0;
-    margin-top: -2px;
-    background: rgba(255, 255, 255, 0.2);
   }
   .koloProgress-inner {
     position: absolute;

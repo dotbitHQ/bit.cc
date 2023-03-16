@@ -124,12 +124,13 @@
         </div>
       </div>
     </div>
+    <!-- kolo player -->
     <Player></Player>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, onMounted, ref, useContext, useFetch, useRoute, computed } from '@nuxtjs/composition-api'
+import { defineComponent, inject, onMounted, ref, useContext, useFetch, useRoute, computed, watch, useStore } from '@nuxtjs/composition-api'
 import BitHeader from '~/components/BitHeader.vue'
 import Player from '~/components/Player/index.vue'
 import { AccountStatus, useAccount } from '~/hooks/useAccount'
@@ -162,7 +163,7 @@ export default defineComponent({
     const context = useContext()
     const activeNav = ref(NavItem.nft)
     const activeBrandFilter = ref(BrandItem.all)
-    // const store = useStore()
+    const store = useStore()
 
     const { account, fetchAccount } = useAccount(resolveResult)
     const { nfts, fetchNFTs, loading: loadingNFT } = useNFT(account)
@@ -219,6 +220,15 @@ export default defineComponent({
         // so we have to invoke fetchNFTs again
         else {
           setTimeout(() => fetchNFTs(), 2000)
+        }
+      })
+      watch(() => nfts.value, (newNfts, oldNfts) => {
+        const koloNft = newNfts.find(nft => nft.providerType === NFTProviderType.kolo)
+        if (koloNft) {
+          store.dispatch('music/selectPlay', {
+            list: koloNft.subNfts,
+            index: 0
+          })
         }
       })
     }

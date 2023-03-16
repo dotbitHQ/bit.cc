@@ -35,6 +35,7 @@
       </div>
     </div>
     <audio ref="player" autoplay crossOrigin="anonymous"></audio>
+
   </div>
 </template>
 
@@ -51,10 +52,11 @@ export default {
   data() {
     return {
       infoShow: false,
-      musicReady: false, // 是否可以使用播放器
+      musicReady: false, // Is it possible to use the player
       isPlaying: false,
       drag: null,
-      dragFlag: false // 是否在拖拽中
+      isInit: true,
+      dragFlag: false // Is it dragging
     }
   },
   components: {
@@ -99,10 +101,15 @@ export default {
   },
   created() {
     this.drag = null
+
   },
   mounted() {
     this.$nextTick(() => {
       this.setAudioEle(this.$refs.player)
+      this.audioEle.volume = 0.8
+      silencePromise(this.audioEle.play())
+      this.audioEle.pause()
+      silencePromise(this.audioEle.play())
       if (this.audioEle) {
         playerMusic.initAudio(this)
       } else {
@@ -111,13 +118,18 @@ export default {
         }, 500)
       }
     })
+    document.addEventListener('click', () => {
+      if (this.isInit) {
+        silencePromise(this.audioEle.play())
+      }
+      this.isInit = false
+    }, false)
   },
   watch: {
     currentMusic: {
       handler(newMusic, oldMusic) {
         if (!oldMusic) return
-        if (!newMusic.audioUrl && newMusic.audioUrl === oldMusic.audioUrl && newMusic.trackIndex === oldMusic.trackIndex) return
-        console.log('歌曲改变了', newMusic, oldMusic)
+        if (!newMusic.audioUrl || newMusic.tokenId === oldMusic.tokenId) return
         this.setCurrentTime(0)
         this.setPlaying(false)
         this.$refs.contentBg.style.background = `url('${newMusic.cover}') center center no-repeat`
@@ -138,7 +150,6 @@ export default {
         } else {
           audio.pause()
         }
-        console.log('newPlaying', newPlaying)
         this.isPlaying = true
         this.musicReady = true
       })
@@ -187,7 +198,6 @@ export default {
           counterclockwise: false,
           change: (v) => {
             this.dragFlag = true
-            console.log('+++', retainNum(v / 100))
             this.progressMusic(retainNum(v / 100))
           },
           changeEnd: (v) => {
@@ -205,11 +215,9 @@ export default {
       if (!this.musicReady) {
         return
       }
-      console.log('播放暂停音乐', this.currentTime)
-
       this.setPlaying(!this.playing)
     },
-    // prev: 是否是上一首
+    // prev: Is it the last song
     play(prev) {
       if (!this.musicReady) {
         return
@@ -217,7 +225,6 @@ export default {
       const len = this.playlist.length
       if (!len) return
       const index = this.currentIndex
-      console.log('prev', prev)
       let nextIndex = -1
       if (this.mode === config.playMode[2]) {
         nextIndex = Math.floor(Math.random() * this.playlist.length)

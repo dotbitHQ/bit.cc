@@ -50,7 +50,6 @@ export default {
   watch: {
     volume: {
       handler(newVolume) {
-        console.log('newVolume', newVolume)
         if (newVolume > 0.8) this.volumeNum = 4
         else if (newVolume > 0.4) this.volumeNum = 3
         else if (newVolume > 0.1) this.volumeNum = 2
@@ -77,7 +76,6 @@ export default {
       this.setVolume(e)
     },
     volumeChange(e) {
-      console.log('e:::', e)
       if (e > 0) {
         this.setVolumeChange(e)
       }
