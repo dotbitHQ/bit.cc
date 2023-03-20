@@ -102,7 +102,7 @@
     <DasUnregistered v-if="account.status === AccountStatus.unregistered" :account="account.account" />
     <DasOnCross v-else-if="account.status === AccountStatus.onCross" :account="account.account" />
     <div v-else-if="account.status === AccountStatus.successful" class="index_content">
-      <ProfileCard class="index_profile" :account="account" :activeNav="activeBrandFilter" />
+      <ProfileCard class="index_profile" :account="account" :nfts="filteredNfts" />
       <SideNav v-model="activeNav" class="index_nav" />
       <BrandFilters
         v-if="activeNav === NavItem.nft"
@@ -223,6 +223,7 @@ export default defineComponent({
         }
       })
       watch(() => nfts.value, (newNfts, oldNfts) => {
+        // If there is an nft from kolo, the audio will be played automatically
         const koloNft = newNfts.find(nft => nft.providerType === NFTProviderType.kolo)
         if (koloNft) {
           store.dispatch('music/selectPlay', {

@@ -231,6 +231,7 @@ import Iconfont from '~/components/Iconfont'
 import IconProfile from '~/components/IconProfile'
 import { Dropdown, VClosePopper } from 'floating-vue'
 import { collapseString } from '~/modules/tools'
+import { NFTProviderType } from '~/hooks/useNFT'
 import 'floating-vue/dist/style.css'
 
 export default defineComponent({
@@ -250,9 +251,9 @@ export default defineComponent({
       type: Object,
       default: () => ({})
     },
-    activeNav: {
-      type: String,
-      default: ''
+    nfts: {
+      type: Array,
+      default: () => ([])
     },
   },
 
@@ -282,11 +283,11 @@ export default defineComponent({
     })
 
     watch(
-      () => props.activeNav,
-      (newActiveNav) => {
-        console.log('new', newActiveNav)
-        if (newActiveNav === 'kolo') {
-          const text = 'Hey! Come to my #NFT gallery! I set XX song as Kolo, 😎 \nYou can see my multi-chain NFTs and my .bit profile.  @dotbitHQ \n'
+      () => props.nfts,
+      (newNfts) => {
+        const koloNft = newNfts.find(nft => nft.providerType === NFTProviderType.kolo)
+        if (koloNft) {
+          const text = 'Hey! Come to my #NFT gallery! I set XX song as Kolo, 😎 \nYou can see my multi-chain NFTs and my .bit profile.  @dotbitHQ @KoloNft \n'
           const url = window.location.href
           intent.value = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
         } else {

@@ -2,9 +2,9 @@
   <div>
     <div class="player" v-show="isPlayer">
       <div class="player-content">
-        <div class="content">
-          <transition name="fade" enter-active-class="fadeInRight" leave-active-class="fadeOutRight">
-            <div class="content-box animated" v-show="infoShow">
+        <transition name="fade" enter-active-class="fadeInRight" leave-active-class="fadeOutRight">
+          <div class="content animated" v-show="infoShow">
+            <div class="content-box " >
               <div class="content-bg-nav">
                 <div class="content-bg" ref="contentBg">
                   <div class="mask"></div>
@@ -25,8 +25,8 @@
                 <other-control @toggleList="toggleList"></other-control>
               </div>
             </div>
-          </transition>
-        </div>
+          </div>
+        </transition>
         <div class="img-nav">
           <img ref="audioBg" :src="currentMusic.cover" :class="playing ? 'playing-true' : 'playing-false'" alt="" />
           <div class="drag" ref="drag"></div>
@@ -118,6 +118,7 @@ export default {
         }, 500)
       }
     })
+    // Dealing with the issue of background music not playing automatically
     document.addEventListener('click', () => {
       if (this.isInit) {
         silencePromise(this.audioEle.play())
@@ -174,7 +175,6 @@ export default {
   },
   methods: {
     ...mapActions('music', {
-      setHistory: 'setHistory',
       setPlaying: 'setPlaying',
       selectPlayUrl: 'selectPlayUrl'
     }),
@@ -260,7 +260,6 @@ export default {
       }
       this.setCurrentTime(0)
       this.audioEle.currentTime = 0
-      musicLog.addItem()
       switch (this.mode) {
         case config.playMode[0]: {
           const len = this.playlist.length
@@ -298,7 +297,6 @@ export default {
     progressMusicEnd(percent) {
       this.setCurrentTime(timeToSec(this.currentMusic.timing) * percent)
       this.audioEle.currentTime = timeToSec(this.currentMusic.timing) * percent
-
       this.dragFlag = false
     }
   }
