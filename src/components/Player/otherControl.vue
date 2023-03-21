@@ -86,6 +86,7 @@ export default {
       } else {
         this.setVolumeMute(false)
       }
+      this.audioEle.volume = this.volume
     }
   }
 }

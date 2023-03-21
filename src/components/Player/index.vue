@@ -75,7 +75,8 @@ export default {
       'currentTime',
       'allAuth',
       'userWorkIds',
-      'audioUrl'
+      'audioUrl',
+      'volume'
     ]),
     percent() {
       return this.currentTime / timeToSec(this.currentMusic.timing)
@@ -106,7 +107,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       this.setAudioEle(this.$refs.player)
-      this.audioEle.volume = 0.8
+      this.audioEle.volume = this.volume
       silencePromise(this.audioEle.play())
       this.audioEle.pause()
       silencePromise(this.audioEle.play())

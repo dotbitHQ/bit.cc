@@ -287,7 +287,7 @@ export default defineComponent({
       (newNfts) => {
         const koloNft = newNfts.find(nft => nft.providerType === NFTProviderType.kolo)
         if (koloNft) {
-          const text = 'Hey! Come to my #NFT gallery! I set XX song as Kolo, 😎 \nYou can see my multi-chain NFTs and my .bit profile.  @dotbitHQ @KoloNft \n'
+          const text = `Hey! Come to my #NFT gallery and listen to the \nbeautiful ${koloNft.name}! 😎 \nYou can see my multi-chain NFTs and my .bit profile.  @dotbitHQ @KOLONFT \n`
           const url = window.location.href
           intent.value = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
         } else {
