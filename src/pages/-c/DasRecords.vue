@@ -112,7 +112,7 @@
       <div id="J_nft" class="das-records_group _nft">
         <NFTRecord v-for="nft in nfts" :key="nft.name + nft.link" :nft="nft" />
       </div>
-      <div class="records-desc">{{ $tt('Above are all the NFTs of the owner address') }}</div>
+      <div class="records-desc">{{ $tt('Above are all the .bit of the owner address') }}</div>
       <RecordsSeparator style="margin-top: 20px;" />
     </template>
 

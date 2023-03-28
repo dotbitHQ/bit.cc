@@ -43,6 +43,10 @@
     .center_footer {
       display: none;
     }
+
+    .index_das-records {
+      margin-top: 30px;
+    }
   }
 
   &.theme_dark {
@@ -61,6 +65,10 @@
       }
 
       .index_brand-filters {
+        margin-bottom: 24px;
+      }
+
+      .index_das-records {
         margin-bottom: 24px;
       }
 
@@ -104,17 +112,19 @@
     <div v-else-if="account.status === AccountStatus.successful" class="index_content">
       <ProfileCard class="index_profile" :account="account" />
       <SideNav v-model="activeNav" class="index_nav" />
-      <BrandFilters
-        v-if="activeNav === NavItem.nft"
-        v-model="activeBrandFilter"
-        class="index_brand-filters"
-      />
+<!--      <BrandFilters-->
+<!--        v-if="activeNav === NavItem.nft"-->
+<!--        v-model="activeBrandFilter"-->
+<!--        class="index_brand-filters"-->
+<!--      />-->
 
-      <DasRecords :addresses="account.addresses"
-                  :profiles="account.profiles"
-                  :customs="account.customs"
-                  :nfts="filteredNfts"
-                  :account="account.account"
+      <DasRecords
+        class="index_das-records"
+        :addresses="account.addresses"
+        :profiles="account.profiles"
+        :customs="account.customs"
+        :nfts="filteredNfts"
+        :account="account.account"
       />
 
       <div class="center_footer">
