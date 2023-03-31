@@ -1,6 +1,3 @@
-/**
- * @description 播放列表，不建议修改
- */
 import { Module } from 'vuex'
 import { augmentKeys } from './-/helpers'
 import { useKolo } from '~/hooks/useKolo'
@@ -8,7 +5,7 @@ import { KoloNftAsset } from '../../types/kolo'
 
 function findIndex(list: any[], music: KoloNftAsset) {
   return list.findIndex(item => {
-    return item.audioUrl === music.audioUrl
+    return item.audioUrl === music.audioUrl && item.tokenId === music.tokenId
   })
 }
 

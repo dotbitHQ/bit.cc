@@ -28,6 +28,13 @@
           </div>
         </transition>
         <div class="img-nav">
+          <div class="no-init" v-show="(!isInit && currentTime === 0) || !musicReady">
+            <p>
+              Click anywhere<br/>
+              and to start<br/>
+              the BGM~
+            </p>
+          </div>
           <img ref="audioBg" :src="currentMusic.cover" :class="playing ? 'playing-true' : 'playing-false'" alt="" />
           <div class="drag" ref="drag"></div>
         </div>
@@ -55,7 +62,7 @@ export default {
       musicReady: false, // Is it possible to use the player
       isPlaying: false,
       drag: null,
-      isInit: true,
+      isInit: false,
       dragFlag: false // Is it dragging
     }
   },
@@ -108,9 +115,6 @@ export default {
     this.$nextTick(() => {
       this.setAudioEle(this.$refs.player)
       this.audioEle.volume = this.volume
-      silencePromise(this.audioEle.play())
-      this.audioEle.pause()
-      silencePromise(this.audioEle.play())
       if (this.audioEle) {
         playerMusic.initAudio(this)
       } else {
@@ -121,11 +125,11 @@ export default {
     })
     // Dealing with the issue of background music not playing automatically
     document.addEventListener('click', () => {
-      if (this.isInit) {
+      if (!this.isInit) {
+        this.isInit = true
         silencePromise(this.audioEle.play())
       }
-      this.isInit = false
-    }, false)
+    }, true)
   },
   watch: {
     currentMusic: {
@@ -423,6 +427,25 @@ div {
 
     background: #2c2c2c;
     z-index: 99;
+    .no-init {
+      position: absolute;
+      z-index: 18;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 90px;
+      height: 90px;
+      border-radius: 50%;
+      overflow: hidden;
+      background: rgba(255, 255, 255, 0.8);
+      backdrop-filter: blur(10px);
+      padding: 28px 0;
+      p {
+        text-align: center;
+        font-size: 12px;
+        color: #FF7F00;
+      }
+    }
     .drag {
       position: absolute;
       z-index: 10;
