@@ -42,9 +42,9 @@ export default {
     '~/plugins/service',
   ],
 
-  serverMiddleware: [
-    '~/serverMiddleware/api_mibao.ts'
-  ],
+  // serverMiddleware: [
+  //   '~/serverMiddleware/api_mibao.ts'
+  // ],
 
   router: {
     middleware: [],

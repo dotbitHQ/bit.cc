@@ -43,6 +43,10 @@
     .center_footer {
       display: none;
     }
+
+    .index_das-records {
+      margin-top: 30px;
+    }
   }
 
   &.theme_dark {
@@ -61,6 +65,10 @@
       }
 
       .index_brand-filters {
+        margin-bottom: 24px;
+      }
+
+      .index_das-records {
         margin-bottom: 24px;
       }
 
@@ -104,17 +112,19 @@
     <div v-else-if="account.status === AccountStatus.successful" class="index_content">
       <ProfileCard class="index_profile" :account="account" :nfts="filteredNfts" />
       <SideNav v-model="activeNav" class="index_nav" />
-      <BrandFilters
-        v-if="activeNav === NavItem.nft"
-        v-model="activeBrandFilter"
-        class="index_brand-filters"
-      />
+<!--      <BrandFilters-->
+<!--        v-if="activeNav === NavItem.nft"-->
+<!--        v-model="activeBrandFilter"-->
+<!--        class="index_brand-filters"-->
+<!--      />-->
 
-      <DasRecords :addresses="account.addresses"
-                  :profiles="account.profiles"
-                  :customs="account.customs"
-                  :nfts="filteredNfts"
-                  :account="account.account"
+      <DasRecords
+        class="index_das-records"
+        :addresses="account.addresses"
+        :profiles="account.profiles"
+        :customs="account.customs"
+        :nfts="filteredNfts"
+        :account="account.account"
       />
 
       <div class="center_footer">
@@ -211,28 +221,24 @@ export default defineComponent({
       }
     })
 
-    if (process.browser) {
-      onMounted(() => {
-        if (account.value.status === AccountStatus.successful) {
-          fetchNFTs()
-        }
-        // it's weird that account.value.status will always be AccountStatus.loading when visiting xxx.bit.cc, while everything works fine for xxx.bit.host,
-        // so we have to invoke fetchNFTs again
-        else {
-          setTimeout(() => fetchNFTs(), 2000)
-        }
-      })
-      watch(() => nfts.value, (newNfts, oldNfts) => {
-        // If there is an nft from kolo, the audio will be played automatically
-        const koloNft = newNfts.find(nft => nft.providerType === NFTProviderType.kolo)
-        if (koloNft) {
-          store.dispatch('music/selectPlay', {
-            list: koloNft.subNfts,
-            index: 0
-          })
-        }
-      })
-    }
+    onMounted(() => {
+      console.log('=====account.value.status=======')
+      console.log(account.value.status)
+      if (account.value.status === AccountStatus.successful) {
+        fetchNFTs()
+      }
+    })
+
+    watch(() => nfts.value, (newNfts, oldNfts) => {
+      // If there is an nft from kolo, the audio will be played automatically
+      const koloNft = newNfts.find(nft => nft.providerType === NFTProviderType.kolo)
+      if (koloNft) {
+        store.dispatch('music/selectPlay', {
+          list: koloNft.subNfts,
+          index: 0
+        })
+      }
+    })
 
     return {
       NavItem,
