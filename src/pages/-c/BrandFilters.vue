@@ -121,18 +121,6 @@ export default defineComponent({
       value: BrandItem.all,
       text: root.$tt('All')
     }, {
-      value: BrandItem.opensea,
-      text: 'OpenSea',
-    }, {
-      value: BrandItem.poap,
-      text: 'POAP',
-    }, {
-      value: BrandItem.airnfts,
-      text: 'AirNFTs'
-    }, {
-      value: BrandItem.treasureland,
-      text: 'Treasureland',
-    }, {
       value: BrandItem.kolo,
       text: 'KOLO',
     }]
