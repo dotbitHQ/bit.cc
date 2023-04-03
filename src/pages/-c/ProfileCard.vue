@@ -224,13 +224,14 @@
 
 <script>
 
-import { defineComponent, onMounted, ref } from '@nuxtjs/composition-api'
+import { defineComponent, onMounted, ref, reactive, watch, computed, useStore } from '@nuxtjs/composition-api'
 import { DasAvatar, ResizeText } from 'das-ui-shared'
 import { useToggle } from '@vueuse/core'
 import Iconfont from '~/components/Iconfont'
 import IconProfile from '~/components/IconProfile'
 import { Dropdown, VClosePopper } from 'floating-vue'
 import { collapseString } from '~/modules/tools'
+import { NFTProviderType } from '~/hooks/useNFT'
 import 'floating-vue/dist/style.css'
 
 export default defineComponent({
@@ -250,13 +251,19 @@ export default defineComponent({
       type: Object,
       default: () => ({})
     },
+    nfts: {
+      type: Array,
+      default: () => ([])
+    },
   },
 
-  setup (_, ctx) {
+  setup (props, ctx) {
     const intent = ref('')
     const mail3MeButton = ref(null)
     const [isShowingCard, toggleCard] = useToggle()
     const hasUnreadMail = ref(false)
+    const store = useStore()
+    const currentMusic = computed(() => (store.getters['music/currentMusic']))
     onMounted(() => {
       const text = 'Hey! Come to my #NFT gallery! 😎 \nYou can see my multi-chain NFTs and my .bit profile.  @dotbitHQ \n'
       const url = window.location.href
@@ -276,6 +283,41 @@ export default defineComponent({
       window.addEventListener('message', handleMail3MessageEvent)
       return () => window.removeEventListener('message', handleMail3MessageEvent)
     })
+
+    // Set kolo share title
+    function getShareKoloText(nftType, title, workTitle) {
+      let text = ''
+      if (nftType === 1) {
+        text = `Hey! Come to my #NFT gallery and listen to the \nbeautiful ${title} from ${workTitle}! 😎 \nYou can see my multi-chain NFTs and my .bit profile.  @dotbitHQ @KOLONFT \n`
+      } else {
+        text = `Hey! Come to my #NFT gallery and listen to the \nbeautiful ${workTitle}! 😎 \nYou can see my multi-chain NFTs and my .bit profile.  @dotbitHQ @KOLONFT \n`
+      }
+      return text
+    }
+
+    watch(
+      () => [currentMusic, props.nfts],
+      ([newCurrentMusic, newNfts], [oldCurrentMusic, oldNfts]) => {
+        const koloNft = newNfts.find(nft => nft.providerType === NFTProviderType.kolo)
+        if (koloNft) {
+          let text = ''
+          if (Object.keys(newCurrentMusic.value).length === 0 && koloNft.subNfts.length > 0) {
+            const music = koloNft.subNfts[0]
+            text = getShareKoloText(music.nftType, music.title, music.workTitle)
+          } else {
+            const { nftType, title, workTitle } = newCurrentMusic.value
+            text = getShareKoloText(nftType, title, workTitle)
+          }
+          const url = window.location.href
+          intent.value = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
+        } else {
+          const text = 'Hey! Come to my #NFT gallery! 😎 \nYou can see my multi-chain NFTs and my .bit profile.  @dotbitHQ \n'
+          const url = window.location.href
+          intent.value = `https://twitter.com/intent/tweet?text=${encodeURIComponent(text)}&url=${encodeURIComponent(url)}`
+        }
+      },
+      { deep: true }
+    )
 
     return {
       intent,

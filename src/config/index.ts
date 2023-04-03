@@ -1,3 +1,4 @@
 export default {
-  apiOrigin: ''
+  apiOrigin: '',
+  playMode: ['sequence', 'loop', 'random']
 }

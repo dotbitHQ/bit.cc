@@ -7,6 +7,7 @@ import { JinseAsset } from '../../types/jinse'
 import { OpenSeaAsset } from '../../types/opensea'
 import { Treasureland } from '../../types/treasureland'
 import { XdaiPoap } from '../../types/xdai.poap'
+import { KoloAssets } from '../../types/kolo'
 
 // for simple app, service can all be placed under BasicService
 export class Services extends BasicService {
@@ -155,6 +156,16 @@ export class Services extends BasicService {
 
   getJinseAssets (address: string): Promise<JinseAsset[]> {
     return this.axios.get(`/mibao/holder_tokens/${address}`)
+  }
+
+  /**
+   * get Kolo assets for address
+   * @param owner eth address
+   * @doc https://www.kolo.market/api/outer/nftinfo/0x364056980867d1655897299889bca4e7d465b395
+   */
+  getKoloAssets (owner: string): Promise<any> {
+    owner = Web3Utils.toChecksumAddress(owner)
+    return this.axios.get(`https://www.kolo.market/api/outer/nftinfo/${owner}`)
   }
 }
 

@@ -110,7 +110,7 @@
     <DasUnregistered v-if="account.status === AccountStatus.unregistered" :account="account.account" />
     <DasOnCross v-else-if="account.status === AccountStatus.onCross" :account="account.account" />
     <div v-else-if="account.status === AccountStatus.successful" class="index_content">
-      <ProfileCard class="index_profile" :account="account" />
+      <ProfileCard class="index_profile" :account="account" :nfts="filteredNfts" />
       <SideNav v-model="activeNav" class="index_nav" />
 <!--      <BrandFilters-->
 <!--        v-if="activeNav === NavItem.nft"-->
@@ -134,12 +134,15 @@
         </div>
       </div>
     </div>
+    <!-- kolo player -->
+    <Player></Player>
   </div>
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, onMounted, ref, useContext, useFetch, useRoute, computed } from '@nuxtjs/composition-api'
+import { defineComponent, inject, onMounted, ref, useContext, useFetch, useRoute, computed, watch, useStore } from '@nuxtjs/composition-api'
 import BitHeader from '~/components/BitHeader.vue'
+import Player from '~/components/Player/index.vue'
 import { AccountStatus, useAccount } from '~/hooks/useAccount'
 import { useMetaAccount } from '~/hooks/useMetaAccount'
 import { NFTProviderType, useNFT } from '~/hooks/useNFT'
@@ -162,6 +165,7 @@ export default defineComponent({
     DasUnregistered,
     BrandFilters,
     DasOnCross,
+    Player
   },
   setup () {
     const resolveResult = inject(INJECTED_BITCC_ACCOUNT) as ResolveResult
@@ -169,6 +173,7 @@ export default defineComponent({
     const context = useContext()
     const activeNav = ref(NavItem.nft)
     const activeBrandFilter = ref(BrandItem.all)
+    const store = useStore()
 
     const { account, fetchAccount } = useAccount(resolveResult)
     const { nfts, fetchNFTs, loading: loadingNFT } = useNFT(account)
@@ -194,6 +199,11 @@ export default defineComponent({
             return nft.providerType === NFTProviderType.airnfts
           })
         }
+        else if (activeBrandFilter.value === BrandItem.kolo) {
+          return nfts.value.filter(nft => {
+            return nft.providerType === NFTProviderType.kolo
+          })
+        }
         else {
           return nfts.value
         }
@@ -216,6 +226,17 @@ export default defineComponent({
       console.log(account.value.status)
       if (account.value.status === AccountStatus.successful) {
         fetchNFTs()
+      }
+    })
+
+    watch(() => nfts.value, (newNfts, oldNfts) => {
+      // If there is an nft from kolo, the audio will be played automatically
+      const koloNft = newNfts.find(nft => nft.providerType === NFTProviderType.kolo)
+      if (koloNft) {
+        store.dispatch('music/selectPlay', {
+          list: koloNft.subNfts,
+          index: 0
+        })
       }
     })
 
