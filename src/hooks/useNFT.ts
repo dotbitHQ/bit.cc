@@ -110,18 +110,21 @@ function normalizeAirNFTsAssets (assets: AirNFTsNft[]): NFT[] {
   }).filter(asset => asset.imageUrl)
 }
 
-function normalizeKoloAssets(assets: KoloAssets[]): NFT[] {
-  return assets.map(asset => {
-    return {
+function normalizeKoloAssets(assets: { [key: string]: KoloAssets }): NFT[] {
+  const list: NFT[] = []
+  Object.keys(assets).forEach(key => {
+    const asset = assets[key]
+    list.push({
       name: asset.title,
       imageUrl: asset.cover,
       link: asset.workId ? `https://www.kolo.market/mintDetail?id=${asset.workId}` : asset.targetId ? `https://www.kolo.market/mintDetail?id=${asset.targetId}` : 'https://www.kolo.market',
       providerType: NFTProviderType.kolo,
-      tokenId: asset.tokenId,
+      tokenId: key,
       audioUrl: asset.audioUrl,
       subNfts: asset.subNfts || []
-    }
-  }).filter(asset => asset.imageUrl)
+    })
+  })
+  return list.filter(asset => asset.imageUrl)
 }
 
 export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolean>, nfts: Ref<NFT[]>, fetchNFTs: Function} {
@@ -177,85 +180,91 @@ export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolea
         .concat(koloAssets.value)
     })
 
-    // if (account.value.owner_address_chain === 'eth') {
-    //   void services.getOpenseaAssets(ownerAddress).then(res => {
-    //     openseaAssets.value = normalizeOpenseaAssets(res.assets)
-    //   })
-    //
-    //   void services.getXdaiPoaps(ownerAddress).then(res => {
-    //     xdaiPoaps.value = normalizeXdaiPoaps(res)
-    //   })
-    //
-    //   void services.getTreasurelandBscAssets(ownerAddress).then(res => {
-    //     if (res?.data?.list?.length > 0) {
-    //       treasurelandBSCAssets.value = normalizeTreasurelandAssets(res.data.list)
-    //     }
-    //   })
-    //
-    //   void services.getTreasurelandPolygonAssets(ownerAddress).then(res => {
-    //     if (res?.data?.list?.length > 0) {
-    //       treasurelandPolygonAssets.value = normalizeTreasurelandAssets(res.data.list)
-    //     }
-    //   })
-    //
-    //   void services.getTreasurelandETHAssets(ownerAddress).then(res => {
-    //     if (res?.data?.list?.length > 0) {
-    //       treasurelandETHAssets.value = normalizeTreasurelandAssets(res.data.list)
-    //     }
-    //   })
-    //
-    //   void services.getTreasurelandMoonriverAssets(ownerAddress).then(res => {
-    //     if (res?.data?.list?.length > 0) {
-    //       treasurelandMoonriverAssets.value = normalizeTreasurelandAssets(res.data.list)
-    //     }
-    //   })
-    //
-    //   void services.getTreasurelandIotexAssets(ownerAddress).then(res => {
-    //     if (res?.data?.list?.length > 0) {
-    //       treasurelandIotexAssets.value = normalizeTreasurelandAssets(res.data.list)
-    //     }
-    //   })
-    //
-    //   void services.getAirNFTsAssets(ownerAddress).then(res => {
-    //     if (res?.nfts?.length > 0) {
-    //       airNFTsAssets.value = normalizeAirNFTsAssets(res.nfts)
-    //     }
-    //   })
-    //
-    //   if (process.browser) {
-    //     void import('@lay2/pw-core').then(async (PWCoreImported) => {
-    //       const { Platform, Address, AddressType, Provider, PwCollector, default: PWCore } = PWCoreImported
-    //
-    //       // only used as a placeholder for pw-core initialization
-    //       class DummyProvider extends Provider {
-    //         async init (): Promise<DummyProvider> {
-    //           this.address = new Address(ownerAddress, AddressType.eth)
-    //           return this
-    //         }
-    //
-    //         async sign (message: string): Promise<string> {
-    //           return ''
-    //         }
-    //
-    //         close (): any {
-    //           return this
-    //         }
-    //       }
-    //
-    //       // PWCore need to initialized to use Address
-    //       await new PWCore('https://mainnet.ckb.dev/').init(
-    //         new DummyProvider(Platform.eth),
-    //         new PwCollector('https://mainnet.ckb.dev/'),
-    //       )
-    //
-    //       const ethAddressForPW = new Address(ownerAddress, AddressType.eth).toCKBAddress()
-    //
-    //       void services.getJinseAssets(ethAddressForPW).then((res) => {
-    //         jinseAssets.value = normalizeJinseAssets(res)
-    //       })
-    //     })
-    //   }
-    // }
+    if (account.value.owner_address_chain === 'eth') {
+      // void services.getOpenseaAssets(ownerAddress).then(res => {
+      //   openseaAssets.value = normalizeOpenseaAssets(res.assets)
+      // })
+      //
+      // void services.getXdaiPoaps(ownerAddress).then(res => {
+      //   xdaiPoaps.value = normalizeXdaiPoaps(res)
+      // })
+      //
+      // void services.getTreasurelandBscAssets(ownerAddress).then(res => {
+      //   if (res?.data?.list?.length > 0) {
+      //     treasurelandBSCAssets.value = normalizeTreasurelandAssets(res.data.list)
+      //   }
+      // })
+      //
+      // void services.getTreasurelandPolygonAssets(ownerAddress).then(res => {
+      //   if (res?.data?.list?.length > 0) {
+      //     treasurelandPolygonAssets.value = normalizeTreasurelandAssets(res.data.list)
+      //   }
+      // })
+      //
+      // void services.getTreasurelandETHAssets(ownerAddress).then(res => {
+      //   if (res?.data?.list?.length > 0) {
+      //     treasurelandETHAssets.value = normalizeTreasurelandAssets(res.data.list)
+      //   }
+      // })
+      //
+      // void services.getTreasurelandMoonriverAssets(ownerAddress).then(res => {
+      //   if (res?.data?.list?.length > 0) {
+      //     treasurelandMoonriverAssets.value = normalizeTreasurelandAssets(res.data.list)
+      //   }
+      // })
+      //
+      // void services.getTreasurelandIotexAssets(ownerAddress).then(res => {
+      //   if (res?.data?.list?.length > 0) {
+      //     treasurelandIotexAssets.value = normalizeTreasurelandAssets(res.data.list)
+      //   }
+      // })
+      //
+      // void services.getAirNFTsAssets(ownerAddress).then(res => {
+      //   if (res?.nfts?.length > 0) {
+      //     airNFTsAssets.value = normalizeAirNFTsAssets(res.nfts)
+      //   }
+      // })
+      //
+      // if (process.browser) {
+      //   void import('@lay2/pw-core').then(async (PWCoreImported) => {
+      //     const { Platform, Address, AddressType, Provider, PwCollector, default: PWCore } = PWCoreImported
+      //
+      //     // only used as a placeholder for pw-core initialization
+      //     class DummyProvider extends Provider {
+      //       async init (): Promise<DummyProvider> {
+      //         this.address = new Address(ownerAddress, AddressType.eth)
+      //         return this
+      //       }
+      //
+      //       async sign (message: string): Promise<string> {
+      //         return ''
+      //       }
+      //
+      //       close (): any {
+      //         return this
+      //       }
+      //     }
+      //
+      //     // PWCore need to initialized to use Address
+      //     await new PWCore('https://mainnet.ckb.dev/').init(
+      //       new DummyProvider(Platform.eth),
+      //       new PwCollector('https://mainnet.ckb.dev/'),
+      //     )
+      //
+      //     const ethAddressForPW = new Address(ownerAddress, AddressType.eth).toCKBAddress()
+      //
+      //     void services.getJinseAssets(ethAddressForPW).then((res) => {
+      //       jinseAssets.value = normalizeJinseAssets(res)
+      //     })
+      //   })
+      // }
+
+      void services.getKoloAssets(ownerAddress).then(res => {
+        if (res) {
+          koloAssets.value = normalizeKoloAssets(res)
+        }
+      })
+    }
 
     const addressChain2CoinType = {
       tron: '195',

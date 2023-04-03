@@ -61,6 +61,7 @@ export function useAccount (resolveResult: ResolveResult): {account: Ref<Account
       rawRecords = await dotbit.records(account.value.account)
     }
     catch (err) {
+      console.error(err)
       // @ts-expect-error
       if (err.code === 20007) {
         account.value.status = AccountStatus.unregistered

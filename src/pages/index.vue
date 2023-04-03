@@ -112,14 +112,13 @@
     <div v-else-if="account.status === AccountStatus.successful" class="index_content">
       <ProfileCard class="index_profile" :account="account" :nfts="filteredNfts" />
       <SideNav v-model="activeNav" class="index_nav" />
-<!--      <BrandFilters-->
-<!--        v-if="activeNav === NavItem.nft"-->
-<!--        v-model="activeBrandFilter"-->
-<!--        class="index_brand-filters"-->
-<!--      />-->
+      <BrandFilters
+        v-if="activeNav === NavItem.nft"
+        v-model="activeBrandFilter"
+        class="index_brand-filters"
+      />
 
       <DasRecords
-        class="index_das-records"
         :addresses="account.addresses"
         :profiles="account.profiles"
         :customs="account.customs"
@@ -214,10 +213,14 @@ export default defineComponent({
     useMetaAccount(account.value, resolveResult.url)
 
     useFetch(async () => {
-      await fetchAccount()
-
-      if (account.value.redirect && !route.value.query.noredirect) {
-        context.redirect(account.value.redirect)
+      try {
+        await fetchAccount()
+        if (account.value.redirect && !route.value.query.noredirect) {
+          context.redirect(account.value.redirect)
+        }
+      }
+      catch (err) {
+        console.log(err)
       }
     })
 
