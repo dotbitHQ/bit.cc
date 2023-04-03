@@ -110,21 +110,18 @@ function normalizeAirNFTsAssets (assets: AirNFTsNft[]): NFT[] {
   }).filter(asset => asset.imageUrl)
 }
 
-function normalizeKoloAssets(assets: { [key: string]: KoloAssets }): NFT[] {
-  const list: NFT[] = []
-  Object.keys(assets).forEach(key => {
-    const asset = assets[key]
-    list.push({
+function normalizeKoloAssets(assets: KoloAssets[]): NFT[] {
+  return assets.map(asset => {
+    return {
       name: asset.title,
       imageUrl: asset.cover,
       link: asset.workId ? `https://www.kolo.market/mintDetail?id=${asset.workId}` : asset.targetId ? `https://www.kolo.market/mintDetail?id=${asset.targetId}` : 'https://www.kolo.market',
       providerType: NFTProviderType.kolo,
-      tokenId: key,
+      tokenId: asset.tokenId,
       audioUrl: asset.audioUrl,
       subNfts: asset.subNfts || []
-    })
-  })
-  return list.filter(asset => asset.imageUrl)
+    }
+  }).filter(asset => asset.imageUrl)
 }
 
 export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolean>, nfts: Ref<NFT[]>, fetchNFTs: Function} {
@@ -261,7 +258,34 @@ export function useNFT (account: Ref<AccountInfoExtended>): {loading: Ref<boolea
 
       void services.getKoloAssets(ownerAddress).then(res => {
         if (res) {
-          koloAssets.value = normalizeKoloAssets(res)
+          let newArr = Object.entries(res).flatMap(
+            ([key, item]: [string, any]): KoloAssets[] => {
+              if (item.nftType === 2) {
+                const subNfts = item.subNfts && item.subNfts.map(
+                  (i: KoloNftAsset): KoloNftAsset => ({ ...i, tokenId: key })
+                );
+                return {
+                  ...item,
+                  tokenId: key,
+                  subNfts,
+                };
+              }
+              else if (item.nftType === 1) {
+                return {
+                  ...item,
+                  tokenId: key,
+                  subNfts: [
+                    {
+                      ...item,
+                      tokenId: key,
+                    },
+                  ],
+                };
+              }
+              return [];
+            }
+          );
+          koloAssets.value = normalizeKoloAssets(newArr)
         }
       })
     }
