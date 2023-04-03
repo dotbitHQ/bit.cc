@@ -1,7 +1,7 @@
 import abcConfig from './abc.config'
 
 export default {
-  ssr: true,
+  ssr: false,
   target: 'server',
   srcDir: 'src',
   server: {
@@ -105,41 +105,32 @@ export default {
   ],
   render: {
     // prevent preload, improve first time performance
-    resourceHints: false,
-    // https://nuxtjs.org/guides/directory-structure/static
-    // https://www.npmjs.com/package/serve-static
-    static: {
-      maxAge: 60 * 60 * 24 * 1000, // this will cache files in `static/` for 1 day, please change the filename if you have urgent need to update image.
-    },
+    resourceHints: false
   },
   /*
   ** Build configuration
   */
   build: {
-    // For debug purpose
-    'html.minify': !abcConfig.isDev,
+    extractCSS: true,
     babel: {
-      presets (ctx) {
+      presets ({ isServer }, [preset, options]) {
         let targets
         // Keep default target in server side
-        if (ctx.isServer) {
+        if (isServer) {
           targets = { node: 'current' }
         }
         // Custom target in client side
         else {
           // Compile to ES5 for better compatibility in production
           if (!abcConfig.isDev) {
-            targets = { ie: 10 }
+            targets = { ie: 11 }
           }
           // Compile to ESNext for easier debugging in development
           else {
-            targets = { chrome: 80 }
+            targets = { chrome: 100 }
           }
         }
-
-        return [
-          [require.resolve('@nuxt/babel-preset-app'), { targets }]
-        ]
+        options.targets = targets
       }
     },
     /*

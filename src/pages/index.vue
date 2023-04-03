@@ -139,7 +139,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, inject, onMounted, ref, useContext, useFetch, useRoute, computed, watch, useStore } from '@nuxtjs/composition-api'
+import { defineComponent, inject, onMounted, ref, useContext, useRoute, computed, watch, useStore } from '@nuxtjs/composition-api'
 import BitHeader from '~/components/BitHeader.vue'
 import Player from '~/components/Player/index.vue'
 import { AccountStatus, useAccount } from '~/hooks/useAccount'
@@ -212,21 +212,11 @@ export default defineComponent({
 
     useMetaAccount(account.value, resolveResult.url)
 
-    useFetch(async () => {
-      try {
-        await fetchAccount()
-        if (account.value.redirect && !route.value.query.noredirect) {
-          context.redirect(account.value.redirect)
-        }
+    onMounted(async () => {
+      await fetchAccount()
+      if (account.value.redirect && !route.value.query.noredirect) {
+        context.redirect(account.value.redirect)
       }
-      catch (err) {
-        console.log(err)
-      }
-    })
-
-    onMounted(() => {
-      console.log('=====account.value.status=======')
-      console.log(account.value.status)
       if (account.value.status === AccountStatus.successful) {
         fetchNFTs()
       }
