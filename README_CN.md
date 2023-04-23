@@ -64,5 +64,5 @@ bit.cc 会将链上存储的 .bit 记录，以更加个性化的设计风格进�
 
 > [yourname].bit.cc
 
-比如你的账号是 `dastodamoon.bit`，那么你的访问链接就是 [https://dastodamoon.bit.host](https://dastodamoon.bit.host) 或者 [https://dastodamoon.bit.cc](https://dastodamoon.bit.cc)。
+比如你的账号是 `dastodamoon.bit`，那么你的访问链接就是 [https://dastodamoon.bit.cc](https://dastodamoon.bit.cc)。
 
