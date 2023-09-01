@@ -1,0 +1,51 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3.5.3
+
+      - name: Restore Cache
+        uses: actions/cache@v3.2.6
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/yarn.lock') }}
+        if: github.ref == 'refs/heads/main'
+
+      - name: Setup Node.js environment
+        uses: actions/setup-node@v3.7.0
+        with:
+          node-version: 16.x
+
+      - name: Install yarn
+        run: npm install -g yarn
+
+      - name: Install dependency
+        run: yarn install
+
+      - name: Build
+        run: npm run build
+        if: github.ref == 'refs/heads/main'
+
+      - name: Remove node_modules
+        run: rm -rf node_modules
+
+      - name: Compress file
+        uses: TheDoctor0/zip-release@0.7.1
+        with:
+          filename: bit.cc-artifact-${{ github.sha }}.zip
+          custom: -q
+
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v3.1.2
+        with:
+          name: bit.cc-artifact-${{ github.sha }}.zip
+          path: ./bit.cc-artifact-${{ github.sha }}.zip
+        if: github.ref == 'refs/heads/main'
